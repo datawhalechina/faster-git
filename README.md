@@ -25,7 +25,7 @@
 1. 在GitHub上Fork本仓库
 1. Clone Fork后的个人仓库
 1. 设置`upstream`仓库地址，并禁用`push`
-1. 使用分支开发，课程分支名为`lecture{#NO}`，如`lecture7`，进行相应的提交
+1. 使用分支开发，课程分支名为`lecture{#NO}`，`#NO`保持两位，如`lecture07`，对应课程目录
 1. PR之前保持与原始仓库的同步，之后发起PR请求
 
 命令示例：
@@ -48,9 +48,9 @@ git remote -v
 # upstream	DISABLE (push)
 
 # do your work
-git checkout -b lecture7
+git checkout -b lecture07
 # edit and commit and push your changes
-git push -u origin lecture7
+git push -u origin lecture07
 
 # keep your fork up to date
 ## fetch upstream main and merge with forked main branch
@@ -58,7 +58,7 @@ git fetch upstream
 git checkout main
 git merge upstream/main
 ## rebase brach and force push
-git checkout lecture7
+git checkout lecture07
 git rebase main
 git push -f
 ```
