@@ -1,0 +1,15 @@
+# General
+.DS_Store
+
+# Thumbnails
+._*
+
+# Windows
+Thumbs.db
+
+*~
+
+# Vim Swap
+[._]*.sw[a-p]
+
+.vscode/*
