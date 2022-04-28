@@ -61,7 +61,7 @@ Git 虽然作为一个开源的分布式版本控制系统，可以有效、高�
 
 在 Github Desktop 中完成fork后，登录 Github 网页就可以在个人仓库中看到目标仓库的复刻版，如下所示。
 
-<img src="https://gitee.com/shenhao-stu/picgo/raw/master/DataWhale/image-20220428195013737.png" alt="image-20220428195013737" style="zoom: 50%;" />
+<img src="./Assets/github_desktop.png" style="zoom: 50%;" />
 
 ##### commit & push
 
@@ -85,7 +85,9 @@ Git 虽然作为一个开源的分布式版本控制系统，可以有效、高�
 
 <img src="./Assets/github_desktop_9.png" style="zoom:50%;" />
 
-<img src="./Assets/github_desktop_10.png"  />![](./Assets/github_desktop_11.png)
+<img src="./Assets/github_desktop_10.png"  />
+
+![](./Assets/github_desktop_11.png)
 
 在完成PR后，会自动跳转到目标仓库，可以看到在Pull requests一栏中，上标增加了1，1就是贡献者所提交PR。之后就需要目标仓库的拥有者对贡献的代码进行审阅，如果代码合规可利用，就会将fork分支的commits合并到主分支中。这样一来，就完成了一次贡献！！👏👏
 
