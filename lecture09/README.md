@@ -1,6 +1,6 @@
 # 第九章 Git 图形工具
 
-> 作者：shenhao
+> Author：shenhao
 
 ## 9.0 前言：为什么要使用 Git GUI ？
 
