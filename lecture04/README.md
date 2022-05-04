@@ -2,7 +2,7 @@
 
 > Author: Martin
 
-本章主要介绍 Git 常用的工具，可能不会经常用到，但是“万一”呢，你说对吧? 看看总归不会是坏处，技多不压身吧 🐶。
+本章主要介绍 Git 常用的工具，可能不会经常用到，但是“万一”呢，你说对吧? 看看总归不会有坏处，技多不压身嘛 🐶。
 
 ## 4.0 开始你的工作
 
@@ -18,7 +18,7 @@ Git 支持多种方式来引用单个提交、一组提交或一定范围内的�
 
 ### 4.1.1 引用 Commit 的记录
 
-你可以通过任意一个提交的 40 位字符的 `SHA-`散列值来指定它。
+你可以通过任意一个提交的 40 位字符的 `SHA-1`散列值来指定它。
 
 **`$` 是终端交互的提示符，不需要输入。如果系统或者终端不一样，只需输入`$`后的内容即可，本文后续不再累述**
 
@@ -40,11 +40,11 @@ Date:   Wed May 4 13:33:17 2022 +0800
     Initial commit
 ```
 
-从日志能明显的看到多次提交的记录，每次包括一个，包括 commit(后跟一串 ID)、作者、提交时间和提交信息。
+从日志能明显的看到多次提交的记录，每次包括 `commit` + 一串字符、作者、提交时间 和详细信息等。
 
 这里的主角就是 commit 后跟的 40 位的字符，这个值是一个 SHA-1 哈希值。它是对内容和头信息 Header 的一个校验和 checksum，Git 使用 SHA-1 并不是为了数据的安全性，而是数据的完整性；它保证，在很多年后，你重新 checkout 某个 commit 时，一定是当时的状态，完全一摸一样。 有兴趣进一步了解这个 SHA-1 的值，可以 [参考这里](https://www.jianshu.com/p/4f8b56d0fd5b)。
 
-想查看某次提交信息，可以通过 `git show {value of SHA-1}` 来查看，如:
+想查看某次提交信息，可以通过 `git show` 来查看，如:
 
 ```bash
 $ git show 44328544187650f2f6ecc253ef3a2b099c51baa5
@@ -74,7 +74,7 @@ index 0000000..a8328fd
 
 ```
 
-查看所有所有提交 SHA-1
+查看所有所有提交 SHA-1 字符串
 
 ```bash
 $ git log|grep '^commit'|awk '{print $2}'
@@ -83,7 +83,7 @@ $ git log|grep '^commit'|awk '{print $2}'
 a55ea122894272b13c3a43129ca0b74cfd2b6a4a
 ```
 
-Git 非常聪明的知道在没有歧义的情况下，通过前几个字符来替代上诉 40 位字符，如上诉可简化成：
+Git 非常聪明的知道在没有歧义的情况下，通过前几个字符来替代上述 40 位字符，如上可简化成：
 
 ```bash
  $ git show 4432854
@@ -178,9 +178,15 @@ index a8328fd..ca79fae 160000
 
 如果你的 branch 的名称和当前目录名称很不巧的重名了，那么应该会出现意外的输出 😭 并没有我们期盼中的结果。
 
+创建同名测试目录
+
 ```bash
 $ mkdir stable
+```
 
+再次执行`git show stable`
+
+```bash
 $ git show stable
 
 fatal: ambiguous argument 'stable': both revision and filename
@@ -256,7 +262,7 @@ index 0000000..a8328fd
 
 ## 4.2 交互式暂存
 
-当你修改大量文件后，希望和谐改动能拆分成多个提交而不是一起提交的时候，可以通过如下命令操作。
+当你修改大量文件后，希望将改动拆分成多个提交而不是一起提交的时候，可以通过如下命令操作。
 
 如果运行 `git add` 后加 `-i` 或者 `--interactive` 选项的时候，Git 会进入一个交互式命令模式，如:
 
@@ -276,9 +282,9 @@ $ git add -i
 What now>
 ```
 
-可以看到这个命令以和平时非常不同的视图显示了暂存区——基本上与 git status 是相同的信息，但是更简明扼要一些。 它将暂存的修改列在左侧，未暂存的修改列在右侧。
+可以看到这个命令以和平时不同的视图：显示了暂存区。基本上与 git status 是相同的信息，但是更简明扼要一些。 它将暂存的修改列在左侧，未暂存的修改列在右侧。
 
-在这块区域后是“Commands”命令区域。 在这里你可以做一些工作，包括暂存文件、取消暂存文件、暂存文件的一部分、添加未被追踪的文件、显示暂存内容的区别。
+在这块区域后是 `Commands` 命令区域。 在这里你可以做一些工作，包括暂存文件、取消暂存文件、暂存文件的一部分、添加未被追踪的文件、显示暂存内容的区别。
 
 ### 4.2.1 暂存、取消文件
 
@@ -326,22 +332,38 @@ What now> s
 如果想要查看已暂存内容的区别，可以使用 d 或 6（区别）命令。 它会显示暂存文件的一个列表，可以从中选择想要查看的暂存区别。 这跟你在命令行指定 git diff --cached 非常相似：
 
 ```bash
+$ git add -i
+
+           staged     unstaged path
+  1:        +1/-1      nothing src/trace/trace_test.go
+
 What now> d
            staged     unstaged path
-  1:      +308/-0      nothing lecture04/README.md
-  2:        +1/-0      nothing lecture04/TODO
+  1:        +1/-1      nothing src/trace/trace_test.go
 
-Review diff>> 2
-*** Commands ***
-  1: status	  2: update	  3: revert	  4: add untracked
-  5: patch	  6: diff	  7: quit	  8: help
+Review diff>> 1
+
+diff --git a/src/trace/trace_test.go b/src/trace/trace_test.go
+index 8cc7998..33732e6 100644
+--- a/src/trace/trace_test.go
++++ b/src/trace/trace_test.go
+@@ -1,7 +1,7 @@
+ // Copyright 2015 The Go Authors. All rights reserved.
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+-
++//
+ package trace
+
+ import (
+
 ```
 
 通过这些基本命令，可以使用交互式添加模式来轻松地处理暂存区。
 
 ### 4.2.2 暂存补丁
 
-Git 也可以暂存文件的特定部分。 例如，如果在 TODO 文件中做了两处修改，但只想要暂存其中的一个而不是另一个，Git 会帮你轻松地完成。 在和上一节一样的交互式提示符中，输入 p 或 5（补丁）
+Git 也可以暂存文件的特定部分。 例如，如果在 TODO 文件中做了两处修改，但只想要暂存其中的一个而不是另一个，Git 会帮你轻松地完成。 在和上一节一样的交互式提示符中，输入 p 或 5。
 
 ```bash
 $ git add -i
@@ -444,7 +466,7 @@ nothing to commit, working tree clean
 ```bash
 $ git stash list
 
-stash@{1}: WIP on main: a123887 sample codes for demonstration
+stash@{0}: WIP on main: 36c4cad sample codes for demonstration
 
 ```
 
@@ -481,9 +503,9 @@ Dropped stash@{0} (36c4cad0bafa4dbbd78ae469b0afa38ae2808102)
 
 需要注意的是，这个命令会移除未被跟踪的文件，可以考虑执行 `git stash --all` 来移除所有文件并保存到栈上。
 
-使用 `git clean -f -d` 命令来移除工作目录中所有未追踪的文件以及空的子目录。 `-f` 意味着“强制（force）”或“确定要移除”，使用它需要 Git 配置变量 `clean.requireForce` 没有显式设置为 `false`。
+使用 `git clean -f -d` 命令来移除工作目录中所有未追踪的文件以及空的子目录。 `-f` 意味着强制移除，使用它需要 Git 配置变量 `clean.requireForce` 没有显式设置为 `false`。
 
-如果你只是想看下或者删除前小心点确认下，它到底会删除那些东西，可以通过`--dry-run`或者`-n`选项来执行命令，这只是告诉会删除什么，而不会真的删除.
+如果你只是想看下或者删除前小心翼翼的确认: 它到底会删除那些东西. 可以通过`--dry-run`或者`-n`选项来执行命令，这只是告诉你会删除什么，而不会真的删除.
 
 创建一些临时文件用于测试
 
@@ -922,7 +944,7 @@ $ git log --oneline main ^origin/main
 这里将获得到我们希望被打包的提交列表，将这些提交打包，通过 `git bundle create`操作
 
 ```bash
-$ git bundle create commits.bundle main ^ff3a764
+$ git bundle create commits.bundle main ^5de18d5
 ```
 
 可以将 commits.bundle 文件分享给合作者，他可以将这个文件导入到原始仓库中。在导入前可通过`bundle verify` 命令检查这个文件是否是一个合法的 Git 包，是否拥有共同的祖先。
