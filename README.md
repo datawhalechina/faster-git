@@ -4,13 +4,13 @@
 
 1. 第一章 Git是什么
 1. 第二章 Git基础命令
-1. 第三章 [Git分支管理](lecture03/README.md)
+1. 第三章 Git分支管理
 1. 第四章 Git工具
 1. 第五章 Git内部原理
-1. 第六章 [GitFlow工作流实战](lecture06/第六章%20GitFlow工作流实战.md)
+1. 第六章 GitFlow工作流实战
 1. 第七章 [Git提交规范](lecture07/README.md)
 1. 第八章 Github/Gitee使用说明
-1. 第九章 [Git可视化工具下载](lecture09/README.md)
+1. 第九章 Git可视化工具下载
 1. 第十章 Git团队协作以及合并时的diff工具
 
 课程安排：
