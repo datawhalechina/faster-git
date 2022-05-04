@@ -3,14 +3,14 @@
 课程内容：
 
 1. 第一章 Git是什么
-1. 第二章 Git基础命令
-1. 第三章 Git分支管理
-1. 第四章 Git工具
-1. 第五章 Git内部原理
-1. 第六章 GitFlow工作流实战
-1. 第七章 [Git提交规范](lecture07/README.md)
-1. 第八章 Github/Gitee使用说明
-1. 第九章 Git可视化工具下载
+1. [第二章 Git基础命令](lecture02)
+1. [第三章 Git分支管理](lecture03/README.md)
+1. [第四章 Git工具](lecture04/README.md)
+1. [第五章 Git内部原理](lecture05/README.md)
+1. [第六章 GitFlow工作流实战](lecture06/README.md)
+1. [第七章 Git提交规范](lecture07/README.md)
+1. [第八章 Github/Gitee使用说明](lecture08/README.md)
+1. [第九章 Git可视化工具下载](lecture09/README.md)
 1. 第十章 Git团队协作以及合并时的diff工具
 
 课程安排：
@@ -80,3 +80,6 @@ git push -f
 ```
 
 `others`包括非课程相关的改动，如本`README.md`中的变动，`.gitignore`的调整等。
+
+## 关注我们
+<div align=center><img src="https://raw.githubusercontent.com/datawhalechina/easy-rl/master/docs/res/qrcode.jpeg" width = "250" height = "270" alt="Datawhale是一个专注AI领域的开源组织，以“for the learner，和学习者一起成长”为愿景，构建对学习者最有价值的开源学习社区。关注我们，一起学习成长。"></div>
