@@ -11,7 +11,7 @@
 1. [第七章 Git提交规范](lecture07/README.md)
 1. [第八章 Github/Gitee使用说明](lecture08/README.md)
 1. [第九章 Git可视化工具下载](lecture09/README.md)
-1. 第十章 Git团队协作以及合并时的diff工具
+1. [第十章 Git团队协作以及合并时的diff工具](lecture10/README.md)
 
 课程安排：
 

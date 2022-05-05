@@ -1,6 +1,4 @@
-#  Lecture08 Github/Gitee使用说明
-
-
+#  第八章 Github/Gitee使用说明
 
 ## 初识GitHub
 
