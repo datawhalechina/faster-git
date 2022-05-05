@@ -13,6 +13,10 @@
 1. [第九章 Git可视化工具下载](lecture09/README.md)
 1. 第十章 Git团队协作以及合并时的diff工具
 
+课程安排：
+
+课程贡献人员：
+
 # Contributing
 
 主分支为`main`
