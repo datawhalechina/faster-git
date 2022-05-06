@@ -25,22 +25,22 @@
 课程贡献人员：（排名不分先后，按章节顺序排序）
 | 成员&nbsp; | 个人简介                                            | 负责章节|
 | --------------- | --------------------------------------------------- |-------|
-|   牛志康   | DataWhale成员，西安电子科技大学本科生 | lecture01，lecture03|
+|   牛志康   | Datawhale成员，西安电子科技大学本科生 | lecture01，lecture03|
 |朱松青| Datawhale成员，上海交通大学研究生|lecture02|
 |徐祥军|在职，互联网金融、后端开发|lecture04|
-|李碧涵||lecture05|
-|   宋泽山   | DataWhale成员，算法开发 | lecture06|
+|李碧涵|Datawhale成员，在职|lecture05|
+|   宋泽山   | Datawhale成员，算法开发 | lecture06|
 |王晓亮|Datawhale成员，在职|lecture07|
 |张翔宇|华东师范大学研究生|lecture08|
 |    沈豪    | Datawhale成员，复旦大学网安博士在读 |lecture09|
-|   夏峻   | DataWhale成员，上海交通大学研究生  |lecture10|
+|   夏峻   | Datawhale成员，上海交通大学研究生  |lecture10|
 
 # Contributing
 
 主分支为`main`
 ## Workflow
 
-本项目使用`Forking`工作流，具体参考[atlassian文档](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow)
+关于本项目中出现的问题或者其他补充材料，我们鼓励大家提出pr和issue，我们将在短时间内进行解答。本项目使用`Forking`工作流，具体参考[atlassian文档](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow)
 
 大致步骤如下：
 
