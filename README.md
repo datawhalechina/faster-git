@@ -27,12 +27,12 @@
 | --------------- | --------------------------------------------------- |-------|
 |   牛志康   | DataWhale成员，西安电子科技大学本科生 | lecture01，lecture03|
 |朱松青| Datawhale成员，上海交通大学研究生|lecture02|
-|徐祥军||lecture04|
+|徐祥军|在职，互联网金融、后端开发|lecture04|
 |李碧涵||lecture05|
 |   宋泽山   | DataWhale成员，算法开发 | lecture06|
-|王晓亮（tomo_wang()）||lecture07|
+|王晓亮|Datawhale成员，在职|lecture07|
 |张翔宇|华东师范大学研究生|lecture08|
-|    沈豪    | Datawhale成员， |lecture09|
+|    沈豪    | Datawhale成员，复旦大学网安博士在读 |lecture09|
 |   夏峻   | DataWhale成员，上海交通大学研究生  |lecture10|
 
 # Contributing
