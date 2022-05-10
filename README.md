@@ -2,7 +2,7 @@
 
 课程内容：
 
-1. [第一章 Git是什么](lecture01/README.md)
+1. [第一章 Git简介](lecture01/README.md)
 1. [第二章 Git基础命令](lecture02)
 1. [第三章 Git分支管理](lecture03/README.md)
 1. [第四章 Git工具](lecture04/README.md)
