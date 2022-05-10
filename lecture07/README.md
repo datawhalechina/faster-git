@@ -1,5 +1,5 @@
 # 第七章 Git提交规范
-## 前言
+## 7.0 前言
 
 Git是目前程序员必备基础技能，可以用来管理代码、文档、博客，甚至菜谱。个人的私有仓库的提交相对而言可以
 较为随意，但是在团队开发中，还是要遵循相应的规范。本文对Git使用中涉及到提交相关的实践做了些整理，
@@ -15,7 +15,7 @@ Git是目前程序员必备基础技能，可以用来管理代码、文档、�
 * changed files - 修改的文件
 * hash & parent - 提交内容的hash及在提交树上的位置
 
-## Commit Message
+## 7.1 Commit Message
 
 提交消息描述的是当前提交的功能相关信息，一般可以包括`header`，`body`，`footer`，
 
@@ -72,7 +72,7 @@ Git是目前程序员必备基础技能，可以用来管理代码、文档、�
 要求也有差异，一般需要遵从所在项目的约定。较为成熟的开源项目一般可以在`README`文档中找到如何贡献，
 或者有单独的`CONTRIBUTING.md`文档，对代码风格、提交方式等进行约定。
 
-### 自动化校验`commit message`
+### 7.1.1 自动化校验`commit message`
 
 有了提交信息的规范，如何确保开发者对规范进行遵守呢？我们可以使用Git提供的`Git Hooks`功能对提交
 的信息进行校验。本文不对`Git Hooks`的细节做过多介绍，仅做基础的说明，具体细节可以参考
@@ -104,8 +104,8 @@ total 120
 * `pre-commit` - 在Git生成`commit`对象前执行
 * `prepare-commit-msg` - 在`pre-commit`后执行，用以生成默认的提交信息，脚本接收三个参数：
   1. 包含提交信息的临时文件名
-  1. 提交的类型，如`message`, `template`, `merge`, `squash`
-  1. 相关提交的SHA1，仅在有`-c`, `-C`或`--amend`参数时提供该参数
+  2. 提交的类型，如`message`, `template`, `merge`, `squash`
+  3. 相关提交的SHA1，仅在有`-c`, `-C`或`--amend`参数时提供该参数
 * `commit-msg` - 在开发者编写提交信息后执行，仅有临时文件名一个参数
 * `post-commit` - 在`commit-msg`后立马执行，更多做通知用
 
@@ -204,7 +204,7 @@ ln -sf .githooks/* .git/hooks
 当然这些都是客户端的校验，开发者可以完全忽视这样的一些`Git Hooks`的配置并引入不合规范的提交，
 这种情况下我们可以使用服务端校验进行处理，或者引入一些CI工具或使用GitHub Action进行校验。
 
-## Author & Committer
+## 7.2 Author & Committer
 
 Git中，Author表示原始纂写该提交的作者，Committer表示应用该提交的人，如合并`Pull Request`
 的项目管理员。如果是个人开发者或只使用单个Git平台服务（如GitHub、BitBucket等），我们一般
@@ -220,28 +220,28 @@ git config user.email "<enterprise email>"
 git config user.name "<real name>"
 ```
 
-## Changed files
+## 7.3 Changed files
 
 我们所有的提交，核心的其实我们提交的文件。不同的提交涉及的文件可多可少，一般遵循以下一些原则：
 
 * 提交前使用`git diff`查看文件的改动，使用`git add`添加期望进入提交的文件，
-使用`git status`查看文件状态，最终使用`git commit`进行提交
+  使用`git status`查看文件状态，最终使用`git commit`进行提交
 * 单次提交仅提交相关的改动，例如修复两个不同的bug应该使用两次独立的提交
 * 鼓励经常性的提交，这样可以更快的分享实现的功能，并且减少代码丢失的风险
 * 在主分支或者协作的功能分支不能提交半成品，提交之前需要进过测试
 * 编译输出，日志，中间产物等，不要引入到提交中，使用`.gitignore`进行相关文件的排除，不同语言
-或者操作系统有一些通用的排除配置，参考[github/gitignore](https://github.com/github/gitignore)
+  或者操作系统有一些通用的排除配置，参考[github/gitignore](https://github.com/github/gitignore)
 * 密码、授权凭证、密钥等，**不要提交**。如AWS的certificate.csv文件或内容，
-GCP的Service Account文件等，泄露到公开仓库会导致资源被不法分子使用，造成损失。同时由于Git的特性，
-想从历史提交中移除这类文件会较为困难，参考[GitHub官方相关文档及描述](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)
+  GCP的Service Account文件等，泄露到公开仓库会导致资源被不法分子使用，造成损失。同时由于Git的特性，
+  想从历史提交中移除这类文件会较为困难，参考[GitHub官方相关文档及描述](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)
 * 对于配置文件（如数据库连接信息等），一般使用配置模板，个人维护本地文件，且该文件在`.gitignore`
-中配置。或者使用`git update-index --[no-]assume-unchanged <file>`来忽略某些文件的改动
+  中配置。或者使用`git update-index --[no-]assume-unchanged <file>`来忽略某些文件的改动
 * 其他一些常用命令（请在明确知道其含义后使用）
   + `git reset <file>` - 移除被添加的文件（提交之前），`reset`命令的其他可以查看帮助文档
   + `git clean -f` - 移除较多的未被追踪的中间文件
   + `git checkout <file>` - 回退对某个文件的改动（提交之前）
 
-## Hash & Parent
+## 7.4 Hash & Parent
 
 一般情况，`commit hash`及父节点信息我们不需要额外关注，但在特定场景下我们可能需要对`commit`
 进行修复或者其他处理。在这样的场景下，我们需要理解整个git的提交链，每个提交对应的父节点，分支
@@ -252,9 +252,9 @@ GCP的Service Account文件等，泄露到公开仓库会导致资源被不法�
 下面是一些实际开发过程中涉及的场景：
 
 * 在自身的开发分支，某个功能涉及多个提交，在正式合并至主分支前对相关的提交进行整理，可以使用
-`git rebase -i <commit>`命令，对提交进行合并、废弃、修改提交信息等处理。需要注意的是如果提交
-已经发布到远端，需要使用`git push -f`进行覆盖（仅限个人开发分支）。下面是一个简单的例子及相关
-命令描述，常见的命令有`pick`, `reword`, `fixup`, `drop`等。
+  `git rebase -i <commit>`命令，对提交进行合并、废弃、修改提交信息等处理。需要注意的是如果提交
+  已经发布到远端，需要使用`git push -f`进行覆盖（仅限个人开发分支）。下面是一个简单的例子及相关
+  命令描述，常见的命令有`pick`, `reword`, `fixup`, `drop`等。
 
 ```
 $ git rebase -i 8717c71fc
