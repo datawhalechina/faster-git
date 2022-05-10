@@ -1,6 +1,6 @@
 # 第五章 Git 内部原理
 
-## 1. 引言
+## 5.0 引言
 本章相对独立，从底层出发带你了解Git内部是如何运作的。
 
 你应该注意到本地仓库下有个名为 `.git` 的隐藏目录，本章将带你了解这个目录下的文件结构和内容。
@@ -10,7 +10,7 @@
 > - '\$' 符号所在行是演示命令；
 > - 如有内容输出，会在'\$' 符号所在行的下面输出。
 
-## 2.  `.git` 的目录结构
+## 5.1 `.git` 的目录结构
 创建一个名为 `test` 的新仓库
 ```shell
 $ mkdir test
@@ -40,7 +40,7 @@ $ git init
     ├── remotes/         
     └── tags/            
 ```
-## 3. objects目录 —— 对象存储
+## 5.2 objects目录 —— 对象存储
 初始化仓库后：objects目录下只有子目录 `pack` 和 `info` ，但均为空。
 
 运行以下命令，创建两个文件并提交
@@ -121,7 +121,7 @@ $ git cat-file -p 40fa006a9f641b977fc7b3b5accb0171993a3d31
 file inside folder1
 ```
 
-## 4. objects目录 —— 包文件的存储机制
+## 5.3 objects目录 —— 包文件的存储机制
 > Git默认保存文件快照，即保存每个文件每个版本的完整内容。但假设只更改了某大文件中的一个字符，保存两次全部内容是不是有点低效？
 
 Git最初向磁盘存储对象时采用"松散"对象格式；但为了节省空间和提高效率，Git会时不时将多个对象打包成一个称为"包文件"。
@@ -152,7 +152,7 @@ Total 113 (delta 15), reused 102 (delta 13), pack-reused 0
 - 包文件`pack-XXX.pack`：包含了刚才从文件系统中移除的所有对象的内容；
 - 索引文件`pack-XXX.idx`：包含了包文件的偏移信息。通过索引文件可以快速定位任意一个指定对象
 
-## 5. refs目录 —— 引用
+## 5.4 refs目录 —— 引用
 Git把一些常用的 `SHA-1` 值存储在文件中，用文件名来替代，这些别名就称为**引用**。有三种引用类型：heads, remotes和tags。
 
 运行以下命令，更新refs目录下的内容
@@ -185,29 +185,29 @@ git stash
 └── stash
 ```
 
-### 5.1 HEAD引用
+### 5.4.1 HEAD引用
 HEAD引用有两种类型
-||存储位置|指代内容|文件内容|
-|--|--|--|--|
-|分支级别|`.git/refs/heads`目录下|本地分支的最后一次提交- **有多少个分支，就有多少个同名的HEAD引用**|commitHash|
-|代码库级别|`.git/HEAD`文件|指代当前代码所处的分支；拓展：也可指代commitHash（称为[分离HEAD](https://git-scm.com/docs/git-checkout#_detached_head)）|符号引用 - 例如 `ref: refs/heads/master`|
+|       | 存储位置                 | 指代内容                                     | 文件内容                               |
+| ----- | -------------------- | ---------------------------------------- | ---------------------------------- |
+| 分支级别  | `.git/refs/heads`目录下 | 本地分支的最后一次提交- **有多少个分支，就有多少个同名的HEAD引用**   | commitHash                         |
+| 代码库级别 | `.git/HEAD`文件        | 指代当前代码所处的分支；拓展：也可指代commitHash（称为[分离HEAD](https://git-scm.com/docs/git-checkout#_detached_head)） | 符号引用 - 例如 `ref: refs/heads/master` |
 
-### 5.2 远程引用
+### 5.4.2 远程引用
 - 存储位置： `.git/refs/remotes` 目录下
 - 指代内容：远程仓库各分支的最后一次提交
 - 注意点：用于记录远程仓库；文件是只读的，乱改就崩了
 
-### 5.3 标签引用
+### 5.4.3 标签引用
 > tag主要用于发布版本的管理：一个版本发布之后，我们可以为git打上 v1.0 v2.0 ... 这样的标签
 - 存储位置：`.git/refs/heads` 目录下
 - 指代内容：tag可以指向任何类型（更多的是指向一个commit，赋予它一个更友好的名字）
 - 文件内容：SHA-1值
 
-### 5.4 stash
+### 5.4.4 stash
 - 存储位置：`.git/refs/stash` 文件
 - 指代内容：当你想转到其他分支进行其他工作，又不想舍弃当前修改的代码时 - stash可把当前的修改暂存起来
 
-## 6. config文件 —— 引用规范
+## 5.5 config文件 —— 引用规范
 运行以下命令，连接远程仓库
 ```shell
 git remote add origin https://github.com/datawhalechina/faster-git.git
@@ -226,15 +226,15 @@ git fetch
 - 更新本地的 `.git/config` 文件
 
 一些常用命令：
-||命令|
-|--|--|
-|连接远程仓库|`git remote add <远端名origin> <url>`|
-|拉取分支|`git fetch <远端名origin> <远端分支名>:<本地分支名>`|
-|将远程的 main 分支拉到本地的mymaster 分支|`git fetch origin main:mymaster`|
-|将本地的master分支推送到远端的topic分支|`git push origin master:topic`|
-|删除远端分支topic | 法1：将\<src\>留空<br> `git push origin :topic` <br>  法2：Git v1.7.0新语法 <br> `git push origin --delete topic`|
+|                              | 命令                                       |
+| ---------------------------- | ---------------------------------------- |
+| 连接远程仓库                       | `git remote add <远端名origin> <url>`       |
+| 拉取分支                         | `git fetch <远端名origin> <远端分支名>:<本地分支名>`  |
+| 将远程的 main 分支拉到本地的mymaster 分支 | `git fetch origin main:mymaster`         |
+| 将本地的master分支推送到远端的topic分支    | `git push origin master:topic`           |
+| 删除远端分支topic                  | 法1：将\<src\>留空<br> `git push origin :topic` <br>  法2：Git v1.7.0新语法 <br> `git push origin --delete topic` |
 
-## 7. config文件 —— 环境变量
+## 5.6 config文件 —— 环境变量
 Git有三种环境变量：
 
 1）系统变量
@@ -251,14 +251,14 @@ Git有三种环境变量：
 - 存储位置：`.git/config`
 
 一些常用命令：
-||命令|
-|--|--|
-|查看所有配置|`git config --list`|
-|配置用户名|`git config --global user.name "你的用户名"`|
-|配置邮箱|`git config --global user.email "你的邮箱"`|
+|        | 命令                                      |
+| ------ | --------------------------------------- |
+| 查看所有配置 | `git config --list`                     |
+| 配置用户名  | `git config --global user.name "你的用户名"` |
+| 配置邮箱   | `git config --global user.email "你的邮箱"` |
 
-## 8. 小练习
-### 8.1 远端分支推送
+## 5.7 小练习
+### 5.7.1 远端分支推送
 Tom 想把自己的本地分支 `feature1`（当前也为 `HEAD` ），推送到远端分支的 `feature`，应当执行什么命令？
 
 ```
@@ -268,7 +268,7 @@ C. git push origin HEAD:feature
 D. git push origin :feature
 ```
 
-### 8.2 邮箱配置
+### 5.7.2 邮箱配置
 Tom工作在多个Git项目上，大部分属于公司的项目，都是使用他的工作邮箱提交。
 
 今天他新建了一个私人项目，想使用私人邮箱进行提交。他运行什么命令更合适呢？
