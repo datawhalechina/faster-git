@@ -294,3 +294,8 @@ fixup d9a9d7f04 feat: some feature third commit
 * 原则上禁止对主分支等进行`git push -f`操作，涉及需要回退的，使用`git revert <commit>`
 * 涉及多分枝代码同步，可以使用`git cherry-pick`命令
 
+## 7.5 Exercise
+
+基于课程中[7.1.1 自动化校验commit message](https://github.com/datawhalechina/faster-git/blob/main/lecture07/README.md#711-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%A0%A1%E9%AA%8Ccommit-message)方案，
+实现[README.md](https://github.com/datawhalechina/faster-git/blob/main/README.md#commit-message)
+中提交信息规范的`git-hook`的实现。
