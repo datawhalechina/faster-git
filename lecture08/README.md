@@ -169,9 +169,19 @@ Github不是法外之地，如果有遇到代码滥用行为或者政治/宗教�
 
 
 
->  **练习一**：github readme-profile练习
+>  **练习一**（选做）：github readme-profile练习
+>
+>  Readme-profile是github提供的一个主页展示仓库，具体实现方式为创建一个与自己用户名相同的仓库，该仓库可以展示在githubprofile中。同时，你也可以添加各种badges来让你的主页变得很炫酷。
+>
+>  一些可以参考的资源：
+>
+>  https://github.com/rzashakeri/beautify-github-profile
+>
+>  https://github.com/kautukkundan/Awesome-Profile-README-templates
 
-> **练习二**：小组内PR练习
+> **练习二**（选做）：小组内PR练习
+>
+> 以小组为单位建立学习一个仓库，每人向仓库中提交pr并合并到主分支中。
 
 
 
