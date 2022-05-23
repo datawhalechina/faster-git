@@ -2,13 +2,13 @@
 
 ## 8.0 初识GitHub
 
- 可能同学们都或多或少听说过Github，Github是一个使用Git作为版本管理工具的代码托管平台，由于其用户量大并且氛围友好，又经常被大家戏称为“全球最大同性交流平台”。事实上，依赖于git的强大协作能力，Github是开源软件发展的主战场之一。如果还有同学没有注册过github，可以先登陆http://github.com注册账号
+ 可能同学们都或多或少听说过Github，Github是一个使用Git作为版本管理工具的代码托管平台，由于其用户量大并且氛围友好，又经常被大家戏称为“全球最大同性交流平台”。事实上，依赖于Git的强大协作能力，Github是开源软件发展的主战场之一。如果还有同学没有注册过Github，可以先登陆http://github.com注册账号
 
-## 8.1 使用github托管代码
+## 8.1 使用Github托管代码
 
 ### 8.1.2 创建仓库
 
-Github上几乎所有的事情都是围绕着仓库展开的。我们首先来学习如何新建一个仓库并满足自己的开发需求
+Github上几乎所有的事情都是围绕着仓库展开的。我们首先来学习如何新建一个仓库并满足自己的开发需求。
 
 一个GitHub仓库实质上是一个包含了你的项目所有文件的文件夹。 .git文件夹也包含在其中用于版本控制。
 
@@ -33,7 +33,7 @@ Github上几乎所有的事情都是围绕着仓库展开的。我们首先来�
 
 我们以vscode项目进行介绍
 
-访问https://github.com/microsoft/vscode即可看到如下的界面
+访问https://github.com/microsoft/vscode 即可看到如下的界面
 
 ![](imgs/repo-page.png)
 
@@ -55,7 +55,7 @@ Github上几乎所有的事情都是围绕着仓库展开的。我们首先来�
 
 <img src="imgs/watch.png" alt="image-20220430232629453" style="zoom:25%;" />
 
-> 提示：如果不是特别重要的项目，不要随意点fork，否则很容易邮箱被轰炸
+> 提示：如果不是特别重要的项目，不要随意点Watch，否则很容易邮箱被轰炸
 
 **Issues**:Issues在Github官方文档中被翻译为议题，作用是针对仓库的内容进行讨论（例如bug反馈/新功能推荐）
 
@@ -67,7 +67,7 @@ Github上几乎所有的事情都是围绕着仓库展开的。我们首先来�
 
 **Projects**：针对某一仓库的项目板（看板）
 
-#### Wiki：  存放一些介绍性的内容
+**Wiki**：  存放一些介绍性的内容
 
 **Security**：与安全相关，这里不做介绍
 
@@ -89,7 +89,7 @@ Github上几乎所有的事情都是围绕着仓库展开的。我们首先来�
 
 
 
-> 提示：在提bug时，请尽可能详细的描述出bug发生的步骤以及所运行的环境（https://stackoverflow.com/help/minimal-reproducible-example）。一般来说，Issue是参与项目贡献的起点，一个高质量的Issue也会让maintainer更愿意交流、处理。
+> 提示：在提bug时，请尽可能详细的描述出bug发生的步骤以及所运行的环境（https://stackoverflow.com/help/minimal-reproducible-example ）。一般来说，Issue是参与项目贡献的起点，一个高质量的Issue也会让maintainer更愿意交流、处理。
 
 如果你是项目的maintainer，也可以通过右侧对该issue进行更详细的设置，这里不详细介绍了。
 
@@ -117,9 +117,9 @@ draft PR表示该PR还没有开发完，项目的maintainer不需要进行reveiw
 
 1. GitHub Explore
 
-点击GitHub最上方的Explore或输入https://github.com/explore即可进入。Explore板块不仅可以根据你的兴趣进行项目的推荐，而且Trending榜展示了当前综合热度最高的项目。关注Trending可以随时掌握整个Github的最新动向![](imgs/trending.png)
+点击GitHub最上方的Explore或输入https://github.com/explore 即可进入。Explore板块不仅可以根据你的兴趣进行项目的推荐，而且Trending榜展示了当前综合热度最高的项目。关注Trending可以随时掌握整个Github的最新动向![](imgs/trending.png)
 
-> 补充 https://kamranahmed.info/githunt/也是一个追踪热门项目的网站
+> 补充 https://kamranahmed.info/githunt/ 也是一个追踪热门项目的网站
 
 2.  GitHub 快捷键
 
@@ -147,7 +147,7 @@ stars:>10000
 
 5. Copilot
 
-Copilot是Github通过公开代码训练的一个强大的代码补全工具，现在还在内测阶段，有感兴趣的同学可以在https://copilot.github.com/申请，这里不过多介绍了
+Copilot是Github通过公开代码训练的一个强大的代码补全工具，现在还在内测阶段，有感兴趣的同学可以在https://copilot.github.com/ 申请，这里不过多介绍了
 
 6. 用户主页
 
@@ -161,7 +161,7 @@ Copilot是Github通过公开代码训练的一个强大的代码补全工具，�
 
 7. 用数据探索GitHub--Github API
 
-Github对针对开发者提供了一系列API，详情见https://docs.github.com/en/developers。通过API可以对数据采集分析，探索更微观的GitHub。也有开源项目专门做这件事情，例如open-digger开源项目（https://github.com/X-lab2017/open-digger），感兴趣的同学去自己探索下，这里也不多讲了。
+Github对针对开发者提供了一系列API，详情见https://docs.github.com/en/developers 。通过API可以对数据采集分析，探索更微观的GitHub。也有开源项目专门做这件事情，例如open-digger开源项目（https://github.com/X-lab2017/open-digger ），感兴趣的同学去自己探索下，这里也不多讲了。
 
 8. 保持清醒 保持正义
 
@@ -169,9 +169,19 @@ Github不是法外之地，如果有遇到代码滥用行为或者政治/宗教�
 
 
 
->  **练习一**：github readme-profile练习
+>  **练习一**（选做）：github readme-profile练习
+>
+>  Readme-profile是github提供的一个主页展示仓库，具体实现方式为创建一个与自己用户名相同的仓库，该仓库可以展示在githubprofile中。同时，你也可以添加各种badges来让你的主页变得很炫酷。
+>
+>  一些可以参考的资源：
+>
+>  https://github.com/rzashakeri/beautify-github-profile
+>
+>  https://github.com/kautukkundan/Awesome-Profile-README-templates
 
-> **练习二**：小组内PR练习
+> **练习二**（选做）：小组内PR练习
+>
+> 以小组为单位建立学习一个仓库，每人向仓库中提交pr并合并到主分支中。
 
 
 
@@ -244,7 +254,6 @@ https://github.com/GorvGoyl/Clone-Wars
 https://github.com/TheAlgorithms
 
 这里只列出了一小部分项目，感兴趣的同学可以在学习群里交流～
-
 
 
 
