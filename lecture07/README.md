@@ -4,7 +4,7 @@
 Git是目前程序员必备基础技能，可以用来管理代码、文档、博客，甚至菜谱。个人的私有仓库的提交相对而言可以
 较为随意，但是在团队开发中，还是要遵循相应的规范。本文对Git使用中涉及到提交相关的实践做了些整理，
 供大家参考。
-
+fsfddf
 ![git commit](git-commit.png)
 
 如上图所示（截取自Angular commit [970a3b5](https://github.com/angular/angular/commit/970a3b5c70fee29aa40945836ebeb464d75438e4)），
