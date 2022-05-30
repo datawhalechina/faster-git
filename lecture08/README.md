@@ -4,9 +4,11 @@
 
  可能同学们都或多或少听说过Github，Github是一个使用Git作为版本管理工具的代码托管平台，由于其用户量大并且氛围友好，又经常被大家戏称为“全球最大同性交流平台”。事实上，依赖于Git的强大协作能力，Github是开源软件发展的主战场之一。如果还有同学没有注册过Github，可以先登陆http://github.com注册账号
 
+
+
 ## 8.1 使用Github托管代码
 
-### 8.1.2 创建仓库
+### 8.1.1 创建仓库
 
 Github上几乎所有的事情都是围绕着仓库展开的。我们首先来学习如何新建一个仓库并满足自己的开发需求。
 
@@ -29,7 +31,7 @@ Github上几乎所有的事情都是围绕着仓库展开的。我们首先来�
 
 点击绿色的code按钮，选择相应的协议即可拿到该项目的地址，在本地只需要clone下来就可以进行开发了，开发完成后push到原仓库即可
 
-### 8.1.3 仓库界面介绍
+### 8.1.2 仓库界面介绍
 
 我们以vscode项目进行介绍
 
@@ -39,7 +41,7 @@ Github上几乎所有的事情都是围绕着仓库展开的。我们首先来�
 
 整个页面的信息量很大，我们主要介绍几个：
 
-#### 页面的左上角：
+**页面的左上角：**
 
 **Star**：Star类似于朋友圈的点赞，给项目star代表了你对项目的认可
 
@@ -77,6 +79,8 @@ Github上几乎所有的事情都是围绕着仓库展开的。我们首先来�
 
 <img src="imgs/discussion.png"  style="zoom:50%;" />
 
+
+
 ## 8.2 提交issue
 
 我们以vscode为例展示提交issue
@@ -92,6 +96,8 @@ Github上几乎所有的事情都是围绕着仓库展开的。我们首先来�
 > 提示：在提bug时，请尽可能详细的描述出bug发生的步骤以及所运行的环境（https://stackoverflow.com/help/minimal-reproducible-example ）。一般来说，Issue是参与项目贡献的起点，一个高质量的Issue也会让maintainer更愿意交流、处理。
 
 如果你是项目的maintainer，也可以通过右侧对该issue进行更详细的设置，这里不详细介绍了。
+
+
 
 ## 8.3 提交PR
 
@@ -111,17 +117,52 @@ draft PR表示该PR还没有开发完，项目的maintainer不需要进行reveiw
 
 >  小提示：在提交PR时，尽可能关联相关Issue，并说明你的代码解决了什么问题。
 
+
+
+**更新fork的项目-Fetch upstream**
+
+情景：用户2729956566的对项目进行了fork，提交的PR通过了，或者项目进行了其它更新。此时，我们fork的项目已不是最新版，因此需要更新我们fork的项目到最新版。
+
+大概步骤 [视频参考链接](https://www.bilibili.com/video/BV1Vb411A7z2?spm_id_from=333.337.search-card.all.click) 
+
+```shell
+# 查看远程仓库有几个分支
+git remote -v
+
+# 将仓库的原始地址加进去
+git remote add upstream git@github.com:2951121599/repo_for_test_pr.git
+
+# 再次查看远程仓库的分支 (会多上有仓库upstream)
+git remote -v
+
+# fetch将远程分支拉到本地 pull = fetch + merge (pull会做自动合并)
+# 创建新分支 master/upstream
+git fetch upstream
+
+# 查看远程分支 若跟本地分支名一样 然后做一下合并
+git branch -r
+
+# 和原始仓库的远程保持一致 rebase不会做合并操作,将当前分支的修改复制并放在目标分支的最后一次 而merge会将两个分支合在一起
+# 因此没做贡献用rebase就够了
+git rebase upstream/master
+
+# 推送
+git push
+```
+
+
+
 ## 8.4 探索Github
 
 对于大多数程序员来说，Github的一个重要用途就是学习别人的代码，看自己的任务有没有已经写好的轮子可以用。因此如何高效的探索Github也是很重要的，这里给大家介绍几种探索GitHub的小技巧
 
-1. GitHub Explore
+### 8.4.1 Explore
 
 点击GitHub最上方的Explore或输入https://github.com/explore 即可进入。Explore板块不仅可以根据你的兴趣进行项目的推荐，而且Trending榜展示了当前综合热度最高的项目。关注Trending可以随时掌握整个Github的最新动向![](imgs/trending.png)
 
 > 补充 https://kamranahmed.info/githunt/ 也是一个追踪热门项目的网站
 
-2.  GitHub 快捷键
+### 8.4.2  快捷键
 
 GitHub网站拥有一系列快捷键，你可以通过快捷键来完成你想要完成的动作，例如ctrl/command+k会调起一个类似于powertoy一样的搜索框，在这里你可以直接进行搜索。
 
@@ -129,7 +170,7 @@ GitHub网站拥有一系列快捷键，你可以通过快捷键来完成你想�
 
 类似的快捷键有很多，完整的快捷键见文档https://docs.github.com/cn/get-started/using-github/keyboard-shortcuts
 
-3. 高级搜索
+### 8.4.3 高级搜索
 
 高效的搜索方式可以节约你很多时间，例如下面代码可以帮助你找到Github中star量超过10000的项目
 
@@ -141,15 +182,67 @@ stars:>10000
 
 其他搜索技巧可以参考上图红框中的链接
 
-4. 内置IDE --- CodeSpace
+**常见搜索的快速备忘单**
+
+##### 8.4.3.1 基本搜索
+
+| 搜索                    | 使用...查找存储库                                |
+| ----------------------- | ------------------------------------------------ |
+| cat stars:>100          | 查找星数超过 100 的 cat 存储库。                 |
+| user:2951121599         | 从用户 2951121599 获取所有存储库。               |
+| qucik_sort extension:py | 在带有py扩展名的代码中查找所有qucik_sort的实例。 |
+| NOT cat                 | 排除所有包含 cat 的结果。                        |
+
+
+
+##### 8.4.3.2 存储库搜索
+
+查看你在 GitHub 上可以访问的项目，你也可以过滤结果
+
+| 搜索                     | 使用...查找存储库                          |
+| ------------------------ | ------------------------------------------ |
+| python forks:>200        | 查找所有大于 200 个forks的 Python 存储库。 |
+| awesome-python fork:true | 包括 awesome-python 的分支。               |
+| awesome-python fork:only | 仅返回 awesome-python 的分支。             |
+
+
+
+##### 8.4.3.3 代码搜索
+
+代码搜索会查看托管在 GitHub 上的文件。您还可以过滤结果：
+
+| 搜索                        | 使用...查找存储库                                       |
+| --------------------------- | ------------------------------------------------------- |
+| chunk repo:2951121599/Utils | 从存储库 2951121599/Utils 中查找所有 chunk 的code实例。 |
+| pandas user:2951121599      | 从所有公共 2951121599 存储库中查找对 pandas 的引用。    |
+| examples path:/docs/        | 在路径 /docs/ 中查找所有examples 。                     |
+
+
+
+##### 8.4.3.4 问题搜索
+
+问题搜索查看 GitHub 上的 issues and pull requests（问题和拉取请求）。您还可以过滤结果：
+
+| 搜索                 | 发现问题…                      |
+| -------------------- | ------------------------------ |
+| cat is:open          | 查找未解决的猫问题。           |
+| strange comments:>42 | 超过 42 条评论的问题。         |
+| hard label:bug       | 标记为错误的难题。             |
+| author:2951121599    | 所有问题均由 2951121599 撰写。 |
+| mentions:tpope       | 所有提到 tpope 的问题。        |
+| assignee:2951121599  | 分配给 2951121599 的所有问题。 |
+
+
+
+### 8.4.4 CodeSpace
 
 在你的仓库界面，输入英文状态下的 `.`，即可进入该项目的web editor，这实质上是一个云端的vscode，方便用户查找编辑代码。很可惜现在CodeSpace还不能支持在线运行代码，一些简单的修改可以配合Action使用
 
-5. Copilot
+### 8.4.5  Copilot
 
 Copilot是Github通过公开代码训练的一个强大的代码补全工具，现在还在内测阶段，有感兴趣的同学可以在https://copilot.github.com/ 申请，这里不过多介绍了
 
-6. 用户主页
+### 8.4.6 Readme-profile
 
 用户主页也是探索Github很好的地方，我的用户主页如下图
 
@@ -159,11 +252,11 @@ Copilot是Github通过公开代码训练的一个强大的代码补全工具，�
 
 >  补充资料：思否今年做过一个中国开源爱好者榜单，有兴趣的同学可以看下https://github.com/OpenSourceWin/hacking-force
 
-7. 用数据探索GitHub--Github API
+### 8.4.7 Github API
 
 Github对针对开发者提供了一系列API，详情见https://docs.github.com/en/developers 。通过API可以对数据采集分析，探索更微观的GitHub。也有开源项目专门做这件事情，例如open-digger开源项目（https://github.com/X-lab2017/open-digger ），感兴趣的同学去自己探索下，这里也不多讲了。
 
-8. 保持清醒 保持正义
+### 8.4.8 保持清醒 保持正义
 
 Github不是法外之地，如果有遇到代码滥用行为或者政治/宗教等歧视行为，请毫不犹豫地举报！
 
@@ -189,7 +282,9 @@ Github不是法外之地，如果有遇到代码滥用行为或者政治/宗教�
 
 Gitee/Coding/jihulab
 
-作为代码托管平台，Github由于网速等原因的限制，访问起来会很慢，这时可以采用国内的代码托管平台，这里我们只介绍下Gitee
+作为代码托管平台，Github由于网速等原因的限制，访问起来会很慢，可以使用开源项目[dotnetcore/FastGithub: github加速神器](https://github.com/dotnetcore/FastGithub)，只需下载安装运行，即可提高网站访问速度。
+
+这时可以采用国内的代码托管平台，这里我们只介绍下Gitee
 
 网址：https://gitee.com/
 
