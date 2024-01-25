@@ -1,4 +1,4 @@
-# 第九章 Git 图形工具
+# 第九章 Git 图形工具 
 
 > Author：shenhao
 
