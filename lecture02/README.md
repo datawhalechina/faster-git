@@ -240,7 +240,7 @@ Note
 ###  2.2.5 查看已暂存和未暂存的修改
 如果 git status 命令的输出对于你来说过于简略，而你想知道具体修改了什么地方，可以用 git diff 命令。 稍后我们会详细介绍 git diff，你通常可能会用它来回答这两个问题：当前做的哪些更新尚未暂存？ 有哪些更新已暂存并准备好下次提交？ 虽然 git status 已经通过在相应栏下列出文件名的方式回答了这个问题，但 git diff 能通过文件补丁的格式更加具体地显示哪些行发生了改变。
 
-假如再次修改 README 文件后暂存，然后编辑 CONTRIBUTING.md 文件后先不暂存， 运行 status 命令将会看到：
+假如再次修改 README 文件后暂存，然后编辑 CONTRIBUTING.md 文件后先不暂存， 运行 git status 命令将会看到：
 
 ```shell
 $ git status
@@ -380,7 +380,7 @@ Note
 
 退出编辑器时，Git 会丢弃注释行，用你输入的提交说明生成一次提交。
 
-另外，你也可以在 commit 命令后添加 -m 选项，将提交信息与命令放在同一行，如下所示：
+另外，你也可以在 git commit 命令后添加 -m 选项，将提交信息与命令放在同一行，如下所示：
 ```shell
 $ git commit -m "Story 182: Fix benchmarks for speed"
 [master 463dc4f] Story 182: Fix benchmarks for speed
@@ -442,21 +442,28 @@ Changes to be committed:
 
 另外一种情况是，我们想把文件从 Git 仓库中删除（亦即从暂存区域移除），但仍然希望保留在当前工作目录中。 换句话说，你想让文件保留在磁盘，但是并不想让 Git 继续跟踪。 当你忘记添加 .gitignore 文件，不小心把一个很大的日志文件或一堆 .a 这样的编译生成文件添加到暂存区时，这一做法尤其有用。 为达到这一目的，使用 --cached 选项：
 
+```shell
 $ git rm --cached README
+```
 git rm 命令后面可以列出文件或者目录的名字，也可以使用 glob 模式。比如：
 
+```shell
 $ git rm log/\*.log
+```
 注意到星号 * 之前的反斜杠 \， 因为 Git 有它自己的文件模式扩展匹配方式，所以我们不用 shell 来帮忙展开。 此命令删除 log/ 目录下扩展名为 .log 的所有文件。 类似的比如：
 
+```shell
 $ git rm \*~
+```
 该命令会删除所有名字以 ~ 结尾的文件。
 
 ###  2.2.9 移动文件
 不像其它的 VCS 系统，Git 并不显式跟踪文件移动操作。 如果在 Git 中重命名了某个文件，仓库中存储的元数据并不会体现出这是一次改名操作。 不过 Git 非常聪明，它会推断出究竟发生了什么，至于具体是如何做到的，我们稍后再谈。
 
 既然如此，当你看到 Git 的 mv 命令时一定会困惑不已。 要在 Git 中对文件改名，可以这么做：
-
+```shell
 $ git mv file_from file_to
+```
 它会恰如预期般正常工作。 实际上，即便此时查看状态信息，也会明白无误地看到关于重命名操作的说明：
 ```shell
 $ git mv README.md README
@@ -469,10 +476,11 @@ Changes to be committed:
     renamed:    README.md -> README
 ```
 其实，运行 git mv 就相当于运行了下面三条命令：
-
+```shell
 $ mv README.md README
 $ git rm README.md
 $ git add README
+```
 如此分开操作，Git 也会意识到这是一次重命名，所以不管何种方式结果都一样。 两者唯一的区别在于，git mv 是一条命令而非三条命令，直接使用 git mv 方便得多。 不过在使用其他工具重命名文件时，记得在提交前 git rm 删除旧文件名，再 git add 添加新文件名。
 
 ## 2.3 查看提交历史
@@ -481,8 +489,10 @@ $ git add README
 我们使用一个非常简单的 “simplegit” 项目作为示例。 运行下面的命令获取该项目：
 ```shell
 $ git clone https://github.com/schacon/simplegit-progit
+```
 当你在此项目中运行 git log 命令时，可以看到下面的输出：
 
+```shell
 $ git log
 commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon <schacon@gee-mail.com>
@@ -593,47 +603,34 @@ $ git log --pretty=oneline
 ca82a6dff817ec66f44342007202690a93763949 changed the version number
 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7 removed unnecessary test
 a11bef06a3f659402fe7563abf99ad00de2209e6 first commit
+```
 最有意思的是 format ，可以定制记录的显示格式。 这样的输出对后期提取分析格外有用——因为你知道输出的格式不会随着 Git 的更新而发生改变：
-
+```shell
 $ git log --pretty=format:"%h - %an, %ar : %s"
 ca82a6d - Scott Chacon, 6 years ago : changed the version number
 085bb3b - Scott Chacon, 6 years ago : removed unnecessary test
 a11bef0 - Scott Chacon, 6 years ago : first commit
 git log --pretty=format 常用的选项 列出了 format 接受的常用格式占位符的写法及其代表的意义。
-
-Table 1. git log --pretty=format 常用的选项
-选项	说明
-%H提交的完整哈希值
-
-%h提交的简写哈希值
-
-%T树的完整哈希值
-
-%t树的简写哈希值
-
-%P父提交的完整哈希值
-
-%p父提交的简写哈希值
-
-%an作者名字
-
-%ae作者的电子邮件地址
-
-%ad作者修订日期（可以用 --date=选项 来定制格式）
-
-%ar作者修订日期，按多久以前的方式显示
-
-%cn提交者的名字
-
-%ce提交者的电子邮件地址
-
-%cd提交日期
-
-%cr提交日期（距今多长时间）
-
-%s提交说明
 ```
 
+Table 1. git log --pretty=format 常用的选项
+|选项|说明|
+| ----------- | ----------- |
+|%H|提交的完整哈希值|
+|%h|提交的简写哈希值|
+|%T|树的完整哈希值|
+|%t|树的简写哈希值|
+|%P|父提交的完整哈希值|
+|%p|父提交的简写哈希值|
+|%an|作者名字|
+|%ae|作者的电子邮件地址|
+|%ad|作者修订日期（可以用 --date=选项 来定制格式）|
+|%ar|作者修订日期，按多久以前的方式显示|
+|%cn|提交者的名字|
+|%ce|提交者的电子邮件地址|
+|%cd|提交日期|
+|%cr|提交日期（距今多长时间）|
+|%s|提交说明|
 
 你一定奇怪 作者 和 提交者 之间究竟有何差别， 其实作者指的是实际作出修改的人，提交者指的是最后将此工作成果提交到仓库的人。 所以，当你为某个项目发布补丁，然后某个核心成员将你的补丁并入项目时，你就是作者，而那个核心成员就是提交者。 我们会在 分布式 Git 再详细介绍两者之间的细微差别。
 
@@ -655,85 +652,52 @@ $ git log --pretty=format:"%h %s" --graph
 
 以上只是简单介绍了一些 git log 命令支持的选项。 git log 的常用选项 列出了我们目前涉及到的和没涉及到的选项，以及它们是如何影响 log 命令的输出的：
 
-```shell
 Table 2. git log 的常用选项
-选项	说明
--p
-
-按补丁格式显示每个提交引入的差异。
-
---stat
-
-显示每次提交的文件修改统计信息。
-
---shortstat
-
-只显示 --stat 中最后的行数修改添加移除统计。
-
---name-only
-
-仅在提交信息后显示已修改的文件清单。
-
---name-status
-
-显示新增、修改、删除的文件清单。
-
---abbrev-commit
-
-仅显示 SHA-1 校验和所有 40 个字符中的前几个字符。
-
---relative-date
-
-使用较短的相对时间而不是完整格式显示日期（比如“2 weeks ago”）。
-
---graph
-
-在日志旁以 ASCII 图形显示分支与合并历史。
-
---pretty
-
-使用其他格式显示历史提交信息。可用的选项包括 oneline、short、full、fuller 和 format（用来定义自己的格式）。
-
---oneline
-
---pretty=oneline --abbrev-commit 合用的简写。
-```
+|选项|说明|
+| ----------- | ----------- |
+|-p|按补丁格式显示每个提交引入的差异。|
+|--stat|显示每次提交的文件修改统计信息。|
+|--shortstat|只显示 --stat 中最后的行数修改添加移除统计。|
+|--name-only|仅在提交信息后显示已修改的文件清单。|
+|--name-status|显示新增、修改、删除的文件清单。|
+|--abbrev-commit|仅显示 SHA-1 校验和所有 40 个字符中的前几个字符。|
+|--relative-date|使用较短的相对时间而不是完整格式显示日期（比如“2 weeks ago”）。|
+|--graph|在日志旁以 ASCII 图形显示分支与合并历史。|
+|--pretty|使用其他格式显示历史提交信息。可用的选项包括 oneline、short、full、fuller 和 format（用来定义自己的格式）。|
+|--oneline|--pretty=oneline --abbrev-commit 合用的简写。|
 
 ### 2.3.1 限制输出长度
 除了定制输出格式的选项之外，git log 还有许多非常实用的限制输出长度的选项，也就是只输出一部分的提交。 之前你已经看到过 -2 选项了，它只会显示最近的两条提交， 实际上，你可以使用类似 -<n> 的选项，其中的 n 可以是任何整数，表示仅显示最近的 n 条提交。 不过实践中这个选项不是很常用，因为 Git 默认会将所有的输出传送到分页程序中，所以你一次只会看到一页的内容。
 
 但是，类似 --since 和 --until 这种按照时间作限制的选项很有用。 例如，下面的命令会列出最近两周的所有提交：
-
+```shell
 $ git log --since=2.weeks
+```
 该命令可用的格式十分丰富——可以是类似 "2008-01-15" 的具体的某一天，也可以是类似 "2 years 1 day 3 minutes ago" 的相对日期。
 
 还可以过滤出匹配指定条件的提交。 用 --author 选项显示指定作者的提交，用 --grep 选项搜索提交说明中的关键字。
 
-Note
-你可以指定多个 --author 和 --grep 搜索条件，这样会只输出匹配 任意 --author 模式和 任意 --grep 模式的提交。然而，如果你添加了 --all-match 选项， 则只会输出匹配 所有 --grep 模式的提交。
+**Note**
+> 你可以指定多个 --author 和 --grep 搜索条件，这样会只输出匹配 任意 --author 模式和 任意 --grep 模式的提交。然而，如果你添加了 --all-match 选项， 则只会输出匹配 所有 --grep 模式的提交。
 
 另一个非常有用的过滤器是 -S（俗称“pickaxe”选项，取“用鹤嘴锄在土里捡石头”之意）， 它接受一个字符串参数，并且只会显示那些添加或删除了该字符串的提交。 假设你想找出添加或删除了对某一个特定函数的引用的提交，可以调用：
-
+```shell
 $ git log -S function_name
+```
 最后一个很实用的 git log 选项是路径（path）， 如果只关心某些文件或者目录的历史提交，可以在 git log 选项的最后指定它们的路径。 因为是放在最后位置上的选项，所以用两个短划线（--）隔开之前的选项和后面限定的路径名。
 
 在 限制 git log 输出的选项 中列出了常用的选项
 
 Table 3. 限制 git log 输出的选项
-选项	说明
--<n>仅显示最近的 n 条提交。
-
---since, --after仅显示指定时间之后的提交。
-
---until, --before仅显示指定时间之前的提交。
-
---author仅显示作者匹配指定字符串的提交。
-
---committer仅显示提交者匹配指定字符串的提交。
-
---grep仅显示提交说明中包含指定字符串的提交。
-
--S仅显示添加或删除内容匹配指定字符串的提交。
+|选项|说明|
+| ----------- | ----------- |
+|-<n>|仅显示最近的 n 条提交。|
+|--since, --after|仅显示指定时间之后的提交。|
+|--until, --before|仅显示指定时间之前的提交。|
+|--author|仅显示作者匹配指定字符串的提交。|
+|--committer|仅显示提交者匹配指定字符串的提交。|
+|--grep|仅显示提交说明中包含指定字符串的提交。|
+|-S|仅显示添加或删除内容匹配指定字符串的提交。|
 
 来看一个实际的例子，如果要在 Git 源码库中查看 Junio Hamano 在 2008 年 10 月其间， 除了合并提交之外的哪一个提交修改了测试文件，可以使用下面的命令：
 ```shell
