@@ -97,7 +97,6 @@ git merge issue102
 
     1. [Use vimdiff as git mergetool](https://www.rosipov.com/blog/use-vimdiff-as-git-mergetool/)
     2. [使用vimdiff作为git mergetool](https://kinboyw.github.io/2018/10/09/Use-Vimdiff-As-Git-Mergetool/)
-    3. [git-mergetool](https://www.lhsz.xyz/read/git-doc-zh/docs-16.md)
 
 ![](./figures/mergetool.png)
 
@@ -143,8 +142,8 @@ git branch -m oldBranchName newBranchName
 当我们想要将改名后的分支推送到远程时，我们需要进行如下操作：
 ```bash
 git branch -m oldBranchName newBranchName   # 将本地的分支进行重命名
-git push origin newBranchName               # 将新的分支推送到远程        
-git push --delete origin oldBranchName      # 删除远程的旧的分支 
+git push origin newBranchName               # 将新的分支推送到远程
+git push --delete origin oldBranchName      # 删除远程的旧的分支
 ```
 ## 3.3 分支开发工作流
 当我们已经了解了分支的操作后，我们应该考虑使用一种怎样的方式使我们最大化的使用分支操作的优点。在接下来的这部分中，我们将会介绍一些常见的分支开发工作流程。而正是由于分支管理的便捷，才衍生出这些典型的工作模式，我们以后可以根据项目实际情况进行使用。
@@ -154,7 +153,7 @@ git push --delete origin oldBranchName      # 删除远程的旧的分支
 ![](./figures/branches.png)
 
 ### 3.3.2 短期分支
-短期分支也可以叫做主题分支，它的作用是用来实现某一种特性或者相关工作（修复bug，开发产品新特性）。比如当我们的产品出现了bug时，我们应该新建一个分支并起名为bug分支，并在该分支上进行bug的修复，等我们的代码确定不会引起其他bug时，我们就可以合并到主分支上进行修复。当我们看见issue时，我们也可以使用同样的方式来解决issue的问题。常见的短期分支还有上面提到的develop，topic分支。在实际开发中，我们应该按照以下几个基本原则进行分支开发工作流程
+短期分支也可以叫做主题分支，它的作用是用来实现某一种特性或者相关工作（修复bug，开发产品新特性）。比如当我们的产品出现了bug时，我们应该新建一个分支并起名为bug分支，并在该分支上进行bug的修复，等我们的代码确定不会引起其他bug时，我们就可以合并到主分支上进行修复。当我们看见issue时，我们也可以使用同样的方式来解决issue的问题。常见的短期分支还有上面提到的develop，topic分支。在实际开发中，我们应该按照以下几个基本原则进行分支开发工作流程：
 
 1. master分支应该是最稳定的，也就是仅用来发布新版本，平时不能直接在上面进行操作，应该保存在远程。
 2. 短期分支是我们干活的分支，短期分支可以不用上传到远程，当我们完成了bug的修复，新功能的开发时才需要合并到主分支上。
