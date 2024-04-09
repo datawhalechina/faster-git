@@ -86,7 +86,7 @@ a55ea122894272b13c3a43129ca0b74cfd2b6a4a
 Git 非常聪明的知道在没有歧义的情况下，通过前几个字符来替代上述 40 位字符，如上可简化成：
 
 ```bash
- $ git show 4432854
+$ git show 4432854
 ```
 
 甚至简化成
@@ -111,7 +111,6 @@ Author: Martin Xu <martin.xus@gmail.com>
 Date:   Wed May 4 13:33:17 2022 +0800
 
     Initial commit
-
 ```
 
 通过在 `git log`后增加 `--pretty=oneline`简化输出内容
@@ -228,7 +227,6 @@ $ git reflog
 4432854 (origin/main, origin/HEAD, main, develop) HEAD@{1}: checkout: moving from main to stable
 4432854 (origin/main, origin/HEAD, main, develop) HEAD@{2}: commit: add model module
 a55ea12 HEAD@{3}: clone: from https://github.com/datawhalechina-git-samples/app
-
 ```
 
 每当你的 HEAD 所指向的位置发生了变化，Git 就会将这个信息存储到引用日志这个历史记录里。 你也可以通过 reflog 数据来获取之前的提交历史。 如果你想查看仓库中 HEAD 在 2 次前的所指向的提交，你可以使用 @{n} 来引用 reflog 中输出的提交记录。
@@ -356,7 +354,6 @@ index 8cc7998..33732e6 100644
  package trace
 
  import (
-
 ```
 
 通过这些基本命令，可以使用交互式添加模式来轻松地处理暂存区。
@@ -398,7 +395,6 @@ index 8cc7998..a95f46e 100644
 
  import (
 (1/1) Stage this hunk [y,n,q,a,d,e,?]?
-
 ```
 
 输入`p` 后，选择你需要操作的文件后，直接敲回车，会逐一询问你是否需要暂存他们，`(1/1)` 表示当前是第 1 个初变更，共 1 处变更。选项很多，输入?可以查看具体的解释
@@ -421,6 +417,8 @@ e - manually edit the current hunk
 
 ## 4.3 贮藏与清理
 
+### 4.3.1 贮藏工作目录
+
 很多时候，你在当前分支上工作了一段时间后，东西变得很混乱。你想切换至新的分支而又不想放弃放弃的修改，或者纯粹想先做其他分支的事情的时候，就该`git stash`上场了。
 
 `stash` 会处理工作目录的的状态，跟踪文件的修改和暂存的改动，然后将未完成的修改保存至一个栈上，这样就可以在后续任何时间切换回来。
@@ -437,7 +435,6 @@ Changes not staged for commit:
 	modified:   src/trace/trace_test.go
 
 no changes added to commit (use "git add" and/or "git commit -a")
-
 ```
 
 文件被修改了一大坨，但是还没修改完，暂时还不想提交，而我又想切换至新的分支，这时候就需要`stash`，先把变更推送至栈上，运行`git stash` 或者 `git stash push`
@@ -467,7 +464,6 @@ nothing to commit, working tree clean
 $ git stash list
 
 stash@{0}: WIP on main: 36c4cad sample codes for demonstration
-
 ```
 
 切换至最后 stash 变更，直接执行 `git stash apply` 即可，当然如果有多个，可以通过 `git stash apply stash@{n}` 中的 n 来获取指定的的变更。
@@ -484,7 +480,6 @@ Changes not staged for commit:
 	modified:   src/trace/trace_test.go
 
 no changes added to commit (use "git add" and/or "git commit -a")
-
 ```
 
 `git stash apply stash@{0}` 会输出同样的内容。
@@ -544,6 +539,7 @@ Would remove temp
 如果你想交互删除，可以通过选项 `-i`来操作
 
 ```bash
+$ git clean -n -x -d -i
 
 Would remove the following items:
   .DS_Store  log/       target/    temp
@@ -588,7 +584,7 @@ src/trace/histogram_test.go:            percentile := a.percentileBoundary(test.
 
 通过`-n`或者`--line-number`显示匹配的行号
 
-```
+```bash
 $ git grep -n percentileBoundary
 
 src/trace/histogram.go:120:func (h *histogram) percentileBoundary(percentile float64) int64 {
@@ -599,7 +595,7 @@ src/trace/histogram_test.go:181:                percentile := a.percentileBounda
 通过`-c`或者`--count`输出统计信息
 
 ```bash
-git grep -c percentileBoundary
+$ git grep -c percentileBoundary
 
 src/trace/histogram.go:2
 src/trace/histogram_test.go:1
@@ -608,7 +604,7 @@ src/trace/histogram_test.go:1
 通过`-p` 或者 `--show-function ` 显示每个匹配字符串所在的方法或函数
 
 ```bash
- git grep -p percentileBoundary
+$ git grep -p percentileBoundary
 
 src/trace/histogram.go=func (h *histogram) standardDeviation() float64 {
 src/trace/histogram.go:func (h *histogram) percentileBoundary(percentile float64) int64 {
@@ -655,7 +651,6 @@ diff --git a/src/trace/histogram.go b/src/trace/histogram.go
 +               return int64(h.average())
 +       }
 ...
-
 ```
 
 如果 Git 无法匹配到你的函数或者方法，可以通过正则表达式，如这个命令和上面是等效的
@@ -700,7 +695,6 @@ remote: Counting objects: 100% (5/5), done.
 remote: Compressing objects: 100% (4/4), done.
 remote: Total 5 (delta 0), reused 0 (delta 0), pack-reused 0
 Receiving objects: 100% (5/5), done.
-
 ```
 
 参数同 `clone`，默认是 repo 的名称，如果你想改名，可以在后续增加新的名称或路径。
@@ -717,7 +711,6 @@ Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
 	new file:   .gitmodules
 	new file:   model
-
 ```
 
 能看到有个新增的 `model` 和 `.gitmodules`文件，该配置文件保存了项目 URL 和本地目录的 mapping 关系。
@@ -728,7 +721,6 @@ $ cat .gitmodules
 [submodule "model"]
 	path = model
 	url = https://github.com/datawhalechina-git-samples/model
-
 ```
 
 如果有多个子模块，这里会列出多条。
@@ -815,7 +807,6 @@ $ ls -alh
 total 0
 drwxr-xr-x  2 martin  staff    64B May  4 13:46 .
 drwxr-xr-x  8 martin  staff   256B May  4 13:46 ..
-
 ```
 
 会发现什么也没有，需要通过如下两个命令来获取内容
@@ -849,7 +840,6 @@ Resolving deltas: 100% (1/1), done.
 Submodule 'model' (https://github.com/datawhalechina-git-samples/model) registered for path 'model'
 Cloning into '/Users/martin/project/datawhalechina/new_app/model/new_app2/model'...
 ...
-
 ```
 
 如果你已经克隆了项目但忘记了 `--recurse-submodules`，那么可以运行 `git submodule update --init ` 将 `git submodule init` 和 `git submodule update` 合并成一步。如果还要初始化、抓取并检出任何嵌套的子模块， 请使用简明的 `git submodule update --init --recursive`。
@@ -860,7 +850,6 @@ Cloning into '/Users/martin/project/datawhalechina/new_app/model/new_app2/model'
 
 ```bash
 $ git submodule update --remote
-
 ```
 
 该命令默认会更新 main 分支，如果你想设置为其他分支，可以在 `.gitmodules` 文件中设置 （这样其他人也可以跟踪它），也可以只在本地的 `.git/config` 文件中设置，我们在`.gitmodules`中配置它
@@ -893,7 +882,7 @@ Submodule path 'model': checked out 'ca79fae869c9b4ddd7999f06ffd48ac25971b9dd'
 
 ## 4.6 打包
 
-Git 提供了多种网络传输的方法，如 SSH、HTTP 等，但是还有种不太常用的功能又什么有效。
+Git 提供了多种网络传输的方法，如 SSH、HTTP 等，但是还有种不太常用的功能但又十分有效。
 
 Git 可以就将它的数据"打包"到一个文件中，通过 `git bundle`来实现。`bundle` 命令会将`git push`命令所传输的所有内容打包成一个二进制文件，你可以将这个文件转发给别人，然后解包到仓库中。
 
@@ -931,14 +920,12 @@ $ git log --oneline
 
 ```bash
 $ git log --oneline origin/main..main
-
 ```
 
 或者
 
 ```bash
 $ git log --oneline main ^origin/main
-
 ```
 
 这里将获得到我们希望被打包的提交列表，将这些提交打包，通过 `git bundle create`操作
@@ -950,8 +937,7 @@ $ git bundle create commits.bundle main ^5de18d5
 可以将 commits.bundle 文件分享给合作者，他可以将这个文件导入到原始仓库中。在导入前可通过`bundle verify` 命令检查这个文件是否是一个合法的 Git 包，是否拥有共同的祖先。
 
 ```bash
-git bundle verify commits.bundle
-
+$ git bundle verify commits.bundle
 ```
 
 如果打包工具打包的并不是全部的变更，而是最后几个变更，原始仓库则无法导入这个包，因为这个包缺失必要的提交信息。
