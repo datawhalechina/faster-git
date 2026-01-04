@@ -13,3 +13,20 @@ Thumbs.db
 [._]*.sw[a-p]
 
 .vscode/*
+
+# vitepress specific
+
+# dependencies
+node_modules/
+
+# VitePress cache + build output
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+
+# logs
+*.log
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
