@@ -1,0 +1,319 @@
+/* ========== 主题颜色自定义 ========== */
+:root {
+  /* 品牌主色调 - 天蓝色 #87CEFA (SkyBlue) */
+  --vp-c-brand-1: #6CB8E8;
+  --vp-c-brand-2: #87CEFA;
+  --vp-c-brand-3: #A3D9F5;
+  --vp-c-brand-soft: rgba(135, 206, 250, 0.14);
+  
+  /* 默认主题品牌色 */
+  --vp-c-brand: var(--vp-c-brand-1);
+
+  /* 暗黑模式下的品牌色调整 */
+.dark {
+  --vp-c-brand-1: #6CB8E8;
+  --vp-c-brand-2: #87CEFA;
+  --vp-c-brand-3: #A3D9F5;
+  --vp-c-brand-soft: rgba(135, 206, 250, 0.16);
+}
+}
+
+
+/* ========== 左上角 Logo 悬停效果 ========== */
+.VPNavBarTitle {
+  .title {
+    transition: opacity 0.2s ease-in-out;
+    
+    .logo {
+      transition: all 0.2s ease-in-out;
+    }
+    
+    &:hover {
+      opacity: 1;
+      
+      .logo {
+        transform: scale(1.5);
+      }
+    }
+  }
+}
+
+
+/* ========== 关于本站卡片 ========== */
+.info-card {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  margin: 24px 0;
+  border-radius: 12px;
+  border: 1px solid var(--vp-c-brand-soft);
+  background: var(--vp-c-bg-soft);
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  border-color: var(--vp-c-brand);
+  box-shadow: 0 2px 12px rgba(135, 206, 250, 0.15);
+}
+
+.info-card-content {
+  flex: 1;
+}
+
+.info-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  margin-bottom: 8px;
+}
+
+.info-card-desc {
+  font-size: 14px;
+  color: var(--vp-c-text-2);
+  line-height: 1.6;
+}
+
+/* ========== 表格自适应宽度 ========== */
+.vp-doc table {
+  display: table;
+  width: 100%;
+  table-layout: auto;
+  border-collapse: collapse;
+}
+
+.vp-doc table th,
+.vp-doc table td {
+  padding: 8px 12px;
+  word-break: break-word;
+}
+
+
+/* ========== 移动端表格横向滚动 ========== */
+.vp-doc .table-wrapper {
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .vp-doc table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+
+/* ========== 侧边栏标题换行支持 ========== */
+.VPSidebarItem .text {
+  white-space: normal !important;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.VPSidebarItem .link {
+  white-space: normal !important;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+
+/* ========== 文章底部反馈与 GitHub Star 按钮 ========== */
+.feedback-tip {
+  margin-top: 2rem;
+  padding: 12px 14px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.feedback-tip strong {
+  color: var(--vp-c-text-1);
+  font-weight: 600;
+}
+
+.feedback-tip a {
+  color: var(--vp-c-brand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.feedback-actions {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.github-star-text {
+  color: var(--vp-c-text-1);
+  font-weight: 500;
+}
+
+.github-star-wrap {
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--vp-c-bg-soft);
+}
+
+.github-star-btn {
+  display: block;
+  background: transparent;
+  border: 0;
+}
+
+.dark .github-star-wrap {
+  background: #202127;
+}
+
+.dark .github-star-btn {
+  filter: invert(0.9) hue-rotate(180deg) saturate(0.9) brightness(1.05) contrast(0.95);
+}
+
+
+/* ========== 数学公式横向滚动支持 ========== */
+.vp-doc .MathJax,
+.vp-doc .MathJax_Display,
+.vp-doc mjx-container[display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.vp-doc .MathJax:hover,
+.vp-doc .MathJax_Display:hover,
+.vp-doc mjx-container[display="true"]:hover {
+  scrollbar-color: var(--vp-c-brand) transparent;
+}
+
+.vp-doc p .MathJax,
+.vp-doc li .MathJax,
+.vp-doc td .MathJax,
+.vp-doc th .MathJax {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.vp-doc .MathJax::-webkit-scrollbar,
+.vp-doc .MathJax_Display::-webkit-scrollbar,
+.vp-doc mjx-container[display="true"]::-webkit-scrollbar {
+  height: 6px;
+}
+
+.vp-doc .MathJax::-webkit-scrollbar-thumb,
+.vp-doc .MathJax_Display::-webkit-scrollbar-thumb,
+.vp-doc mjx-container[display="true"]::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 3px;
+}
+
+.vp-doc .MathJax:hover::-webkit-scrollbar-thumb,
+.vp-doc .MathJax_Display:hover::-webkit-scrollbar-thumb,
+.vp-doc mjx-container[display="true"]:hover::-webkit-scrollbar-thumb {
+  background: var(--vp-c-brand);
+}
+
+
+/* ========== 隐藏整个页面的滚动条（但仍可滚动） ========== */
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+
+/* ========== 页面切换丝滑过渡效果 ========== */
+
+/* 文章页面切换时滚动显示 */
+html {
+  scroll-behavior: smooth;
+}
+
+  /* 文档内容区域的过渡 */
+.vp-doc {
+  animation: slideInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+  /* 首页 Hero 区域动画 */
+.VPHero .container .main {
+  animation: slideInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+  /* 首页 Hero 图片动画 */
+.VPHero .container .image {
+  animation: slideInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s backwards;
+}
+
+  /* 首页 Actions 按钮动画 */
+.VPHero .actions {
+  animation: slideInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s backwards;
+}
+
+  /* 首页 Features 区域动画 */
+.VPFeatures {
+  animation: slideInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s backwards;
+}
+
+  /* Features 中的每个卡片渐进式动画 */
+.VPFeature {
+  animation: slideInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) backwards;
+}
+
+.VPFeature:nth-child(1) { animation-delay: 0.35s; }
+.VPFeature:nth-child(2) { animation-delay: 0.4s; }
+.VPFeature:nth-child(3) { animation-delay: 0.45s; }
+.VPFeature:nth-child(4) { animation-delay: 0.5s; }
+.VPFeature:nth-child(5) { animation-delay: 0.55s; }
+.VPFeature:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+  /* 侧边栏项目的渐进式动画 */
+.VPSidebarItem {
+  animation: fadeInLeft 0.3s ease-out backwards;
+}
+
+.VPSidebarItem:nth-child(1) { animation-delay: 0.05s; }
+.VPSidebarItem:nth-child(2) { animation-delay: 0.1s; }
+.VPSidebarItem:nth-child(3) { animation-delay: 0.15s; }
+.VPSidebarItem:nth-child(4) { animation-delay: 0.2s; }
+.VPSidebarItem:nth-child(5) { animation-delay: 0.25s; }
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+  /* 按钮过渡效果 */
+.VPButton {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.VPButton:hover {
+  transform: translateY(-2px);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
