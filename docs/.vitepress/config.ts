@@ -13,7 +13,7 @@ const SITE_CONFIG = {
   description: "A tutorial of git",
   
   // SEO 配置
-  url: '',  // 网站域名，示例: 'https://yourdomain.com'（留空则不生成 sitemap）
+  url: 'https://datawhalechina.github.io/faster-git/',  // 网站域名，示例: 'https://yourdomain.com'（留空则不生成 sitemap）
   keywords: 'git,版本控制,教程,中文,学习笔记',
   author: '',
   
@@ -54,9 +54,9 @@ const commonSidebarConfig = {
   collapsed: true,
   excludePattern: ['public', 'assets', 'docs'],
   manualSortFileNameByPriority: [ // 手动排序文件名优先级
-    'guide',
-    'Appendix',
-    '80-MachineLearning'
+    '',
+    '',
+    ''
   ],
 }
 
@@ -80,7 +80,18 @@ const createSidebar = (root: string, prefix = '/') => {
 
 // ========== 三、VitePress 配置 ==========
 
+// 注意：如果网站部署在根目录下（例如使用自定义域名 https://your-domain.com/），
+// 请将下方的 '/faster-git/' 改为 '/'
+// 如果部署在 GitHub Pages 子路径（https://username.github.io/faster-git/），则保持 '/faster-git/'
+const deployPath = '/faster-git/'
+
+// 根据环境动态设置 base 路径 (生产环境用 deployPath, 本地开发强制用 /)
+const base = process.env.NODE_ENV === 'production' ? deployPath : '/'
+
 export default withMermaid(defineConfig({
+
+  // 部署时的路径前缀
+  base,
 
   // 路由重写：将 en 目录映射到根路径,作为默认语言内容
   rewrites: {
@@ -261,7 +272,8 @@ export default withMermaid(defineConfig({
     ['meta', { name: 'keywords', content: SITE_CONFIG.keywords }],
     ['meta', { name: 'author', content: SITE_CONFIG.author }],
     ['meta', { property: 'og:type', content: 'website' }],
-    ['link', { rel: 'icon', href: SITE_CONFIG.favicon.href, type: SITE_CONFIG.favicon.type }],
+    // 注意：head 中的资源路径不会自动添加 base，需要手动处理
+    ['link', { rel: 'icon', href: base + SITE_CONFIG.favicon.href.replace(/^\//, ''), type: SITE_CONFIG.favicon.type }],
   ],
   
   // Sitemap 自动生成（需配置 SITE_CONFIG.url）
@@ -274,7 +286,7 @@ export default withMermaid(defineConfig({
     const pageUrl = `${SITE_CONFIG.url}${getPageUrl(pageData.relativePath)}`
     const title = pageData.frontmatter.title || pageData.title
     const description = pageData.frontmatter.description || pageData.description
-    const image = `${SITE_CONFIG.url}${SITE_CONFIG.logo}`
+    const image = `${SITE_CONFIG.url}${base}${SITE_CONFIG.logo.replace(/^\//, '')}`
     
     return [
       // 规范链接（避免重复内容）
