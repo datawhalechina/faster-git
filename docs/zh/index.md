@@ -18,20 +18,8 @@ hero:
       text: Github-仓库
       link: https://github.com/datawhalechina/faster-git      
 ---
-# 课程内容：
+# 课程安排：
 
-1. [第一章 Git简介](./lecture01/index.md)
-2. [第二章 Git基础命令](./lecture02/index.md)
-3. [第三章 Git分支管理](./lecture03/index.md)
-4. [第四章 Git工具](./lecture04/index.md)
-5. [第五章 Git内部原理](./lecture05/index.md)
-6. [第六章 GitFlow工作流实战](./lecture06/index.md)
-7. [第七章 Git提交规范](./lecture07/index.md)
-8. [第八章 Github/Gitee使用说明](./lecture08/index.md)
-9. [第九章 Git可视化工具下载](./lecture09/index.md)
-10. [第十章 Git团队协作以及合并时的diff工具](./lecture10/index.md)
-
-课程安排：
 | 任务信息                                                    |
 |-------------------------------------------------------------|
 | Task01：Git基础：第一、二章（2天）                          |
@@ -40,7 +28,7 @@ hero:
 | Task04：Git提交规范及Github/Gitee的使用：第七、八章（3天）  |
 | Task05：Git可视化工具下载和团队协作：第九、十章（3天）      |
 
-课程贡献人员：（排名不分先后，按章节顺序排序）
+**课程贡献人员：（排名不分先后，按章节顺序排序**
 | 成员&nbsp; | 个人简介                                            | 负责章节|
 | --------------- | --------------------------------------------------- |-------|
 |   牛志康   | Datawhale成员，西安电子科技大学本科生 | lecture01，lecture03|
@@ -52,6 +40,7 @@ hero:
 |张翔宇|华东师范大学研究生|lecture08|
 |    沈豪    | Datawhale成员，复旦大学网安博士在读 |lecture09|
 |   夏峻   | Datawhale成员，上海交通大学研究生  |lecture10|
+|   傅谢懿   | Datawhale贡献者，香港科技大学(广州) 研究生  |  网站架构与国际化 |
 
 # Contributing
 

@@ -2,22 +2,24 @@
 
 Git教程
 
-> **Website:** [https://datawhalechina.github.io/faster-git/](https://datawhalechina.github.io/faster-git/)
+> **Website:** [https://datawhalechina.github.io/faster-git/zh/](https://datawhalechina.github.io/faster-git/zh/)
+>
+> **English Version:** [README_EN.md](README_EN.md)
 
 # 课程内容：
 
-1. [第一章 Git简介](https://datawhalechina.github.io/faster-git/lecture01/)
-2. [第二章 Git基础命令](https://datawhalechina.github.io/faster-git/lecture02/)
-3. [第三章 Git分支管理](https://datawhalechina.github.io/faster-git/lecture03/)
-4. [第四章 Git工具](https://datawhalechina.github.io/faster-git/lecture04/)
-5. [第五章 Git内部原理](https://datawhalechina.github.io/faster-git/lecture05/)
-6. [第六章 GitFlow工作流实战](https://datawhalechina.github.io/faster-git/lecture06/)
-7. [第七章 Git提交规范](https://datawhalechina.github.io/faster-git/lecture07/)
-8. [第八章 Github/Gitee使用说明](https://datawhalechina.github.io/faster-git/lecture08/)
-9. [第九章 Git可视化工具下载](https://datawhalechina.github.io/faster-git/lecture09/)
-10. [第十章 Git团队协作以及合并时的diff工具](https://datawhalechina.github.io/faster-git/lecture10/)
+1. [第一章 Git简介](https://datawhalechina.github.io/faster-git/zh/lecture01/)
+2. [第二章 Git基础命令](https://datawhalechina.github.io/faster-git/zh/lecture02/)
+3. [第三章 Git分支管理](https://datawhalechina.github.io/faster-git/zh/lecture03/)
+4. [第四章 Git工具](https://datawhalechina.github.io/faster-git/zh/lecture04/)
+5. [第五章 Git内部原理](https://datawhalechina.github.io/faster-git/zh/lecture05/)
+6. [第六章 GitFlow工作流实战](https://datawhalechina.github.io/faster-git/zh/lecture06/)
+7. [第七章 Git提交规范](https://datawhalechina.github.io/faster-git/zh/lecture07/)
+8. [第八章 Github/Gitee使用说明](https://datawhalechina.github.io/faster-git/zh/lecture08/)
+9. [第九章 Git可视化工具下载](https://datawhalechina.github.io/faster-git/zh/lecture09/)
+10. [第十章 Git团队协作以及合并时的diff工具](https://datawhalechina.github.io/faster-git/zh/lecture10/)
 
-课程安排：
+**课程安排：**
 | 任务信息                                                    |
 |-------------------------------------------------------------|
 | Task01：Git基础：第一、二章（2天）                          |
@@ -26,7 +28,7 @@ Git教程
 | Task04：Git提交规范及Github/Gitee的使用：第七、八章（3天）  |
 | Task05：Git可视化工具下载和团队协作：第九、十章（3天）      |
 
-课程贡献人员：（排名不分先后，按章节顺序排序）
+**课程贡献人员：（排名不分先后，按章节顺序排序）**
 | 成员&nbsp; | 个人简介                                            | 负责章节|
 | --------------- | --------------------------------------------------- |-------|
 |   牛志康   | Datawhale成员，西安电子科技大学本科生 | lecture01，lecture03|
@@ -38,6 +40,7 @@ Git教程
 |张翔宇|华东师范大学研究生|lecture08|
 |    沈豪    | Datawhale成员，复旦大学网安博士在读 |lecture09|
 |   夏峻   | Datawhale成员，上海交通大学研究生  |lecture10|
+|   傅谢懿   | Datawhale贡献者，香港科技大学(广州) 研究生  |  网站架构与国际化 |
 
 # Contributing
 

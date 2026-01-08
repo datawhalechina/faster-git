@@ -114,6 +114,8 @@ export default withMermaid(defineConfig({
 
     footer: { //底部版权信息配置
       message: '© 2025 Datawhale. All Rights Reserved.',
+      copyright: 
+                'Powered by <a href="https://github.com/FuTseYi/ViteNotes" target="_blank">ViteNotes</a>'    
     },
 
     // 全局搜索配置&UI语言设置(英文en无需再次配置)
