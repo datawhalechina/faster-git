@@ -1,25 +1,25 @@
----
-layout: home
-hero:
-  name: "Faster-Git"
-  text: ""
-  tagline: "A tutorial of Git"
-  
-  image:
-    src: /favicon/datawhale.png
-    alt: ViteNotes
+# Faster-Git
 
-  actions:
-    - theme: brand
-      text: Start
-      link: ./lecture01/index.md 
+Git Tutorial
 
-    - theme: alt
-      text: Github-Repo
-      link: https://github.com/datawhalechina/faster-git      
----
-# Course Schedule:
+> **Website:** [https://datawhalechina.github.io/faster-git/](https://datawhalechina.github.io/faster-git/)
+>
+> **中文版 (Chinese Version):** [README.md](README.md)
 
+# Course Content:
+
+1. [Chapter 1: Introduction to Git](https://datawhalechina.github.io/faster-git/lecture01/)
+2. [Chapter 2: Git Basic Commands](https://datawhalechina.github.io/faster-git/lecture02/)
+3. [Chapter 3: Git Branch Management](https://datawhalechina.github.io/faster-git/lecture03/)
+4. [Chapter 4: Git Tools](https://datawhalechina.github.io/faster-git/lecture04/)
+5. [Chapter 5: Git Internals](https://datawhalechina.github.io/faster-git/lecture05/)
+6. [Chapter 6: GitFlow Workflow Practice](https://datawhalechina.github.io/faster-git/lecture06/)
+7. [Chapter 7: Git Commit Conventions](https://datawhalechina.github.io/faster-git/lecture07/)
+8. [Chapter 8: GitHub/Gitee Usage Guide](https://datawhalechina.github.io/faster-git/lecture08/)
+9. [Chapter 9: Git GUI Tools Download](https://datawhalechina.github.io/faster-git/lecture09/)
+10. [Chapter 10: Git Team Collaboration and Diff Tools for Merging](https://datawhalechina.github.io/faster-git/lecture10/)
+
+**Course Schedule:**
 | Task Information                                                    |
 |---------------------------------------------------------------------|
 | Task01: Git Basics: Chapters 1-2 (2 days)                          |
@@ -113,6 +113,4 @@ Commit messages should use the following format: `<type>: <short summary>`
 
 ## LICENSE
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
-
-
 
