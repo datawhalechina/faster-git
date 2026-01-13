@@ -159,21 +159,7 @@ export default withMermaid(defineConfig({
       themeConfig: {
         nav: [
           { text: 'Home', link: '/' },
-          { 
-            text: 'Class Content', 
-            items: [
-              { text: 'Chapter 1 Git Introduction', link: '/lecture01/' },
-              { text: 'Chapter 2 Git Basic Commands', link: '/lecture02/' },
-              { text: 'Chapter 3 Git Branch Management', link: '/lecture03/' },
-              { text: 'Chapter 4 Git Tools', link: '/lecture04/' },
-              { text: 'Chapter 5 Git Internal Principles', link: '/lecture05/' },
-              { text: 'Chapter 6 GitFlow Workflow Practice', link: '/lecture06/' },
-              { text: 'Chapter 7 Git Commit Specification', link: '/lecture07/' },
-              { text: 'Chapter 8 Github/Gitee Usage', link: '/lecture08/' },
-              { text: 'Chapter 9 Git Visual Tools Download', link: '/lecture09/' },
-              { text: 'Chapter 10 Git Team Collaboration', link: '/lecture10/' }
-            ]
-          },
+          { text: 'Class Content',link: '/lecture01/'},
         ],
         // 由于 rewrites 已将 en 映射到根路径，侧边栏也使用根路径
         sidebar: createSidebar('docs/en', '/'),// '/'决定“链接挂到哪里”（这些文档对应的网站路径以哪个前缀开头）
@@ -189,21 +175,7 @@ export default withMermaid(defineConfig({
       themeConfig: {
         nav: [
           { text: '主页', link: '/zh/' },
-          { 
-            text: '课程内容', 
-            items: [
-              { text: '第一章 Git简介', link: '/zh/lecture01/' },
-              { text: '第二章 Git基础命令', link: '/zh/lecture02/' },
-              { text: '第三章 Git分支管理', link: '/zh/lecture03/' },
-              { text: '第四章 Git工具', link: '/zh/lecture04/' },
-              { text: '第五章 Git内部原理', link: '/zh/lecture05/' },
-              { text: '第六章 GitFlow工作流实战', link: '/zh/lecture06/' },
-              { text: '第七章 Git提交规范', link: '/zh/lecture07/' },
-              { text: '第八章 Github/Gitee使用说明', link: '/zh/lecture08/' },
-              { text: '第九章 Git可视化工具下载', link: '/zh/lecture09/' },
-              { text: '第十章 Git团队协作以及合并时的diff工具', link: '/zh/lecture10/' }
-            ]
-          },
+          { text: '课程内容',link: '/zh/lecture01/'},
         ],
         sidebar: createSidebar('docs/zh', '/zh/'),
         
