@@ -1,60 +1,60 @@
-# 第六章 GitFlow 工作流实战
+# Chapter 6: GitFlow Workflow in Practice
 
-## 6.0 引言
+## 6.0 Introduction
 
-在实际项目开发工作中，常常会有自测、联调、提测、线上紧急修复等多工作环节，对应可能需要本地、内测、开发、测试、生产等多环境部署代码的需求，对应每个环节会产生不同的分支；本⽂将从 Git-Flow 模型原理出发，通过命令行演示实际可操作⼿段并进⾏总结，最终希望 Git-Flow 在实际项⽬中应⽤起来，从⽽⾼效完成代码开发、版本管理等实际⼯作。
+In actual project development, there are often multiple work stages such as self-testing, integration testing, QA submission, and production hotfixes, which may require code deployment across various environments including local, internal testing, development, testing, and production. Each stage generates different branches. This article starts from the principles of the Git-Flow model, demonstrates practical operational methods through command-line examples, and provides a summary. The ultimate goal is to apply Git-Flow in real projects to efficiently complete code development, version management, and other practical tasks.
 
-（注：不同的公司或者不同的项目的 GitFlow 工作流模型标准也不同，具体以实际应用为准；本文提供的为常用模板，较为全面和通用，建议多加练习，达到熟练掌握的程度）
+(Note: Different companies or projects may have different GitFlow workflow model standards. Please follow the actual application requirements. This article provides a commonly used template that is comprehensive and universal. It is recommended to practice extensively to achieve proficiency.)
 
-## 6.1 深⼊理解 Git-Flow ⼯作流模型原理
+## 6.1 Deep Understanding of Git-Flow Workflow Model Principles
 
-- Git-Flow 模型解决什么问题?
+- What problems does the Git-Flow model solve?
 
-  为了解决实际项⽬中代码开发、代码测试、bug 修复、版本发布等⼀系过程列严重耦合从⽽产⽣各种问题，如冲突过度、版本混乱。
+  It addresses various issues arising from the severe coupling of code development, testing, bug fixes, version releases, and other processes in actual projects, such as excessive conflicts and version chaos.
 
-- Git-Flow 模型⼜是如何解决上述问题的呢?
+- How does the Git-Flow model solve these problems?
 
-  基于 Git 定义 5 种类型的分⽀，各分⽀严格定义其指责、起⽌点等，从⽽使开发、测试、发版等过程有条不紊进⾏。
+  By defining 5 types of branches based on Git, with each branch having strictly defined responsibilities, starting and ending points, etc., enabling development, testing, and release processes to proceed in an orderly manner.
 
-### 6.1.1 Git-Flow 流程图
+### 6.1.1 Git-Flow Flowchart
 
-该流程图完整描述 Git-Flow 模型处理过程，当我们深⼊理解各分⽀，然后结合项⽬阶段与⾃身的⻆⾊（开发/测试/项⽬经理），就会发现每个角色在某个阶段需要关注的可能也就⼀两个分⽀，⽐如在开发阶段，开发⼈员只需关注⾃⼰的新功能分⽀（Feature 分支）；release 阶段，测试⼈员和开发⼈员都只需关注 Release 分⽀，各⾃的职责有所差异⽽已；具体如下图（建议读者动手手绘一遍该流程图以便于加深理解）：
+This flowchart provides a complete description of the Git-Flow model process. When we deeply understand each branch and combine it with the project stage and our own role (developer/tester/project manager), we will find that each role may only need to focus on one or two branches at a certain stage. For example, during the development stage, developers only need to focus on their own feature branches; during the release stage, both testers and developers only need to focus on the Release branch, with their respective responsibilities being different. The details are shown in the following diagram (readers are encouraged to hand-draw this flowchart once to deepen understanding):
 
 <img src="./imgs/gitflow示意图.png" style="zoom:75%;" />
 
-### 6.1.2 Git-Flow 各分⽀的说明
+### 6.1.2 Description of Git-Flow Branches
 
-| 分⽀名称                  | 作⽤                        | ⽣命周期          | 提交 or 合并                                   | 起⽌点                                    |
+| Branch Name | Purpose | Lifecycle | Commit or Merge | Starting and Ending Points |
 | --------------------- | ------------------------- | ------------- | ---------------------------------------- | -------------------------------------- |
-| Feature 分⽀             | ⽤于某个功能的                   | 临时分 ⽀、开发 阶段   | 可提交代码                                    | 由 Develop 分⽀产⽣， 最终合并到 Develop 分⽀          |
-| Develop 分⽀             | 记录历史开发功 能                 | 贯穿整个 项⽬       | 不能提交，由 Feature 分 ⽀、Bugfix 分⽀、Release 分⽀、Hotfix 分⽀合并代码 | 整个项⽬                                   |
-| Release 分⽀             | ⽤于本次 Release 如⽂档、测试、 bug 修复 | 临时分 ⽀、发版 阶段   | 可提交代码                                    | 由 Develop 分⽀产⽣， 最终合并到 Develop 分⽀和 Master 分支 |
-| Hotfix 分⽀              | ⽤于解决线上 bug                 | 临时分 ⽀、紧急 修复阶段 | 可提交代码                                    | 由 Master 分⽀产⽣， 最终合并到 Develop 分⽀和 Master 分支  |
-| Master（Production） 分⽀ | 记录历史发布版 本                 | 贯穿整个 项⽬       | 不能提交，由 Release、Hotfix 分⽀合并代码               | 整个项⽬                                   |
+| Feature Branch | For developing a specific feature | Temporary branch, development stage | Can commit code | Created from Develop branch, eventually merged back to Develop branch |
+| Develop Branch | Records historical development features | Throughout the entire project | Cannot commit directly, receives merged code from Feature, Bugfix, Release, and Hotfix branches | Throughout the entire project |
+| Release Branch | For current release including documentation, testing, and bug fixes | Temporary branch, release stage | Can commit code | Created from Develop branch, eventually merged to both Develop and Master branches |
+| Hotfix Branch | For fixing production bugs | Temporary branch, emergency fix stage | Can commit code | Created from Master branch, eventually merged to both Develop and Master branches |
+| Master (Production) Branch | Records historical release versions | Throughout the entire project | Cannot commit directly, receives merged code from Release and Hotfix branches | Throughout the entire project |
 
-### 6.1.3 不同⻆度理解各分⽀
+### 6.1.3 Understanding Branches from Different Perspectives
 
-- ⽣命周期
+- Lifecycle
 
-  Master 分⽀和 Develop 分⽀贯穿项⽬；其他分⽀均为承担特定指责的临时分⽀。
+  Master and Develop branches span the entire project; all other branches are temporary branches with specific responsibilities.
 
-- 项⽬阶段
+- Project Stages
 
-  开发阶段主要涉及 Feature 分⽀、Develop 分⽀； 发布阶段 主要涉及 Release 分⽀、Production 分⽀、Develop 分⽀； 紧急修复阶段 主要涉及 Hotfix 分⽀、Production 分⽀、Develop 分⽀。
+  **Development stage** mainly involves Feature and Develop branches; **Release stage** mainly involves Release, Production, and Develop branches; **Emergency fix stage** mainly involves Hotfix, Production, and Develop branches.
 
-- 成员关注点
+- Team Member Focus
 
-  开发⼈员 关注 Develop 分⽀、Feature 分⽀以及特殊阶段关注 Hotfix、Release 分⽀的 bug 修复； 测试⼈员 关注 Release 分⽀、Hotfix 分⽀的功能测试；项⽬经理 关注 Production 分⽀、Release 分⽀。
+  **Developers** focus on Develop and Feature branches, and during special stages, focus on bug fixes in Hotfix and Release branches; **Testers** focus on functional testing of Release and Hotfix branches; **Project managers** focus on Production and Release branches.
 
-另外要说明，项⽬阶段在时间纬度有可能重叠.⽐如:release 阶段 (当前版本) 与下各版本的开发阶段可同时存在，因为当前 release 阶段的发起同时也就意味着下⼀个 release 的开发阶段的开始；⼀旦线上出现 bug(任何时候都可能出现)，紧急修复阶段就可能与开发阶段、发版阶段重叠…因此，要求团队成员都要理解 Git-Flow ⼯作流，以及⾃身所处的项⽬阶段.
+Additionally, it should be noted that project stages may overlap in the time dimension. For example, the release stage (current version) and the development stage of the next version can coexist, because the initiation of the current release stage also means the beginning of the development stage for the next release. Once a bug appears in production (which can happen at any time), the emergency fix stage may overlap with the development stage and release stage... Therefore, all team members are required to understand the Git-Flow workflow and their current project stage.
 
-## 6.2 命令行演示⼀个完整的 Git-Flow 流程
+## 6.2 Command Line Demonstration of a Complete Git-Flow Process
 
-原理总是枯燥的，接下来实践⼀个从功能开发到版本发布的完整的流程，感受⼀下 Git-Flow 的具体操作.
+Theory is always dry, so let's practice a complete process from feature development to version release to experience the specific operations of Git-Flow.
 
-> 特此说明，以下 shell 命令是在 win10 环境下，‘/e/PycharmProjects/DatawhaleChina’目录，使用 git bash 工具进行演示；‘\$’ 符号所在行为演示命令，如有内容输出，会在‘\$’ 符号所在行的下面输出。
+> Note: The following shell commands are demonstrated using Git Bash in the '/e/PycharmProjects/DatawhaleChina' directory on a Windows 10 environment. Lines with the '\$' symbol are demonstration commands, and any output will be displayed below the line containing the '\$' symbol.
 
-### 6.2.1 初始化项⽬，创建 Develop 分⽀
+### 6.2.1 Initialize Project and Create Develop Branch
 
 ```shell
 Administrator@WIN MINGW64 /e/PycharmProjects/DatawhaleChina
@@ -90,9 +90,9 @@ Switched to a new branch 'develop'
 
 ```
 
-### 6.2.2 模拟开发阶段过程
+### 6.2.2 Simulate Development Stage Process
 
-(创建新功能 Feature 分⽀、实现⼀个⽤户登录模块、然后合并到 Develop 分⽀、删除功能分⽀)
+(Create a new Feature branch, implement a user login module, then merge to Develop branch, and delete the feature branch)
 
 ```shell
 
@@ -168,9 +168,9 @@ Deleted branch feature-login (was b0d494c).
 
 ```
 
-### 6.2.3 模拟 Release 阶段过程
+### 6.2.3 Simulate Release Stage Process
 
-(创建 Release 分⽀、进⾏ bug 修复、合并到 Production 分⽀与 Develop 分⽀)
+(Create Release branch, perform bug fixes, merge to Production and Develop branches)
 
 ```shell
 Administrator@WIN MINGW64 /e/PycharmProjects/DatawhaleChina/git-demo-workflow-project (develop)
@@ -222,9 +222,9 @@ Deleted branch release-v0.1 (was a37a88c).
 
 ```
 
-### 6.2.4 模拟线上故障，创建 Hotfix 分⽀
+### 6.2.4 Simulate Production Failure and Create Hotfix Branch
 
-(创建 Hotfix 分⽀、进⾏ bug 修复、合并到 Production 分⽀与 Develop 分⽀)
+(Create Hotfix branch, perform bug fixes, merge to Production and Develop branches)
 
 ```shell
 Administrator@WIN MINGW64 /e/PycharmProjects/DatawhaleChina/git-demo-workflow-project (master)
