@@ -1,39 +1,39 @@
-# 第十章 Git 团队协作以及合并时的 diff 工具
+# Chapter 10: Git Team Collaboration and Diff Tools for Merging
 
-> Author：JunXia
+> Author: JunXia
 
-## 10.0 引言
+## 10.0 Introduction
 
-在许多的多人组队（编程）任务、尤其是需要进行交叉修改代码中部分段落的时候，Git 这样一个分布式版本控制系统的优势就体现出来，或许这也是一些人开始接触和使用 Git 的原因。（笔者也是如此！）
+In many multi-person team (programming) tasks, especially when cross-editing certain sections of code is required, the advantages of Git as a distributed version control system become evident. This is perhaps why many people start to learn and use Git. (The author is no exception!)
 
-实际上本项目也是通过这样团队协作的形式来完成的。在本项目的最后，我们也简单介绍一下 Git 团队协作通常的“打开方式”。
+In fact, this project was also completed through such team collaboration. At the end of this project, we will briefly introduce the typical "approaches" to Git team collaboration.
 
-[//]: # " 在实际项目开发工作中，常常会有自测、联调、提测、线上紧急修复等多工作环节，对应可能需要本地、内测、开发、测试、生产等多环境部署代码的需求，对应每个环节会产生不同的分支；本⽂将从 Git-Flow 模型原理出发，通过命令行演示实际可操作⼿段并进⾏总结，最终希望 Git-Flow 在实际项⽬中应⽤起来，从⽽⾼效完成代码开发、版本管理等实际⼯作。"
+[//]: # " In actual project development work, there are often multiple work stages such as self-testing, joint debugging, testing submission, and online emergency fixes, which may require code deployment in multiple environments such as local, internal testing, development, testing, and production. Each stage generates different branches; this article will start from the principles of the Git-Flow model, demonstrate practical operational methods through command-line examples and summarize them, ultimately hoping that Git-Flow can be applied in actual projects to efficiently complete code development, version management, and other practical work."
 
 [//]: #
-[//]: # "（注：不同的公司或者不同的项目的 GitFlow 工作流模型标准也不同，具体以实际应用为准；本文提供的为常用模板，较为全面和通用，建议多加练习，达到熟练掌握的程度）"
+[//]: # "(Note: Different companies or different projects have different GitFlow workflow model standards, which should be based on actual application; this article provides a commonly used template that is relatively comprehensive and universal. It is recommended to practice more to achieve proficiency)"
 
-## 10.1 代码（提交）推送到远程仓库的一般方式
+## 10.1 General Methods for Pushing Code (Commits) to Remote Repositories
 
-[//]: # " 仍以此前在第三章所提到的 liaoxf？"
+[//]: # " Still using the liaoxf mentioned in Chapter 3?"
 
-### 10.1.1 粗放式的提交：加入仓库协作者，即可获得直接 push 的权限（优点：更方便&快捷）
+### 10.1.1 Informal Commits: Adding Repository Collaborators to Gain Direct Push Permission (Advantage: More Convenient & Faster)
 
-以 Github 为例，首先，仓库管理员（一般是仓库的创建者或者拥有者）先在 Github 上仓库的 Settings 页面中点击下图的 `Add People` 按钮，添加合作者：
+Taking GitHub as an example, first, the repository administrator (usually the creator or owner of the repository) clicks the `Add People` button shown in the figure below on the Settings page of the repository on GitHub to add collaborators:
 
 ![](./imgs/colla.png)
 
-约定大致的 Commit Message（提交信息）的格式，有 fix，update，merge 等词语放在提交消息的开头，来大致表示这次提交的大致内容。
+Agree on a general format for Commit Messages, with words like fix, update, merge, etc. placed at the beginning of the commit message to roughly indicate the general content of this commit.
 
-### 10.1.2 标准式的提交与合并：运用 Pull Requests（优点：更严谨&利于把控每个版本的质量。例如 Forking 工作流）
+### 10.1.2 Standard Commits and Merges: Using Pull Requests (Advantage: More Rigorous & Beneficial for Controlling the Quality of Each Version. For Example, Forking Workflow)
 
-（Pull Requests 的基本介绍可以参阅第八章的 Pull Requests 和提交 PR 词条。）
+(For a basic introduction to Pull Requests, please refer to the Pull Requests and Submitting PR entries in Chapter 8.)
 
-本项目采取的正是这种方式，更具体一些来说，使用的是 Forking 工作流，也就是先把仓库 Fork 到个人账号，（为了避免误操作影响主分支，往往还需设置禁用向主仓库直接 push，也就是禁用前一节所述的粗放式提交），然后再用 PR 请求的方式将 fork 的修改提交给仓库管理员审核，审核通过之后再合并入主分支；可以参考 [atlassian文档](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow)
+This project adopts exactly this approach. More specifically, it uses the Forking workflow, which means first forking the repository to a personal account (to avoid accidental operations affecting the main branch, it is often necessary to disable direct push to the main repository, that is, disable the informal commits described in the previous section), and then submitting the forked modifications to the repository administrator for review using PR requests. After approval, they are merged into the main branch; you can refer to the [Atlassian documentation](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow)
 
-此外，这类比较正式的工作流也往往需要更加严谨的提交信息格式，例如本项目提交信息采用如下格式：
+In addition, such relatively formal workflows often require more rigorous commit message formats. For example, this project uses the following format for commit messages:
 
-提交信息使用如下格式：`<type>: <short summary>`
+Commit messages use the following format: `<type>: <short summary>`
 
 ```bash
 <type>: <short summary>
@@ -43,25 +43,25 @@
   └─⫸ Commit Type: lecture{#NO}|others
 ```
 
-`others` 包括非课程相关的改动，如本 `README.md` 中的变动，`.gitignore` 的调整等。
+`others` includes changes unrelated to the course, such as changes in this `README.md`, adjustments to `.gitignore`, etc.
 
-实际上一些更大型的项目或者企业，可能会涉及到统筹配置多个仓库及其参与者的权限，因此会用到 Projects 以及 Organization 等功能。
+In fact, some larger projects or enterprises may involve coordinating the configuration of multiple repositories and their participants' permissions, so they will use features such as Projects and Organizations.
 
-## 10.2 代码比较与冲突处理
+## 10.2 Code Comparison and Conflict Resolution
 
-与团队协作相伴的往往就是修改冲突（Conflit）的问题了，第三章中已经提到了一些处理冲突的一般方法（例如手动修改和暂时终止 Merge 进行排查），这里介绍一个著名的用于进行代码比较的软件——Beyond Compare（或者简称 bc，其官网为<https://www.scootersoftware.com/download.php> ，下文中所使用的版本为 4.4，其他版本可能略有差异，比如对一些路径中含有的版本号数字可能需要微调，但主要功能基本一致）。
+What often accompanies team collaboration is the problem of merge conflicts. Chapter 3 has already mentioned some general methods for handling conflicts (such as manual modification and temporarily aborting Merge for troubleshooting). Here we introduce a famous software for code comparison—Beyond Compare (or bc for short, its official website is <https://www.scootersoftware.com/download.php>. The version used below is 4.4. Other versions may have slight differences, such as version numbers in some paths that may need minor adjustments, but the main functions are basically the same).
 
-将 bc 用作代码比较工具可以较为方便地在 git 中进行配置，且拥有较成熟的图形化界面（对 不同系统的换行符 CR、lF，也能较为合理地自动处理），相比与手动解决冲突的效率还是会好许多。
+Using bc as a code comparison tool can be conveniently configured in git and has a relatively mature graphical interface (it can also reasonably handle line breaks CR and LF for different systems automatically). Compared with manually resolving conflicts, the efficiency is much better.
 
-### 10.2.1 配置 bc
+### 10.2.1 Configuring bc
 
-在 bc 完成安装之后：
+After bc installation is complete:
 
-#### 直接用 git 命令配置
+#### Configure Directly with Git Commands
 
-其中 `C:/Program Files (x86)/Beyond Compare 4` 为（32 位版本的）bc4 的默认安装位置，如果安装时自定义了位置，需要相应地修改。（此外，因代码中有若干个带 `\ ` 的转义字符，请注意不要因手滑而删除之。）
+Where `C:/Program Files (x86)/Beyond Compare 4` is the default installation location for the (32-bit version of) bc4. If you customized the location during installation, you need to modify it accordingly. (In addition, since there are several escape characters with `\ ` in the code, please be careful not to delete them accidentally.)
 
-（这里是直接做了 git 的全局配置，如果只想让它在某个代码仓库生效可以将下面这段中的 global 都改为 local。）
+(This is a direct global configuration for git. If you only want it to take effect in a certain code repository, you can change all the global in the following section to local.)
 
 ```shell
 $ git config --global diff.tool bc4
@@ -73,20 +73,20 @@ $ git config --global mergetool.bc4.cmd "\"C:/Program Files (x86)/Beyond Compare
 $ git config --global mergetool.bc4.trustExitCode true
 ```
 
-如果输入命令后均无报错，则可跳过下面带括号的这个小节。
+If there are no errors after entering the commands, you can skip the following section in parentheses.
 
-#### （或者修改配置文件
+#### (Or Modify the Configuration File
 
-打开 global（全局）或者 local（某个项目）的配置文件，全局配置文件一般在用户文件夹下，可用如下命令打开
+Open the global or local (for a specific project) configuration file. The global configuration file is generally in the user folder and can be opened with the following command:
 
 ```shell
 $ cd ~
 $ vim .gitconfig
 ```
 
-而 local 的配置文件则是在本地代码仓库文件夹的.git 目录下的 config 文件。当然，在 local 中修改就不会在其他代码仓库文件夹里共用这个配置了。
+The local configuration file is the config file in the .git directory of the local code repository folder. Of course, modifying it in local will not share this configuration in other code repository folders.
 
-在文件尾部新建一行，追加如下配置代码 并保存：
+Create a new line at the end of the file, append the following configuration code, and save:
 
 ```bash
 [diff]
@@ -100,36 +100,36 @@ cmd = \"C:/Program Files (x86)/Beyond Compare 4/BComp.exe\" \"$LOCAL\" \"$REMOTE
 trustExitCode = true
 ```
 
-）
+)
 
-### 10.2.2 使用 bc
+### 10.2.2 Using bc
 
-#### 情形 1：在 merge 中使用
+#### Scenario 1: Using in Merge
 
-[//]: # "，"
+[//]: # ","
 
-也就是在第三章所提到的“融合到主分支上时就会发生冲突。如下图所示：”（此时分支名右侧往往还会出现 MERGING 的高亮提示。）
+That is, "a conflict will occur when merging into the main branch" as mentioned in Chapter 3. As shown in the figure below: (At this time, a MERGING highlight prompt often appears to the right of the branch name.)
 
 ![](../lecture03/figures/merge_error.png)
 
-此时直接用命令：
+At this time, directly use the command:
 
 ```bash
 $ git mergetool
 ```
 
-即可直接 bc 的界面：
+This will directly open the bc interface:
 
 ![](./imgs/merge.png)
 
-bc 较好的功能之一正是在于将 "<<<<<<","=======",">>>>>>" 等分割线转换为更直观的三个完整的小窗口显示，并用色块来标记并可以直接点击选择保留哪些部分，可以直接点击 `Next Section` 以及 `Prev Section` 在各个差异区段间切换，中间小窗口（文件名中一般会加入 BASE）的是差异版本的最近共同祖先，左右分别是冲突的两个版本，修改合并后的完成效果显示在屏幕下半区的大窗口中。最终对比和修改完成并保存后可直接关闭窗口，如有大于一个有差异的文件，bc 会自动打开后续需对比的文件。
+One of bc's better features is that it converts dividing lines such as "<<<<<<", "=======", ">>>>>>" into three more intuitive complete small windows, and uses color blocks to mark and allows you to directly click to select which parts to keep. You can directly click `Next Section` and `Prev Section` to switch between various difference sections. The middle small window (the file name generally includes BASE) is the nearest common ancestor of the different versions, the left and right are the two conflicting versions, and the final effect after modification and merging is displayed in the large window in the lower half of the screen. After the final comparison and modification are completed and saved, you can directly close the window. If there is more than one file with differences, bc will automatically open subsequent files that need to be compared.
 
-保存完成，继续到 git bash 进行 commit 以及 push 就可以愉快地完工啦！！
+After saving is complete, continue to git bash to commit and push, and you're done!!
 
-#### 情形 2：作为替换 diff 命令的一个较直观的图形化界面
+#### Scenario 2: As a More Intuitive Graphical Interface to Replace the Diff Command
 
-在一般情况下可以直接将第三章的 diff 命令直接替换为 difftool，即可在 bc 的界面看到 diff 状态的内容，如下图：
+In general situations, you can directly replace the diff command in Chapter 3 with difftool to see the content in diff status in the bc interface, as shown in the figure below:
 
 ![](./imgs/diff.png)
 
-仍可以类似地点击 `Next Section` 以及 `Prev Section` 在各个差异区段间切换，并进行其他修改操作。
+You can still similarly click `Next Section` and `Prev Section` to switch between various difference sections and perform other modification operations.
