@@ -84,7 +84,7 @@ Git 是目前程序员必备基础技能，可以用来管理代码、文档、�
 
 或者有单独的 `CONTRIBUTING.md` 文档，对代码风格、提交方式等进行约定。
 
-### 7.1.1 自动化校验 `commit message`
+### 7.1.1 自动化校验 `commit message` {#711-自动化校验-commit-message-方案}
 
 有了提交信息的规范，如何确保开发者对规范进行遵守呢？我们可以使用 Git 提供的 `Git Hooks` 功能对提交
 
@@ -323,6 +323,6 @@ fixup d9a9d7f04 feat: some feature third commit
 
 ## 7.5 Exercise
 
-基于课程中[7.1.1 自动化校验commit message](https://github.com/datawhalechina/faster-git/blob/main/lecture07/README.md#711-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%A0%A1%E9%AA%8Ccommit-message)方案，
+基于课程中[7.1.1 自动化校验commit message方案](#711-自动化校验-commit-message-方案)，
 实现[README.md](https://github.com/datawhalechina/faster-git/blob/main/README.md#commit-message)
 中提交信息规范的`git-hook`的实现。

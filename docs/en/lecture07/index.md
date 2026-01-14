@@ -62,7 +62,7 @@ Finally, `<footer>` is optional and generally involves breaking changes, depreca
 
 Standardized commit messages can be parsed by tools to automatically generate documentation or release logs. In some large open-source projects, manually organizing version update documentation, interface updates, and compatibility impacts is very time-consuming and labor-intensive. Using a unified standard can greatly automate this work. Of course, different projects have different requirements and format standards for commit messages, and open-source projects or company projects also have different requirements for commit messages. Generally, you need to follow the conventions of the project you're working on. More mature open-source projects can usually be found in the `README` documentation on how to contribute, or have a separate `CONTRIBUTING.md` document that specifies code style, commit methods, etc.
 
-### 7.1.1 Automated Validation of `commit message`
+### 7.1.1 Automated Validation of `commit message` {#711-automated-validation-of-commit-message}
 
 With commit message conventions in place, how do we ensure developers follow them? We can use Git's `Git Hooks` feature to validate commit messages. This article won't go into too much detail about `Git Hooks`, only providing basic explanations. For specific details, refer to the [official documentation](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) or [Atlassian's documentation](https://www.atlassian.com/git/tutorials/git-hooks).
 
@@ -265,4 +265,4 @@ fixup d9a9d7f04 feat: some feature third commit
 
 ## 7.5 Exercise
 
-Based on the [7.1.1 Automated Validation of commit message](https://github.com/datawhalechina/faster-git/blob/main/lecture07/README.md#711-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%A0%A1%E9%AA%8Ccommit-message) solution in the course, implement the `git-hook` for the commit message specification in [README.md](https://github.com/datawhalechina/faster-git/blob/main/README.md#commit-message).
+Based on the [7.1.1 Automated Validation of commit message](#711-automated-validation-of-commit-message) solution in the course, implement the `git-hook` for the commit message specification in [README.md](https://github.com/datawhalechina/faster-git/blob/main/README.md#commit-message).
