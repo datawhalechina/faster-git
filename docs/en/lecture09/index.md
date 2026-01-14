@@ -1,86 +1,86 @@
-# 第九章 Git 图形工具
+# Chapter 9 Git Graphical Tools
 
-> Author：shenhao
+> Author: shenhao
 
-## 9.0 前言：为什么要使用 Git GUI ？
+## 9.0 Preface: Why Use Git GUI?
 
-Git 虽然作为一个开源的分布式版本控制系统，可以有效、高速地处理从很小到非常大的项目版本管理，但在实际项目研发过程中，开发人员通常只会使用几个常见的命令进行协同工作。从之前的章节，我们已经深入了解到了 Git 的基本原理和众多命令，有些命令由于不常使用，较难记忆。因此，对于多数项目开发者而言，在终端上运行的纯文本命令并不是最佳的选择；有时候可视化图形界面更符合用户的习惯。Git GUI 为用户提供了一个可视化的图形界面，允许项目开发者通过简单的点击便捷地使用 Git，从而不需要在终端上手动输入繁多的文本命令。这样一来，开发者能够更高效、更便捷地进行项目版本管理。
+Although Git is an open-source distributed version control system that can effectively and efficiently handle project version management from very small to very large projects, during actual project development, developers typically only use a few common commands for collaborative work. From previous chapters, we have gained in-depth understanding of Git's basic principles and numerous commands, some of which are difficult to remember due to infrequent use. Therefore, for most project developers, pure text commands running in the terminal are not the optimal choice; sometimes a visual graphical interface better suits user habits. Git GUI provides users with a visual graphical interface, allowing project developers to conveniently use Git through simple clicks, eliminating the need to manually input numerous text commands in the terminal. This enables developers to perform project version management more efficiently and conveniently.
 
-本章将介绍以下三种主流的 Git GUI 图形化工具，帮助开发者能更为轻松、高效的利用 Git 进行项目版本管理。
+This chapter will introduce the following three mainstream Git GUI graphical tools to help developers utilize Git for project version management more easily and efficiently.
 
 - **GitHub Desktop**
 - **TortoiseGit**
 - **Vscode Git**
 
-在本教程中，只介绍了部分 Git GUI 图形客户端， 更多详细内容可以查看✅[Git 官网](https://git-scm.com/downloads/guis/)。
+This tutorial only introduces some Git GUI graphical clients. For more detailed information, please visit ✅[Git Official Website](https://git-scm.com/downloads/guis/).
 
 ## 9.1 GitHub Desktop
 
-[GitHub Desktop](https://desktop.github.com/) 可能是所有 Git 可视化应用中最著名的方案。几乎所有开发人员都熟悉 GitHub ，而 Github Desktop 正是 Github 推出的开源 Git GUI 图形客户端。可以在 Windows 和 Macos 平台上进行使用，目前暂不支持 Linux 平台。
+[GitHub Desktop](https://desktop.github.com/) is probably the most famous solution among all Git visualization applications. Almost all developers are familiar with GitHub, and GitHub Desktop is the open-source Git GUI graphical client launched by GitHub. It can be used on Windows and macOS platforms, but currently does not support Linux platforms.
 
-### 9.1.1 基本使用
+### 9.1.1 Basic Usage
 
-首先进入官网，根据不同的系统，下载并安装对应版本的 [GitHub Desktop](https://desktop.github.com/) 。
+First, visit the official website and download and install the corresponding version of [GitHub Desktop](https://desktop.github.com/) according to your operating system.
 
 <img src="./Assets/github_desktop_1.png" style="zoom: 25%;" />
 
-#### 9.1.1.1 登录
+#### 9.1.1.1 Login
 
-完成下载后，第一次打开软件会直接要求登录个人 Github 账户进行授权，并配置用户名和邮箱（识别个人创建的 commits 提交）。
+After completing the download, the first time you open the software, you will be directly asked to log in to your personal GitHub account for authorization and configure your username and email (to identify commits created by you).
 
-如果没有找到让你登录 GitHub 账号的地方，你需要在 File -> Options -> Accounts -> Sign in 登录。
+If you cannot find where to log in to your GitHub account, you need to go to File -> Options -> Accounts -> Sign in to log in.
 
-在完成基本配置后，会出现如下界面：
+After completing the basic configuration, the following interface will appear:
 
 <img src="./Assets/github_desktop_2.png" style="zoom: 33%;" />
 
-#### 9.1.1.2 建立首个仓库
+#### 9.1.1.2 Create Your First Repository
 
-初次登陆会看到三个选项，也就是建立自己的第一个 repository。
+Upon first login, you will see three options for creating your first repository.
 
-建立一个 repo 可以通过三个方式：
+You can create a repo through three methods:
 
-- clone a repository：克隆一个 repo
-- create new repository：建立一个新的 repo
-- add a local repository：添加一个本地的 repo
+- clone a repository: Clone a repo
+- create new repository: Create a new repo
+- add a local repository: Add a local repo
 
-我们先选择从 URL 中克隆 [faster-git](https://github.com/datawhalechina/faster-git) 仓库，如下图，需要修改的地方为 URL 链接以及本地存储的路径。
+Let's first choose to clone the [faster-git](https://github.com/datawhalechina/faster-git) repository from URL. As shown in the figure below, you need to modify the URL link and the local storage path.
 
 <img src="./Assets/github_desktop_3.png" style="zoom: 33%;" />
 
-#### 9.1.1.3 提交 Pull Request
+#### 9.1.1.3 Submit Pull Request
 
 ##### fork
 
-由于在实际开源项目贡献的过程中，开发者往往并没有直接修改仓库内容的权限，因此需要先对目标仓库进行 fork 操作，再通过提交 PR 的方式进行代码的贡献。在下图中，可以通过左下角的 warning 标志⚠，判断用户是否有目标仓库的权限。如果没有写入权限，点击 create a fork，将目标仓库复刻为自己的仓库，进行随意的修改。
+Since in the actual process of contributing to open-source projects, developers often do not have direct permission to modify repository content, they need to first perform a fork operation on the target repository, and then contribute code by submitting a PR. In the figure below, you can determine whether the user has permission to the target repository through the warning sign ⚠ in the lower left corner. If you don't have write permission, click "create a fork" to fork the target repository into your own repository for free modification.
 
 <img src="./Assets/github_desktop_4.png" style="zoom:33%;" />
 
 <img src="./Assets/github_desktop_5.png" style="zoom:33%;" />
 
-在 Github Desktop 中完成 fork 后，登录 Github 网页就可以在个人仓库中看到目标仓库的复刻版，如下所示。
+After completing the fork in GitHub Desktop, log in to the GitHub webpage and you can see the forked version of the target repository in your personal repository, as shown below.
 
 <img src="./Assets/github_desktop.png" style="zoom: 50%;" />
 
 ##### commit & push
 
-在完成了 fork 后，当前仓库就会索引到用户个人的复刻仓库，对应于本地指定目录下的文件。此时，用户拥有复刻仓库的所有权限，包括修改，删除，更改可视状态等等。接下来，就可以对本地分支中的代码进行修改，更新而当操作，再 push 到用户个人的复刻仓库中。
+After completing the fork, the current repository will be indexed to the user's personal forked repository, corresponding to the files in the specified local directory. At this point, the user has all permissions for the forked repository, including modification, deletion, changing visibility status, etc. Next, you can modify and update the code in the local branch, and then push it to the user's personal forked repository.
 
 <img src="./Assets/github_desktop_6.png" style="zoom:33%;" />
 
 <img src="./Assets/github_desktop_7.png" style="zoom:33%;" />
 
-此时，登录 Github 网页版就会发现本地修改的代码已经上传到云端，个人复刻仓库进行了本地同步。
+At this point, logging into the GitHub web version, you will find that the locally modified code has been uploaded to the cloud, and the personal forked repository has been synchronized with the local changes.
 
 <img src="./Assets/github_desktop_8.png" />
 
 ##### PR
 
-在完成个人仓库的代码更新后，还要注意个人仓库的分支和目标分支的先后情况，如果目标分支领先于 fork 分支，需要先通过 fetch upstream 操作进行更新后，再提交 PR。
+After completing the code update of the personal repository, you should also pay attention to the sequence of the personal repository branch and the target branch. If the target branch is ahead of the fork branch, you need to update it through the fetch upstream operation first, and then submit the PR.
 
-> **upstream**分支指向上游地址即目标分支，这里的**upstream**名字可以任意指定，只是一般都把上游地址都叫**upstream**。
+> The **upstream** branch points to the upstream address, which is the target branch. The name **upstream** can be specified arbitrarily, but the upstream address is generally called **upstream**.
 
-点击 Contribute，并 Open pull request，向目标仓库提交上传申请。
+Click Contribute and Open pull request to submit an upload request to the target repository.
 
 <img src="./Assets/github_desktop_9.png" style="zoom:50%;" />
 
@@ -88,154 +88,154 @@ Git 虽然作为一个开源的分布式版本控制系统，可以有效、高�
 
 ![](./Assets/github_desktop_11.png)
 
-在完成 PR 后，会自动跳转到目标仓库，可以看到在 Pull requests 一栏中，上标增加了 1，1 就是贡献者所提交 PR。之后就需要目标仓库的拥有者对贡献的代码进行审阅，如果代码合规可利用，就会将 fork 分支的 commits 合并到主分支中。这样一来，就完成了一次贡献！！👏👏
+After completing the PR, it will automatically jump to the target repository. You can see that in the Pull requests column, the superscript has increased by 1, which is the PR submitted by the contributor. After that, the owner of the target repository needs to review the contributed code. If the code is compliant and usable, the commits from the fork branch will be merged into the main branch. In this way, a contribution is completed!! 👏👏
 
 ![](./Assets/github_desktop_12.png)
 
 ## 9.2 TortoiseGit
 
-TortoiseGit 简称 tgit， 中文名海龟 Git ，是一个开放的 Windows 系统下的 Git 版本控制系统的源客户端，提供有中文版支持。由于它不是针对特定 IDE(如 Visual Studio、Eclipse 或其他) 的集成，所以可以与任何开发工具和任何类型的文件一起使用。与 Github Desktop 一类的传统图形化交互不同，与 TortoiseGit 的交互主要利用 Windows 资源管理器的上下文菜单，因此不需要打开任何软件，十分轻量、便捷。
+TortoiseGit, abbreviated as tgit, Chinese name Turtle Git, is an open-source Git version control system client for Windows systems, providing Chinese language support. Since it is not an integration for a specific IDE (such as Visual Studio, Eclipse, or others), it can be used with any development tool and any type of file. Unlike traditional graphical interactions like GitHub Desktop, interaction with TortoiseGit mainly utilizes the context menu of Windows Explorer, so there is no need to open any software, making it very lightweight and convenient.
 
-### 9.2.1 下载
+### 9.2.1 Download
 
-根据操作系统的位数，下载并安装对应版本的 TortoiseGit 及中文语言包（✅ TortoiseGit 及语言包 [下载](https://tortoisegit.org/download/) ，✅TortoiseGit [安装教程](https://jingyan.baidu.com/article/f3ad7d0f37a75d09c2345b6f.html)）。
+According to the number of bits of your operating system, download and install the corresponding version of TortoiseGit and the Chinese language pack (✅ TortoiseGit and language pack [download](https://tortoisegit.org/download/), ✅TortoiseGit [installation tutorial](https://jingyan.baidu.com/article/f3ad7d0f37a75d09c2345b6f.html)).
 
 <img src="./Assets/tgit_1.png" style="zoom: 33%;" />
 
-### 9.2.2 安装
+### 9.2.2 Installation
 
-1、双击刚刚下载好的 msi 文件进入安装
+1. Double-click the msi file you just downloaded to start the installation
 
 <img src="./Assets/tgit_2.png" style="zoom:50%;" />
 
-2、连续两次 next 之后，到如下页面，更改下载位置，继续 next
+2. After clicking next twice, you will reach the following page. Change the download location and continue with next
 
 <img src="./Assets/tgit_3.png" style="zoom:50%;" />
 
-3、点击 Install 进行安装
+3. Click Install to proceed with installation
 
 <img src="./Assets/tgit_4.png" style="zoom:50%;" />
 
-4、点击 Finish 配置 TortoiseGit
+4. Click Finish to configure TortoiseGit
 
 <img src="./Assets/tgit_5.png" style="zoom:50%;" />
 
-5、选择英文进入连续两次点击下一页
+5. Select English and click next twice
 
 <img src="./Assets/tgit_6.png" style="zoom:50%;" />
 
-6、配置 git.exe，并点击下一页
+6. Configure git.exe and click next
 
 <img src="./Assets/tgit_7.png" style="zoom:50%;" />
 
-7、填写用户名和邮箱，并点击下一页
+7. Fill in your username and email, and click next
 
 <img src="./Assets/tgit_8.png" style="zoom:50%;" />
 
-8、完成 tortoisegit 安装
+8. Complete the tortoisegit installation
 
 <img src="./Assets/tgit_9.png" style="zoom:50%;" />
 
-9、双击 TortoiseGit-LanguagePack-64bit-zh_CN.msi，配置中文语言
+9. Double-click TortoiseGit-LanguagePack-64bit-zh_CN.msi to configure the Chinese language
 
 <img src="./Assets/tgit_10.png" style="zoom:50%;" />
 
 <img src="./Assets/tgit_11.png" style="zoom:50%;" />
 
-### 9.2.3 基本使用
+### 9.2.3 Basic Usage
 
-与 Github Desktop 不同，TortoiseGit 是通过鼠标右键菜单栏的方式进行 git 命令的交互，桌面空白处右键后如下所示。
+Unlike GitHub Desktop, TortoiseGit interacts with git commands through the right-click menu bar. Right-clicking on a blank area of the desktop is shown as follows.
 
 <img src="./Assets/tgit_12.png" style="zoom:50%;" />
 
-#### 9.2.3.1 建立首个仓库
+#### 9.2.3.1 Create Your First Repository
 
-本地 Git 仓库的创建有两种，一是直接 Clone 已存在的 Git 仓库，二是本地创建版本库。
+There are two ways to create a local Git repository: one is to directly clone an existing Git repository, and the other is to create a repository locally.
 
-##### Clone 仓库
+##### Clone Repository
 
-在存放项目的目录点右键，选择 Clone，配置目标仓库的 URL 以及本地存储的路径。
+Right-click in the directory where you want to store the project, select Clone, and configure the URL of the target repository and the local storage path.
 
 <img src="./Assets/tgit_13.png" style="zoom:50%;" />
 
 <img src="./Assets/tgit_14.png" style="zoom:50%;" />
 
-克隆成功，在文件夹上就可以看到角标标识，下图是克隆后并修改的情况：
+After successful cloning, you can see the icon overlay on the folder. The figure below shows the situation after cloning and modification:
 
 <img src="./Assets/tgit_15.png" style="zoom:50%;" />
 
-Git 文件上角标符号是用于反映出当前文件或者文件夹的状态：
+Git file icon overlays are used to reflect the current status of files or folders:
 
-1、正常的：**绿色的对号**
+1. Normal: **Green checkmark**
 
-2、被修改过的：**红色感叹号**
+2. Modified: **Red exclamation mark**
 
-3、新添加的：**蓝色的加号**
+3. Newly added: **Blue plus sign**
 
-4、未受控的（无版本控制的）：**蓝色的问号**
+4. Uncontrolled (no version control): **Blue question mark**
 
-5、忽略不受控的：**灰色的减号**
+5. Ignored and uncontrolled: **Gray minus sign**
 
-6、删除的：**红色的叉号**
+6. Deleted: **Red cross**
 
-7、有冲突的：**黄色的感叹号**
+7. Conflicted: **Yellow exclamation mark**
 
-> 若是看不到角标符号可以查看该教程：[TortoiseGit状态图标不能正常显示的解决办法](https://www.cnblogs.com/xiesong/p/5761352.html)
+> If you cannot see the icon overlays, you can check this tutorial: [Solution for TortoiseGit status icons not displaying properly](https://www.cnblogs.com/xiesong/p/5761352.html)
 
-##### 创建本地版本库
+##### Create Local Repository
 
-新建一个项目目录 myfaster-git，在代码目录右键选择创建版本库。在弹出提示中，不要勾选纯版本库，直接确定
+Create a new project directory myfaster-git, right-click in the code directory and select Create repository here. In the pop-up prompt, do not check "Make it Bare", just confirm directly.
 
 <img src="./Assets/tgit_16.png" style="zoom: 50%;" />
 
-之后项目目录下就会生成一个.git 的目录，这个目录里面记录的是 git 操作相关内容。
+After that, a .git directory will be generated in the project directory, which records git operation-related content.
 
 <img src="./Assets/tgit_17.png" style="zoom:50%;" />
 
 #### 9.2.3.2 Add & Commit & Push
 
-在完成项目的代码更新后，可以右键选择 Git 提交进行 add、commit 以及 push 操作。
+After completing the code update of the project, you can right-click and select Git Commit to perform add, commit, and push operations.
 
 <img src="./Assets/tgit_18.png" style="zoom:50%;" />
 
-填写日志信息作为 commit 的 message，同时勾选设置作者日期以及作者，明确代码更新的细节。再在变更列表中选择需要 commit 的文件，最后点击提交并推送完成 push 操作。
+Fill in the log information as the commit message, check "Set author date" and "Author" to clarify the details of the code update. Then select the files to commit in the change list, and finally click "Commit and Push" to complete the push operation.
 
 <img src="./Assets/tgit_19.png" style="zoom: 33%;" />
 
 #### 9.2.3.3 Pull
 
-当需要更新本地代码时，可以右键选择 TortoiseGit，再选择拉取进行 fetch。
+When you need to update the local code, you can right-click and select TortoiseGit, then select Pull to perform fetch.
 
 <img src="./Assets/tgit_20.png" style="zoom:50%;" />
 
 <img src="./Assets/tgit_21.png" style="zoom:50%;" />
 
-> 📃注意：其余的一些 git 操作，可以在下拉框中进行操作，见上图。
+> 📃Note: Other git operations can be performed in the dropdown menu, as shown in the figure above.
 
-#### 9.2.3.4 配置远端
+#### 9.2.3.4 Configure Remote
 
-右键选择 TortoiseGit，再选择设置，进入以下界面。在 Git 下的远端中，可以配置本地 main 分支所对应的远端分支，例如个人 Github 仓库的 origin 分支，或者 fork 分支的上游 upstream 分支等等。
+Right-click and select TortoiseGit, then select Settings to enter the following interface. Under Remote in Git, you can configure the remote branch corresponding to the local main branch, such as the origin branch of the personal GitHub repository, or the upstream branch of the fork branch, etc.
 
 <img src="./Assets/tgit_22.png" style="zoom:50%;" />
 
 ## 9.3 Vscode Git
 
-在实际项目开发过程中，往往遇到的场景是项目开发者直接通过代码编辑器进行 Git 操作，在本章中，主要介绍 Vscode 中 Git 的一些基础的操作。
+In the actual project development process, the scenario often encountered is that project developers directly perform Git operations through the code editor. In this chapter, we mainly introduce some basic Git operations in Vscode.
 
-导入项目文件，选择侧边栏的第三项，就可以看到以下内容。
+Import the project files, select the third item in the sidebar, and you can see the following content.
 
 ![](./Assets/vsgit_1.png)
 
-首选暂存所有更改，再在消息栏中输入 message 并点击勾进行提交，或者使用快捷键 Ctrl+Enter 进行提交。
+First, stage all changes, then enter the message in the message bar and click the checkmark to commit, or use the shortcut Ctrl+Enter to commit.
 
 <img src="./Assets/vsgit_2.png" style="zoom:50%;" />
 
-完成 add 和 commit 操作后，点击同步，即可以 push 到远端。
+After completing the add and commit operations, click Sync to push to the remote.
 
 <img src="./Assets/vsgit_3.png" style="zoom:50%;" />
 
-## 9.4 本章小结
+## 9.4 Chapter Summary
 
-在本章的前言部分，通过比较在日常应用场景下终端命令和图形化界面的优劣，引出了 Git GUI 图形化应用。再详细介绍了三种类型的 Git GUI 图形化应用，Github Desktop、TotoiseGit 以及 Vscode Git。与传统的命令行不同，图形化界面为项目开发者提供了更为轻松、高效的方式利用 Git 进行项目版本管理。在下一章中，将详细介绍 Git 团队协作以及合并时的 diff 工具。
+In the preface of this chapter, by comparing the advantages and disadvantages of terminal commands and graphical interfaces in daily application scenarios, Git GUI graphical applications were introduced. Then three types of Git GUI graphical applications were introduced in detail: GitHub Desktop, TortoiseGit, and Vscode Git. Unlike traditional command lines, graphical interfaces provide project developers with a more relaxed and efficient way to use Git for project version management. In the next chapter, Git team collaboration and diff tools during merging will be introduced in detail.
 
-🎉冲冲冲！！！
+🎉Let's go!!!
