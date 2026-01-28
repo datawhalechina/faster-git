@@ -1,27 +1,21 @@
-# 第七章 Git 提交规范
+# Chapter 7: Git Commit Conventions
 
-## 7.0 前言
+## 7.0 Introduction
 
-Git 是目前程序员必备基础技能，可以用来管理代码、文档、博客，甚至菜谱。个人的私有仓库的提交相对而言可以
-
-较为随意，但是在团队开发中，还是要遵循相应的规范。本文对 Git 使用中涉及到提交相关的实践做了些整理，
-
-供大家参考。
+Git is an essential skill for programmers today, used to manage code, documentation, blogs, and even recipes. While commits to personal private repositories can be relatively casual, team development requires adherence to appropriate conventions. This article organizes some practices related to commits in Git usage for your reference.
 
 ![git commit](git-commit.png)
 
-如上图所示（截取自 Angular commit [970a3b5](https://github.com/angular/angular/commit/970a3b5c70fee29aa40945836ebeb464d75438e4)），
+As shown in the figure above (taken from Angular commit [970a3b5](https://github.com/angular/angular/commit/970a3b5c70fee29aa40945836ebeb464d75438e4)), a commit contains the following information:
 
-一个 commit 包含如下几个信息：
-
-- commit message - 提交的内容相关描述
-- author & committer - 作者及提交者
-- changed files - 修改的文件
-- hash & parent - 提交内容的 hash 及在提交树上的位置
+- commit message - description of the committed content
+- author & committer - the author and committer
+- changed files - modified files
+- hash & parent - the hash of the commit content and its position in the commit tree
 
 ## 7.1 Commit Message
 
-提交消息描述的是当前提交的功能相关信息，一般可以包括 `header`，`body`，`footer`，
+The commit message describes the functional information related to the current commit, and generally can include `header`, `body`, and `footer`:
 
 ```bash
 <header>
@@ -31,9 +25,9 @@ Git 是目前程序员必备基础技能，可以用来管理代码、文档、�
 <footer>
 ```
 
-业内做的好的可以参考 Angular 的提交标准：[Commit Message Format](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit)
+A good industry reference is Angular's commit standard: [Commit Message Format](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit)
 
-其中 `header` 是必须的。Angular 官方建议的格式如下
+The `header` is mandatory. Angular's officially recommended format is as follows:
 
 ```bash
 <type>(<scope>): <short summary>
@@ -45,56 +39,34 @@ Git 是目前程序员必备基础技能，可以用来管理代码、文档、�
   └─⫸ Commit Type: build|ci|docs|feat|fix|perf|refactor|test
 ```
 
-`<header>` 中，`<type>` 与 `<summary>` 是必须的，`<scope>` 可以选填。建议 `<header>` 需要保持在 50 个字符之内。
+In the `<header>`, `<type>` and `<summary>` are required, while `<scope>` is optional. It is recommended that the `<header>` be kept within 50 characters.
 
-`<type>` 表明本次提交的类型，一般有如下几种：
+`<type>` indicates the type of this commit, generally including the following:
 
-- `build`: 涉及构建相关的改动
-- `ci`: 持续集成相关的改动
-- `docs`: 文档
-- `feat`: 新功能
-- `fix`: bug 修复
-- `perf`: 性能相关改动
-- `refactor`: 重构相关（非 bug、非新功能）
-- `test`: 测试相关，包括新增测试或者更改已有测试
+- `build`: Changes related to the build system
+- `ci`: Changes related to continuous integration
+- `docs`: Documentation
+- `feat`: New features
+- `fix`: Bug fixes
+- `perf`: Performance-related changes
+- `refactor`: Refactoring (neither bug fixes nor new features)
+- `test`: Test-related changes, including adding tests or modifying existing tests
 
-`<scope>` 表示改动影响的范围。在 Angular 中，某个提交可能涉及的范围有表单处理、动画处理等。
+`<scope>` indicates the scope affected by the changes. In Angular, a commit might involve scopes such as form processing, animation processing, etc. In actual work, this can be determined based on the project.
 
-在实际工作中可以视项目而定。
+`<summary>` is a brief description of this commit, using imperative mood and present tense. For example, use `change` instead of `changed` or `changes`.
 
-`<summary>` 则是对本次提交的简要描述，使用祈使句、现在时。如使用 `change` 而不是 `changed` 或
+`<body>` is a more detailed description of the commit information, also using imperative mood and present tense like `<header>`. The `<body>` describes the motivation for this modification, such as why this change was introduced, what the previous logic was, what the current logic is, what impacts this change has, etc.
 
-`changes`。
+Finally, `<footer>` is optional and generally involves breaking changes, deprecation notices, as well as references to `GitHub issues` or `Jira tickets`, PR references, etc.
 
-`<body>` 是提交信息的更为详细的描述，与 `<header>` 一样也是用祈使句、现在时。`<body>` 描述本次
+Standardized commit messages can be parsed by tools to automatically generate documentation or release logs. In some large open-source projects, manually organizing version update documentation, interface updates, and compatibility impacts is very time-consuming and labor-intensive. Using a unified standard can greatly automate this work. Of course, different projects have different requirements and format standards for commit messages, and open-source projects or company projects also have different requirements for commit messages. Generally, you need to follow the conventions of the project you're working on. More mature open-source projects can usually be found in the `README` documentation on how to contribute, or have a separate `CONTRIBUTING.md` document that specifies code style, commit methods, etc.
 
-修改的动机，比如为什么引入本次改动，之前的逻辑是什么，现在的逻辑是什么，本次改动有哪些影响，等等。
+### 7.1.1 Automated Validation of `commit message` {#711-automated-validation-of-commit-message}
 
-最后，`<footer>` 是可选项，一般涉及破坏性改动、功能的弃用等说明，以及对 `GitHub issue` 或
+With commit message conventions in place, how do we ensure developers follow them? We can use Git's `Git Hooks` feature to validate commit messages. This article won't go into too much detail about `Git Hooks`, only providing basic explanations. For specific details, refer to the [official documentation](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) or [Atlassian's documentation](https://www.atlassian.com/git/tutorials/git-hooks).
 
-`Jira ticket` 的引用，PR 的引用等。
-
-规范的提交信息可以使用工具对内容进行解析，自动化生成文档或者发布日志。在一些大型的开源项目中，
-
-版本的更新文档，接口的更新及兼容性影响，纯粹靠人工整理是很费时费力的，用统一的规范能够极大自动化
-
-这部分工作。当然不同的项目对提交信息的要求和格式标准也不一样，开源项目或者公司项目对提交信息的
-
-要求也有差异，一般需要遵从所在项目的约定。较为成熟的开源项目一般可以在 `README` 文档中找到如何贡献，
-
-或者有单独的 `CONTRIBUTING.md` 文档，对代码风格、提交方式等进行约定。
-
-### 7.1.1 自动化校验 `commit message`
-
-有了提交信息的规范，如何确保开发者对规范进行遵守呢？我们可以使用 Git 提供的 `Git Hooks` 功能对提交
-
-的信息进行校验。本文不对 `Git Hooks` 的细节做过多介绍，仅做基础的说明，具体细节可以参考
-
-[官方文档](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks)
-
-或 [Atlassian的文档](https://www.atlassian.com/git/tutorials/git-hooks)。
-
-在新初始化的 git 项目内，我们可以在 `.git/hooks` 文件夹中找到官方提供的样例：
+In a newly initialized git project, we can find official sample scripts in the `.git/hooks` folder:
 
 ```shell
 ls -l .git/hooks
@@ -114,23 +86,21 @@ total 120
 -rwxr-xr-x  1 tomo  staff   3.6K Nov 11 20:44 update.sample
 ```
 
-涉及提交相关的是下面四个：
+The four related to commits are:
 
-- `pre-commit` - 在 Git 生成 `commit` 对象前执行
-- `prepare-commit-msg` - 在 `pre-commit` 后执行，用以生成默认的提交信息，脚本接收三个参数：
-  1. 包含提交信息的临时文件名
-  2. 提交的类型，如 `message`, `template`, `merge`, `squash`
-  3. 相关提交的 SHA1，仅在有 `-c`, `-C` 或 `--amend` 参数时提供该参数
-- `commit-msg` - 在开发者编写提交信息后执行，仅有临时文件名一个参数
-- `post-commit` - 在 `commit-msg` 后立马执行，更多做通知用
+- `pre-commit` - Executed before Git generates the `commit` object
+- `prepare-commit-msg` - Executed after `pre-commit`, used to generate the default commit message. The script receives three parameters:
+  1. The name of the temporary file containing the commit message
+  2. The type of commit, such as `message`, `template`, `merge`, `squash`
+  3. The SHA1 of the related commit, only provided when `-c`, `-C`, or `--amend` parameters are present
+- `commit-msg` - Executed after the developer writes the commit message, with only the temporary filename as a parameter
+- `post-commit` - Executed immediately after `commit-msg`, mainly used for notifications
 
-我们可以用 `prepare-commit-msg` 对提交信息规范做说明，并用 `commit-msg` 对规范的执行
+We can use `prepare-commit-msg` to explain the commit message conventions and use `commit-msg` to check compliance with the conventions. A non-zero return from the script will abort the current commit.
 
-进行检查，脚本的非 0 的返回会中断本次提交。
+If we want to apply a simple Angular-like `<header>` format, we can refer to the following implementation.
 
-如我们想应用简单的类似 Angular 的 `<header>` 的格式，可以参考如下的实现。
-
-下面是 `prepare-commit-msg` 的示例：
+Here's an example of `prepare-commit-msg`:
 
 ```python
 #!/usr/bin/env python
@@ -166,7 +136,7 @@ with open(commit_msg_filepath, 'r+') as f:
 sys.exit(0)  # return non-zero will abort current commit
 ```
 
-下面是简单的 `commit-msg` 示例：
+Here's a simple example of `commit-msg`:
 
 ```python
 #!/usr/bin/env python
@@ -199,19 +169,15 @@ with open(commit_msg_filepath, 'r') as f:
 sys.exit(0)
 ```
 
-想使用相关的 `Git Hooks`，可以在目录 `.git/hooks` 创建对应的文件，文件名为 `prepare-commit-msg`
+To use the related `Git Hooks`, create corresponding files in the `.git/hooks` directory with the names `prepare-commit-msg` and `commit-msg`, and grant them executable permissions. This way, when we perform a `git commit` operation, the corresponding scripts will be executed.
 
-及 `commit-msg`，并赋予可执行权限。这样在我们进行 `git commit` 操作时，对应的脚本就会执行。
-
-下图是相关执行示意图，其中不合规范的提交会被中断。
+The figure below shows the execution diagram, where non-compliant commits will be aborted.
 
 ![git hooks demo](git-hooks-demo.png)
 
-具体执行过程可以参考 [在线执行过程](https://asciinema.org/a/dEQHRiP9r6vjaSoSUlD9Sn1nn)
+For the specific execution process, refer to [online execution process](https://asciinema.org/a/dEQHRiP9r6vjaSoSUlD9Sn1nn)
 
-Git 的提交不会包含 `.git` 目录，所以对应的 `hooks` 的改动并不会被提交到仓库中。我们可以在仓库根目录
-
-创建 `.githooks` 文件夹并将我们实现的代码放到该目录中，通过更改配置或者软连接的方式进行引用：
+Git commits do not include the `.git` directory, so changes to the corresponding `hooks` will not be committed to the repository. We can create a `.githooks` folder in the repository root directory and place our implemented code in that directory, referencing it through configuration changes or symbolic links:
 
 ```shell
 # use config
@@ -220,68 +186,44 @@ git config core.hooksPath .githooks
 ln -sf .githooks/* .git/hooks
 ```
 
-当然这些都是客户端的校验，开发者可以完全忽视这样的一些 `Git Hooks` 的配置并引入不合规范的提交，
-
-这种情况下我们可以使用服务端校验进行处理，或者引入一些 CI 工具或使用 GitHub Action 进行校验。
+Of course, these are all client-side validations, and developers can completely ignore such `Git Hooks` configurations and introduce non-compliant commits. In this case, we can use server-side validation, or introduce some CI tools or use GitHub Actions for validation.
 
 ## 7.2 Author & Committer
 
-Git 中，Author 表示原始纂写该提交的作者，Committer 表示应用该提交的人，如合并 `Pull Request`
-
-的项目管理员。如果是个人开发者或只使用单个 Git 平台服务（如 GitHub、BitBucket 等），我们一般
-
-不需要对作者进行特别的配置。但如果使用多个 Git 平台或者有公司内部要求，我们可能需要针对不同的仓库
-
-设置不同的用户及邮箱，比如全局可以设置个人的 GitHub 账号，企业内部仓库设置企业邮箱等。
+In Git, Author represents the original author who wrote the commit, and Committer represents the person who applied the commit, such as a project administrator merging a `Pull Request`. If you're an individual developer or only use a single Git platform service (such as GitHub, BitBucket, etc.), you generally don't need to configure the author specifically. However, if you use multiple Git platforms or have internal company requirements, you may need to set different users and emails for different repositories, such as setting your personal GitHub account globally and setting your enterprise email for internal company repositories.
 
 ```shell
-# 全局默认配置
+# Global default configuration
 git config --global user.email "<github email>"
 git config --global user.name "<github username>"
-# 企业内部仓库
+# Enterprise internal repository
 git config user.email "<enterprise email>"
 git config user.name "<real name>"
 ```
 
-## 7.3 Changed files
+## 7.3 Changed Files
 
-我们所有的提交，核心的其实我们提交的文件。不同的提交涉及的文件可多可少，一般遵循以下一些原则：
+The core of all our commits is actually the files we commit. Different commits can involve varying numbers of files. Generally, follow these principles:
 
-- 提交前使用 `git diff` 查看文件的改动，使用 `git add` 添加期望进入提交的文件，
-  使用 `git status` 查看文件状态，最终使用 `git commit` 进行提交
-- 单次提交仅提交相关的改动，例如修复两个不同的 bug 应该使用两次独立的提交
-- 鼓励经常性的提交，这样可以更快的分享实现的功能，并且减少代码丢失的风险
-- 在主分支或者协作的功能分支不能提交半成品，提交之前需要进过测试
-- 编译输出，日志，中间产物等，不要引入到提交中，使用 `.gitignore` 进行相关文件的排除，不同语言
-  或者操作系统有一些通用的排除配置，参考 [github/gitignore](https://github.com/github/gitignore)
-- 密码、授权凭证、密钥等，**不要提交**。如 AWS 的 certificate.csv 文件或内容，
-  GCP 的 Service Account 文件等，泄露到公开仓库会导致资源被不法分子使用，造成损失。同时由于 Git 的特性，
-  想从历史提交中移除这类文件会较为困难，参考 [GitHub官方相关文档及描述](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)
-- 对于配置文件（如数据库连接信息等），一般使用配置模板，个人维护本地文件，且该文件在 `.gitignore`
-  中配置。或者使用 `git update-index --[no-]assume-unchanged <file>` 来忽略某些文件的改动
-- 其他一些常用命令（请在明确知道其含义后使用）
-  - `git reset <file>` - 移除被添加的文件（提交之前），`reset` 命令的其他可以查看帮助文档
-  - `git clean -f` - 移除较多的未被追踪的中间文件
-  - `git checkout <file>` - 回退对某个文件的改动（提交之前）
+- Before committing, use `git diff` to view file changes, use `git add` to add files you want to include in the commit, use `git status` to check file status, and finally use `git commit` to commit
+- A single commit should only include related changes. For example, fixing two different bugs should use two separate commits
+- Encourage frequent commits, which allows for faster sharing of implemented features and reduces the risk of code loss
+- Half-finished work should not be committed to the main branch or collaborative feature branches. Commits must be tested before submission
+- Build outputs, logs, intermediate artifacts, etc., should not be included in commits. Use `.gitignore` to exclude related files. Different languages or operating systems have some common exclusion configurations, refer to [github/gitignore](https://github.com/github/gitignore)
+- Passwords, authorization credentials, keys, etc., **must not be committed**. For example, AWS certificate.csv files or contents, GCP Service Account files, etc. Leaking to public repositories will result in resources being used by malicious actors, causing losses. Also, due to Git's characteristics, removing such files from historical commits will be quite difficult, refer to [GitHub's official documentation and description](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)
+- For configuration files (such as database connection information, etc.), generally use configuration templates, maintain local files individually, and configure the file in `.gitignore`. Or use `git update-index --[no-]assume-unchanged <file>` to ignore changes to certain files
+- Other commonly used commands (please use after clearly understanding their meaning)
+  - `git reset <file>` - Remove added files (before commit). For other uses of the `reset` command, check the help documentation
+  - `git clean -f` - Remove many untracked intermediate files
+  - `git checkout <file>` - Revert changes to a file (before commit)
 
 ## 7.4 Hash & Parent
 
-一般情况，`commit hash` 及父节点信息我们不需要额外关注，但在特定场景下我们可能需要对 `commit`
+In general, we don't need to pay extra attention to `commit hash` and parent node information, but in specific scenarios we may need to fix or otherwise process `commits`. In such scenarios, we need to understand the entire git commit chain, the parent node corresponding to each commit, the common ancestor between branches, and the differences between local and remote, especially when involving `rebase` related operations. At the same time, we need to follow the workflow model used by the project throughout the entire commit process, using the operations recommended in the corresponding workflow model (for common workflow models, refer to [Atlassian documentation](https://www.atlassian.com/git/tutorials/comparing-workflows)).
 
-进行修复或者其他处理。在这样的场景下，我们需要理解整个 git 的提交链，每个提交对应的父节点，分支
+Here are some scenarios involved in actual development:
 
-间的共同祖先，以及本地与远端的差异，尤其涉及 `rebase` 相关的操作时。同时我们需要在整个提交中
-
-遵循项目使用的工作流模型，使用对应工作流模型中建议的操作（常见的工作流模型参考
-
-[Atlassian文档](https://www.atlassian.com/git/tutorials/comparing-workflows)）。
-
-下面是一些实际开发过程中涉及的场景：
-
-- 在自身的开发分支，某个功能涉及多个提交，在正式合并至主分支前对相关的提交进行整理，可以使用
-  `git rebase -i <commit>` 命令，对提交进行合并、废弃、修改提交信息等处理。需要注意的是如果提交
-  已经发布到远端，需要使用 `git push -f` 进行覆盖（仅限个人开发分支）。下面是一个简单的例子及相关
-  命令描述，常见的命令有 `pick`, `reword`, `fixup`, `drop` 等。
+- In your own development branch, a feature involves multiple commits. Before formally merging to the main branch, organize the related commits using the `git rebase -i <commit>` command to merge, discard, modify commit messages, etc. Note that if the commits have already been published to the remote, you need to use `git push -f` to overwrite (only for personal development branches). Below is a simple example and related command descriptions. Common commands include `pick`, `reword`, `fixup`, `drop`, etc.
 
 ```bash
 $ git rebase -i 8717c71fc
@@ -317,12 +259,10 @@ fixup d9a9d7f04 feat: some feature third commit
 # However, if you remove everything, the rebase will be aborted.
 ```
 
-- 在一些 Git 工作流模型中，使用 `git pull --rebase` 对本地提交进行更新
-- 原则上禁止对主分支等进行 `git push -f` 操作，涉及需要回退的，使用 `git revert <commit>`
-- 涉及多分枝代码同步，可以使用 `git cherry-pick` 命令
+- In some Git workflow models, use `git pull --rebase` to update local commits
+- In principle, `git push -f` operations on the main branch are prohibited. For rollbacks that need to be made, use `git revert <commit>`
+- For multi-branch code synchronization, you can use the `git cherry-pick` command
 
 ## 7.5 Exercise
 
-基于课程中[7.1.1 自动化校验commit message](https://github.com/datawhalechina/faster-git/blob/main/lecture07/README.md#711-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%A0%A1%E9%AA%8Ccommit-message)方案，
-实现[README.md](https://github.com/datawhalechina/faster-git/blob/main/README.md#commit-message)
-中提交信息规范的`git-hook`的实现。
+Based on the [7.1.1 Automated Validation of commit message](#711-automated-validation-of-commit-message) solution in the course, implement the `git-hook` for the commit message specification in [README.md](https://github.com/datawhalechina/faster-git/blob/main/README.md#commit-message).

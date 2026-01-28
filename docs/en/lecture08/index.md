@@ -1,164 +1,166 @@
-# 第八章 Github/Gitee 使用说明
+# Chapter 8 GitHub/Gitee User Guide
 
-## 8.0 初识 GitHub
+## 8.0 Introduction to GitHub
 
- 可能同学们都或多或少听说过 Github，Github 是一个使用 Git 作为版本管理工具的代码托管平台，由于其用户量大并且氛围友好，又经常被大家戏称为“全球最大同性交流平台”。事实上，依赖于 Git 的强大协作能力，Github 是开源软件发展的主战场之一。如果还有同学没有注册过 Github，可以先登陆<http://github.com>注册账号
+You may have heard of GitHub to some extent. GitHub is a code hosting platform that uses Git as its version control tool. Due to its large user base and friendly atmosphere, it is often jokingly referred to as "the world's largest social networking platform for developers." In fact, relying on Git's powerful collaboration capabilities, GitHub is one of the main battlegrounds for open-source software development. If you haven't registered for GitHub yet, you can visit <http://github.com> to create an account.
 
-## 8.1 使用 Github 托管代码
+## 8.1 Using GitHub to Host Code
 
-### 8.1.1 创建仓库
+### 8.1.1 Creating a Repository
 
-Github 上几乎所有的事情都是围绕着仓库展开的。我们首先来学习如何新建一个仓库并满足自己的开发需求。
+Almost everything on GitHub revolves around repositories. Let's first learn how to create a new repository to meet your development needs.
 
-一个 GitHub 仓库实质上是一个包含了你的项目所有文件的文件夹。 .git 文件夹也包含在其中用于版本控制。
+A GitHub repository is essentially a folder that contains all the files for your project. The .git folder is also included for version control.
 
-登陆 GitHub 主页，点击右上角 + 号即可创建一个仓库，如下图：
+Log in to the GitHub homepage and click the + icon in the upper right corner to create a repository, as shown below:
 
 <img src="./imgs/new-repo-button.png" style="zoom:50%;" />
 
-点击后会跳转到新建仓库的表单，
+After clicking, you will be redirected to the new repository form:
 
 <img src="./imgs/create-repo.png" style="zoom: 33%;" />
 
-注意：
+Note:
 
-1. github 上的仓库一般都会包含 readme 文件，该 readme 文件会在项目页面进行展示
-2. .gitignore 文件可以用来忽略工作区的私有文件（例如本地配置、缓存文件、node_modules 等）
+1. Repositories on GitHub generally include a README file, which will be displayed on the project page
+2. The .gitignore file can be used to ignore private files in the working directory (such as local configurations, cache files, node_modules, etc.)
 
 <img src="./imgs/new-repo.png" style="zoom:50%;" />
 
-点击绿色的 code 按钮，选择相应的协议即可拿到该项目的地址，在本地只需要 clone 下来就可以进行开发了，开发完成后 push 到原仓库即可
+Click the green "code" button and select the appropriate protocol to get the project's address. Locally, you just need to clone it to start development. After development is complete, push it back to the original repository.
 
-### 8.1.2 仓库界面介绍
+### 8.1.2 Repository Interface Introduction
 
-我们以 vscode 项目进行介绍
+We'll use the VSCode project as an example for introduction.
 
-访问<https://github.com/microsoft/vscode> 即可看到如下的界面
+Visit <https://github.com/microsoft/vscode> to see the following interface:
 
 ![](./imgs/repo-page.png)
 
-整个页面的信息量很大，我们主要介绍几个：
+The page contains a lot of information. We'll mainly introduce a few key elements:
 
-**页面的左上角：**
+**Upper left corner of the page:**
 
-**Star**：Star 类似于朋友圈的点赞，给项目 star 代表了你对项目的认可
+**Star**: Star is similar to a "like" on social media. Starring a project represents your recognition of the project.
 
-> 所以尽量不要像朋友圈集赞一样要求身边朋友刷 star
+> So try not to ask friends to star your projects like collecting likes on social media.
 
-**Fork**：Fork 操作实际上是创建一个仓库的副本，并将仓库的 upstream 指向原仓库
+**Fork**: The Fork operation actually creates a copy of a repository and points the repository's upstream to the original repository.
 
-> 小问题：为什么要 fork 呢？为什么不直接 push 呢？
+> Small question: Why fork? Why not push directly?
 >
-> fork 方便了多人协作
+> Fork facilitates multi-person collaboration.
 
-**Watch**：Watch 操作可以向你的邮箱中推送该仓库的推送信息
+**Watch**: The Watch operation can push notification information about the repository to your email.
 
 <img src="./imgs/watch.png" alt="image-20220430232629453" style="zoom:25%;" />
 
-> 提示：如果不是特别重要的项目，不要随意点 Watch，否则很容易邮箱被轰炸
+> Tip: If it's not a particularly important project, don't click Watch casually, otherwise your inbox may get bombarded.
 
-**Issues**:Issues 在 Github 官方文档中被翻译为议题，作用是针对仓库的内容进行讨论（例如 bug 反馈/新功能推荐）
+**Issues**: Issues are translated as "issues" in GitHub's official documentation. Their purpose is to discuss the content of the repository (such as bug reports/new feature recommendations).
 
-> 提示：Issues 不等同于评论区，Issues 板块应该专注于解决问题，不要在 Issues 中发一些和项目无关的内容，这样可能会消耗很多 maintainer 的精力
+> Tip: Issues are not equivalent to a comment section. The Issues section should focus on solving problems. Don't post content unrelated to the project in Issues, as this may consume a lot of the maintainer's energy.
 
-**Pull Requests**：Pull Requests，简称 PR，是 github 中将修改过的代码分支合并到目标分支的操作。前面 git 的学习中，我们都知道 commit 是 git 的最小工作单元，在 github 的仓库中，PR 是主要的工作单元。很多同学刚刚接触 GitHub 时，对于 Pull Requests 很不理解：什么是拉取请求？在 gitlab 中，pr 的操作叫做 Merge Request， 实际上大家可以把 PR 理解为“我修改好了你的代码，现在请求你把代码拉回主仓库中”
+**Pull Requests**: Pull Requests, abbreviated as PR, is the operation in GitHub to merge a modified code branch into the target branch. In our previous Git learning, we know that commit is Git's smallest working unit. In GitHub repositories, PR is the main working unit. Many students are confused about Pull Requests when they first encounter GitHub: What is a pull request? In GitLab, the PR operation is called Merge Request. Actually, you can understand PR as "I've finished modifying your code, now I'm requesting you to pull the code back into the main repository."
 
-**Action**：Github Action 是 GitHub 推出的自动化构建工具，感兴趣的同学可以阅读文档
+**Action**: GitHub Action is an automated build tool launched by GitHub. Interested students can read the documentation.
 
-**Projects**：针对某一仓库的项目板（看板）
+**Projects**: Project board (Kanban) for a specific repository.
 
-**Wiki**： 存放一些介绍性的内容
+**Wiki**: Stores some introductory content.
 
-**Security**：与安全相关，这里不做介绍
+**Security**: Related to security, not introduced here.
 
-**Insight**：里面包含里项目的一些数据，包括代码贡献的时间分布图，每个人的贡献量等 metric
+**Insights**: Contains some data about the project, including time distribution charts of code contributions, each person's contribution amount, and other metrics.
 
-**discussion**：vscode 仓库中并没有开启 discussion 功能，这里展示一下 wagtail 社区的，该功能像一个真正的讨论区
+**Discussion**: The VSCode repository doesn't have the discussion feature enabled. Here's an example from the Wagtail community. This feature works like a real discussion forum.
 
 <img src="./imgs/discussion.png" style="zoom:50%;" />
 
-## 8.2 提交 issue
+## 8.2 Submitting an Issue
 
-我们以 vscode 为例展示提交 issue
+We'll use VSCode as an example to demonstrate submitting an issue.
 
 ![](./imgs/issue-tab.png)
 
-进入 Issues 选项卡，可以看到 vscode 项目已经准备了一些模版，我们点击 Bug report
+Enter the Issues tab, and you can see that the VSCode project has prepared some templates. Let's click on Bug report.
 
 ![](./imgs/issue-template.png)
 
-> 提示：在提 bug 时，请尽可能详细的描述出 bug 发生的步骤以及所运行的环境（<https://stackoverflow.com/help/minimal-reproducible-example> ）。一般来说，Issue 是参与项目贡献的起点，一个高质量的 Issue 也会让 maintainer 更愿意交流、处理。
+> Tip: When reporting a bug, please describe the steps to reproduce the bug and the environment in which it runs as detailed as possible (<https://stackoverflow.com/help/minimal-reproducible-example>). Generally speaking, Issues are the starting point for participating in project contributions. A high-quality Issue will also make maintainers more willing to communicate and handle it.
 
-如果你是项目的 maintainer，也可以通过右侧对该 issue 进行更详细的设置，这里不详细介绍了。
+If you are the project maintainer, you can also make more detailed settings for the issue on the right side. We won't go into detail here.
 
-## 8.3 提交 PR
+## 8.3 Submitting a PR
 
-如果你 fork 了一份项目代码并做了修改，并且希望将修改的代码合并进上游仓库中，就可以提交 PR
+If you have forked a project's code and made modifications, and you want to merge the modified code into the upstream repository, you can submit a PR.
 
 ![](./imgs/pr-tab.png)
 
-上图为 vscode 的 pr 界面，点击 New pull request 即可新建 pr。具体的 PR 流程这里也不详细讲解了。
+The image above shows VSCode's PR interface. Click "New pull request" to create a new PR. The specific PR process won't be explained in detail here.
 
-注意：不是所有的 PR 都会被合并，所以在提交 PR 前请先和 maintainer 进行沟通，并且在开发的过程中反馈进度，一种比较好的方式就是 draft PR，如下图所示：
+Note: Not all PRs will be merged, so please communicate with the maintainer before submitting a PR and provide feedback on progress during development. A good approach is to use a draft PR, as shown below:
 
 <img src="./imgs/draft-pr.png" style="zoom:33%;" />
 
-draft PR 表示该 PR 还没有开发完，项目的 maintainer 不需要进行 reveiw 和 merge，只需要简单看看代码是否符合预期。
+A draft PR indicates that the PR is not yet complete. The project maintainer doesn't need to review and merge it, just briefly check if the code meets expectations.
 
-> 小提示：在提交 PR 时，尽可能关联相关 Issue，并说明你的代码解决了什么问题。
+> Small tip: When submitting a PR, try to associate related Issues and explain what problem your code solves.
 
-**更新 fork 的项目 -Fetch upstream**
+**Updating a Forked Project - Fetch Upstream**
 
-情景：用户 2729956566 的对项目进行了 fork，提交的 PR 通过了，或者项目进行了其它更新。此时，我们 fork 的项目已不是最新版，因此需要更新我们 fork 的项目到最新版。
+Scenario: User 2729956566 forked a project, the submitted PR was approved, or the project had other updates. At this point, our forked project is no longer the latest version, so we need to update our forked project to the latest version.
 
-大概步骤 [视频参考链接](https://www.bilibili.com/video/BV1Vb411A7z2?spm_id_from=333.337.search-card.all.click)
+General steps [Video reference link](https://www.bilibili.com/video/BV1Vb411A7z2?spm_id_from=333.337.search-card.all.click)
 
 ```shell
-# 查看远程仓库有几个分支
+# Check how many branches the remote repository has
 git remote -v
 
-# 将仓库的原始地址加进去
+# Add the original repository address
 git remote add upstream git@github.com:2951121599/repo_for_test_pr.git
 
-# 再次查看远程仓库的分支 (会多上有仓库upstream)
+# Check the remote repository branches again (there will be an additional upstream repository)
 git remote -v
 
-# fetch将远程分支拉到本地 pull = fetch + merge (pull会做自动合并)
-# 创建新分支 master/upstream
+# Fetch pulls the remote branch to local. pull = fetch + merge (pull does automatic merging)
+# Create a new branch master/upstream
 git fetch upstream
 
-# 查看远程分支 若跟本地分支名一样 然后做一下合并
+# View remote branches. If the name is the same as the local branch, then do a merge
 git branch -r
 
-# 和原始仓库的远程保持一致 rebase不会做合并操作,将当前分支的修改复制并放在目标分支的最后一次 而merge会将两个分支合在一起
-# 因此没做贡献用rebase就够了
+# Keep consistent with the original repository's remote. Rebase doesn't do merge operations, it copies the current branch's modifications and places them after the last commit of the target branch, while merge combines two branches together
+# So if you haven't made contributions, rebase is enough
 git rebase upstream/master
 
-# 推送
+# Push
 git push
 ```
 
-## 8.4 探索 Github
+## 8.4 Exploring GitHub
 
-对于大多数程序员来说，Github 的一个重要用途就是学习别人的代码，看自己的任务有没有已经写好的轮子可以用。因此如何高效的探索 Github 也是很重要的，这里给大家介绍几种探索 GitHub 的小技巧
+For most programmers, an important use of GitHub is to learn from others' code and see if there are ready-made solutions for their tasks. Therefore, how to efficiently explore GitHub is also very important. Here are some tips for exploring GitHub.
 
 ### 8.4.1 Explore
 
-点击 GitHub 最上方的 Explore 或输入<https://github.com/explore> 即可进入。Explore 板块不仅可以根据你的兴趣进行项目的推荐，而且 Trending 榜展示了当前综合热度最高的项目。关注 Trending 可以随时掌握整个 Github 的最新动向![](./imgs/trending.png)
+Click Explore at the top of GitHub or enter <https://github.com/explore>. The Explore section not only recommends projects based on your interests, but the Trending list also shows the projects with the highest current comprehensive popularity. Following Trending allows you to keep up with the latest trends across GitHub.
 
-> 补充 <https://kamranahmed.info/githunt/> 也是一个追踪热门项目的网站
+![](./imgs/trending.png)
 
-### 8.4.2 快捷键
+> Supplement: <https://kamranahmed.info/githunt/> is also a website for tracking popular projects.
 
-GitHub 网站拥有一系列快捷键，你可以通过快捷键来完成你想要完成的动作，例如 ctrl/command+k 会调起一个类似于 powertoy 一样的搜索框，在这里你可以直接进行搜索。
+### 8.4.2 Keyboard Shortcuts
+
+The GitHub website has a series of keyboard shortcuts that allow you to complete actions you want to perform. For example, Ctrl/Command+K brings up a search box similar to PowerToys, where you can search directly.
 
 <img src="./imgs/shortcuts.png" style="zoom:50%;" />
 
-类似的快捷键有很多，完整的快捷键见文档<https://docs.github.com/cn/get-started/using-github/keyboard-shortcuts>
+There are many similar shortcuts. For a complete list of shortcuts, see the documentation: <https://docs.github.com/en/get-started/using-github/keyboard-shortcuts>
 
-### 8.4.3 高级搜索
+### 8.4.3 Advanced Search
 
-高效的搜索方式可以节约你很多时间，例如下面代码可以帮助你找到 Github 中 star 量超过 10000 的项目
+Efficient search methods can save you a lot of time. For example, the following code can help you find projects on GitHub with more than 10,000 stars:
 
 ```bash
 stars:>10000
@@ -166,139 +168,139 @@ stars:>10000
 
 ![](./imgs/advanced-search.png)
 
-其他搜索技巧可以参考上图红框中的链接
+For other search tips, refer to the link in the red box in the image above.
 
-**常见搜索的快速备忘单**
+**Quick Cheat Sheet for Common Searches**
 
-#### 8.4.3.1 基本搜索
+#### 8.4.3.1 Basic Search
 
-| 搜索                    | 使用…查找存储库                                |
-| ----------------------- | ------------------------------------------------ |
-| cat stars:>100          | 查找星数超过 100 的 cat 存储库。                 |
-| user:2951121599         | 从用户 2951121599 获取所有存储库。               |
-| qucik_sort extension:py | 在带有 py 扩展名的代码中查找所有 qucik_sort 的实例。 |
-| NOT cat                 | 排除所有包含 cat 的结果。                        |
+| Search                  | Find repositories using...                                    |
+| ----------------------- | ------------------------------------------------------------- |
+| cat stars:>100          | Find cat repositories with more than 100 stars.               |
+| user:2951121599         | Get all repositories from user 2951121599.                    |
+| qucik_sort extension:py | Find all instances of qucik_sort in code with py extension.   |
+| NOT cat                 | Exclude all results containing cat.                           |
 
-#### 8.4.3.2 存储库搜索
+#### 8.4.3.2 Repository Search
 
-查看你在 GitHub 上可以访问的项目，你也可以过滤结果
+View projects you have access to on GitHub, and you can also filter results.
 
-| 搜索                     | 使用…查找存储库                          |
-| ------------------------ | ------------------------------------------ |
-| python forks:>200        | 查找所有大于 200 个 forks 的 Python 存储库。 |
-| awesome-python fork:true | 包括 awesome-python 的分支。               |
-| awesome-python fork:only | 仅返回 awesome-python 的分支。             |
+| Search                   | Find repositories using...                                    |
+| ------------------------ | ------------------------------------------------------------- |
+| python forks:>200        | Find all Python repositories with more than 200 forks.        |
+| awesome-python fork:true | Include forks of awesome-python.                              |
+| awesome-python fork:only | Return only forks of awesome-python.                          |
 
-#### 8.4.3.3 代码搜索
+#### 8.4.3.3 Code Search
 
-代码搜索会查看托管在 GitHub 上的文件。您还可以过滤结果：
+Code search looks at files hosted on GitHub. You can also filter results:
 
-| 搜索                        | 使用…查找存储库                                       |
-| --------------------------- | ------------------------------------------------------- |
-| chunk repo:2951121599/Utils | 从存储库 2951121599/Utils 中查找所有 chunk 的 code 实例。 |
-| pandas user:2951121599      | 从所有公共 2951121599 存储库中查找对 pandas 的引用。    |
-| examples path:/docs/        | 在路径 /docs/ 中查找所有 examples 。                     |
+| Search                      | Find repositories using...                                           |
+| --------------------------- | -------------------------------------------------------------------- |
+| chunk repo:2951121599/Utils | Find all code instances of chunk from repository 2951121599/Utils.   |
+| pandas user:2951121599      | Find references to pandas from all public 2951121599 repositories.   |
+| examples path:/docs/        | Find all examples in path /docs/.                                    |
 
-#### 8.4.3.4 问题搜索
+#### 8.4.3.4 Issue Search
 
-问题搜索查看 GitHub 上的 issues and pull requests（问题和拉取请求）。您还可以过滤结果：
+Issue search looks at issues and pull requests on GitHub. You can also filter results:
 
-| 搜索                 | 发现问题…                      |
-| -------------------- | ------------------------------ |
-| cat is:open          | 查找未解决的猫问题。           |
-| strange comments:>42 | 超过 42 条评论的问题。         |
-| hard label:bug       | 标记为错误的难题。             |
-| author:2951121599    | 所有问题均由 2951121599 撰写。 |
-| mentions:tpope       | 所有提到 tpope 的问题。        |
-| assignee:2951121599  | 分配给 2951121599 的所有问题。 |
+| Search               | Find issues...                         |
+| -------------------- | -------------------------------------- |
+| cat is:open          | Find open cat issues.                  |
+| strange comments:>42 | Issues with more than 42 comments.     |
+| hard label:bug       | Hard issues labeled as bugs.           |
+| author:2951121599    | All issues authored by 2951121599.     |
+| mentions:tpope       | All issues mentioning tpope.           |
+| assignee:2951121599  | All issues assigned to 2951121599.     |
 
 ### 8.4.4 CodeSpace
 
-在你的仓库界面，输入英文状态下的 `.`，即可进入该项目的 web editor，这实质上是一个云端的 vscode，方便用户查找编辑代码。很可惜现在 CodeSpace 还不能支持在线运行代码，一些简单的修改可以配合 Action 使用
+In your repository interface, press `.` (period key in English input mode) to enter the project's web editor. This is essentially a cloud-based VSCode, making it convenient for users to search and edit code. Unfortunately, CodeSpace cannot support running code online yet. Some simple modifications can be used in combination with Actions.
 
 ### 8.4.5 Copilot
 
-Copilot 是 Github 通过公开代码训练的一个强大的代码补全工具，现在还在内测阶段，有感兴趣的同学可以在<https://copilot.github.com/> 申请，这里不过多介绍了
+Copilot is a powerful code completion tool trained by GitHub using public code. It is still in the beta testing phase. Interested students can apply at <https://copilot.github.com/>. We won't introduce it in detail here.
 
 ### 8.4.6 Readme-profile
 
-用户主页也是探索 Github 很好的地方，我的用户主页如下图
+User homepages are also a great place to explore GitHub. My user homepage is shown below:
 
 ![](./imgs/homepage.png)
 
-左边展示了你参与过的项目，右边展示了 Github Explore 推荐的项目，中间展示了你 Follow 的用户最近的动态通常来说，你 Follow 的用户越多，主页动态越精彩。
+The left side shows projects you've participated in, the right side shows projects recommended by GitHub Explore, and the middle shows recent activities of users you follow. Generally speaking, the more users you follow, the more exciting your homepage feed will be.
 
-> 补充资料：思否今年做过一个中国开源爱好者榜单，有兴趣的同学可以看下<https://github.com/OpenSourceWin/hacking-force>
+> Supplementary material: SegmentFault made a list of Chinese open-source enthusiasts this year. Interested students can check it out: <https://github.com/OpenSourceWin/hacking-force>
 
-### 8.4.7 Github API
+### 8.4.7 GitHub API
 
-Github 对针对开发者提供了一系列 API，详情见<https://docs.github.com/en/developers> 。通过 API 可以对数据采集分析，探索更微观的 GitHub。也有开源项目专门做这件事情，例如 open-digger 开源项目（<https://github.com/X-lab2017/open-digger> ），感兴趣的同学去自己探索下，这里也不多讲了。
+GitHub provides a series of APIs for developers. For details, see <https://docs.github.com/en/developers>. Through APIs, you can collect and analyze data and explore GitHub at a more microscopic level. There are also open-source projects specifically doing this, such as the open-digger open-source project (<https://github.com/X-lab2017/open-digger>). Interested students can explore it themselves. We won't elaborate here.
 
-### 8.4.8 保持清醒 保持正义
+### 8.4.8 Stay Alert, Stay Just
 
-Github 不是法外之地，如果有遇到代码滥用行为或者政治/宗教等歧视行为，请毫不犹豫地举报！
+GitHub is not a lawless place. If you encounter code abuse or political/religious discrimination, please report it without hesitation!
 
->  **练习一**（选做）：github readme-profile 练习
+> **Exercise 1** (Optional): GitHub readme-profile practice
 >
-> Readme-profile 是 github 提供的一个主页展示仓库，具体实现方式为创建一个与自己用户名相同的仓库，该仓库可以展示在 githubprofile 中。同时，你也可以添加各种 badges 来让你的主页变得很炫酷。
+> Readme-profile is a homepage display repository provided by GitHub. The specific implementation method is to create a repository with the same name as your username. This repository can be displayed in your GitHub profile. At the same time, you can also add various badges to make your homepage look very cool.
 >
-> 一些可以参考的资源：
+> Some resources for reference:
 >
 > <https://github.com/rzashakeri/beautify-github-profile>
 >
 > <https://github.com/kautukkundan/Awesome-Profile-README-templates>
 
-> **练习二**（选做）：小组内 PR 练习
+> **Exercise 2** (Optional): PR practice within groups
 >
-> 以小组为单位建立学习一个仓库，每人向仓库中提交 pr 并合并到主分支中。
+> Establish a learning repository as a group, and each person submits a PR to the repository and merges it into the main branch.
 
-## 8.5 国内其他代码托管平台简介
+## 8.5 Brief Introduction to Other Domestic Code Hosting Platforms
 
 Gitee/Coding/jihulab
 
-作为代码托管平台，Github 由于网速等原因的限制，访问起来会很慢，可以使用开源项目 [dotnetcore/FastGithub: github加速神器](https://github.com/dotnetcore/FastGithub)，只需下载安装运行，即可提高网站访问速度。
+As a code hosting platform, GitHub may be slow to access due to network speed and other limitations. You can use the open-source project [dotnetcore/FastGithub: GitHub acceleration tool](https://github.com/dotnetcore/FastGithub). Just download, install, and run it to improve website access speed.
 
-这时可以采用国内的代码托管平台，这里我们只介绍下 Gitee
+In this case, you can use domestic code hosting platforms. Here we only introduce Gitee.
 
-网址：<https://gitee.com/>
+Website: <https://gitee.com/>
 
-Gitee 整体的功能与 github 相差不大，这里就不多介绍了，等待大家的探索。
+Gitee's overall functionality is not much different from GitHub. We won't introduce it in detail here, waiting for everyone to explore.
 
-下面我们讲一下，如何通过 Gitee 克隆 Github 上的项目
+Below we'll explain how to clone projects from GitHub through Gitee.
 
-在 Gitee 创建仓库时，点击右上角 `点击导入`
+When creating a repository on Gitee, click "Import" in the upper right corner:
 
 ![gitee-import-repo](./imgs/gitee-import-repo.png)
 
-即可导入其他平台项目，并享受高速的克隆速度。非常方便～
+You can then import projects from other platforms and enjoy high-speed cloning. Very convenient!
 
-如果大家想将代码回传到 GitHub 中，请复习 git remote 相关知识进行操作。
+If you want to push code back to GitHub, please review the knowledge related to git remote to perform the operation.
 
 ----
 
-本章内容就介绍到这里了，下面是一些补充资料：
+This concludes the content of this chapter. Below are some supplementary materials:
 
-补充资料一：一些 Git 相关的开源仓库
+Supplementary Material 1: Some Git-related open-source repositories
 
-Progit2:<https://github.com/progit/progit2>
+Progit2: <https://github.com/progit/progit2>
 
-git-cheat-sheet:<https://github.com/arslanbilal/git-cheat-sheet>
+git-cheat-sheet: <https://github.com/arslanbilal/git-cheat-sheet>
 
-githug-- 一个 ruby 编写的 git 练习游戏:<https://github.com/Gazler/githug>
+githug - A Git practice game written in Ruby: <https://github.com/Gazler/githug>
 
-gitignore 模版：<https://github.com/github/gitignore>
+gitignore templates: <https://github.com/github/gitignore>
 
-git-extras：<https://github.com/tj/git-extras>
+git-extras: <https://github.com/tj/git-extras>
 
-git-recipes：<https://github.com/geeeeeeeeek/git-recipes>
+git-recipes: <https://github.com/geeeeeeeeek/git-recipes>
 
-补充资料二：GitHub 高赞项目推荐
+Supplementary Material 2: Recommended High-Star GitHub Projects
 
-awesome 系列：
+Awesome series:
 
-主仓库<https://github.com/sindresorhus/awesome>
+Main repository: <https://github.com/sindresorhus/awesome>
 
-周刊系列：
+Weekly series:
 
 <https://github.com/GrowingGit/GitHub-Chinese-Top-Charts>
 
@@ -306,7 +308,7 @@ awesome 系列：
 
 <https://github.com/GitHubDaily/GitHubDaily>
 
-资源集合系列：
+Resource collection series:
 
 <https://github.com/papers-we-love/papers-we-love>
 
@@ -318,4 +320,4 @@ awesome 系列：
 
 <https://github.com/TheAlgorithms>
 
-这里只列出了一小部分项目，感兴趣的同学可以在学习群里交流～
+This is only a small portion of the projects listed. Interested students can communicate in the study group!

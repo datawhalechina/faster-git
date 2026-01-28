@@ -1,16 +1,16 @@
-# 第三章 Git 分支管理
+# Chapter 3: Git Branch Management
 
-## 3.1 分支的简介
+## 3.1 Introduction to Branches
 
-Git 最重要的运用场景是多人协同开发，但是如何能保证每个人之间的开发不影响其他人的开发进程，Git 分支的出现就是解决了这个问题，使得每个人之间的开发是独立的，互不影响的。
+The most important use case for Git is collaborative development with multiple people. But how can we ensure that each person's development work doesn't interfere with others' progress? Git branches solve this problem by making each person's development independent and non-interfering.
 
-有的人将 Git 的分支模型称为它的“必杀技特性”，也正因为这一特性，使得 Git 从众多版本控制系统中脱颖而出。 为何 Git 的分支模型如此出众呢？ 因为 Git 处理分支的方式可谓是难以置信的轻量，创建新分支这一操作几乎能在瞬间完成，并且在不同分支之间的切换操作也是一样便捷。 与许多其它版本控制系统不同，Git 鼓励在工作流程中频繁地使用分支与合并，哪怕一天之内进行许多次。 理解和精通这一特性，你便会意识到 Git 是如此的强大而又独特，并且从此真正改变你的开发方式。
+Some people call Git's branching model its "killer feature," and it is precisely this feature that makes Git stand out among many version control systems. Why is Git's branching model so outstanding? Because Git handles branches in an incredibly lightweight manner—creating a new branch can be completed almost instantly, and switching between different branches is equally convenient. Unlike many other version control systems, Git encourages frequent use of branching and merging in workflows, even multiple times a day. Understanding and mastering this feature will make you realize how powerful and unique Git is, and will truly change the way you develop from then on.
 
-## 3.2 分支的相关操作
+## 3.2 Branch Operations
 
-### 3.2.1 分支的创建
+### 3.2.1 Creating Branches
 
-Git 分支的创建十分简单，我们可以使用 `git branch` 来查看现有的分支或创建新的分支。当不带任何命令参数时，输入 `git branch` 可以帮助我们查看当前项目所拥有的全部分支。并且 Git 会使用 * 来标明我们当前所处的分支上。
+Creating Git branches is very simple. We can use `git branch` to view existing branches or create new ones. When entered without any command parameters, `git branch` helps us view all branches that the current project has. Git uses an asterisk (*) to indicate which branch we are currently on.
 
 ```bash
 git branch
@@ -20,26 +20,26 @@ git branch
 * master
 ```
 
-当我们想要新增加新的分支时，只需要在 `git branch` 命令后面加上我们想要新建的分支的名称即可。
+When we want to add a new branch, we simply need to add the name of the branch we want to create after the `git branch` command.
 
 ```bash
-# 创建issue102的分支
+# Create the issue102 branch
 git branch issue102
-# 查看现有的所有分支
+# View all existing branches
 git branch
 ```
 
 ```bash
-# 现有的分支
+# Existing branches
 issue102
 *master
 ```
 
-我们可以发现虽然创建了 `issue102` 的分支，但是当前分支还是在 master 上。我们可以通过 `git checkout` 命令来进行切换分支。
+We can see that although the `issue102` branch has been created, the current branch is still on master. We can use the `git checkout` command to switch branches.
 
-### 3.2.2 分支的切换
+### 3.2.2 Switching Branches
 
-在上面的例子中我们发现虽然创建了新的分支，但是当前分支还是在 `master` 分支上，我们需要通过 `git checkout` 命令切换到新建的 `issue102` 分支上，来进行后续的开发操作。
+In the example above, we found that although a new branch was created, the current branch is still on the `master` branch. We need to use the `git checkout` command to switch to the newly created `issue102` branch to continue with subsequent development operations.
 
 ```bash
 git checkout issue102
@@ -49,7 +49,7 @@ git checkout issue102
 Switched to branch 'issue102'
 ```
 
-这是我们可以在查看下当前分支的状态，我们可以发现当前分支已经转换到了 `issue102` 分支上。
+Now we can check the current branch status again, and we can see that the current branch has switched to the `issue102` branch.
 
 ```bash
 git branch
@@ -57,13 +57,13 @@ git branch
 master
 ```
 
-切换分支后，我们就可以进行自己的开发。分支上的文件状态是不同的。我们可以通过下面的例子有着更深入的了解。
+After switching branches, we can proceed with our own development. The file states on branches are different. We can gain a deeper understanding through the following example.
 
 ```bash
-# 切换分支
+# Switch branches
 git checkout issue102
 
-# 在分支上创建下新的文件
+# Create new files on the branch
 touch issue102.md
 git add issue102.md
 git commit -m "update issue102.md"
@@ -73,7 +73,7 @@ git add issue102.html
 git commit -m "update issue102.html"
 ```
 
-在完成上述命令后，我们可以通过 `git log --oneline` 检查下当前 Git 的记录。
+After completing the above commands, we can check the current Git log using `git log --oneline`.
 
 ```bash
 cd836b0 (HEAD -> issue102) update issue102.html
@@ -81,48 +81,48 @@ cd836b0 (HEAD -> issue102) update issue102.html
 242c407 (master) update hello.md
 ```
 
-我们可以发现 issue102 分支上的记录与 master 的记录间隔开了。除此之外，当我们切换回主分支后，我们还会发现 master 分支下没有新建的 issue102.md 和 issue102.html 两个文件。正如下图所示：
+We can see that the records on the issue102 branch are separated from the master records. In addition, when we switch back to the main branch, we will also find that the master branch does not have the newly created issue102.md and issue102.html files. As shown in the figure below:
 
 ![](./figures/branch_file.png)
 
-### 3.2.3 分支的合并
+### 3.2.3 Merging Branches
 
-当我们在分支上完成来开发工作后，我们需要将我们在当前分支进行的工作合并到主分支上。首先我们需要切回需要合并到的分支上，此处以 `issue102` 合并到 `master` 上为例子进行演示。
+After completing development work on a branch, we need to merge the work we've done on the current branch into the main branch. First, we need to switch back to the branch we want to merge into. Here we'll demonstrate using the example of merging `issue102` into `master`.
 
 ```bash
-# 切换回主分支
+# Switch back to the main branch
 git checkout master
-# 使用git merge 进行合并
+# Use git merge to perform the merge
 git merge issue102
 # git branch --no-merged
-# 查看所有未合并工作的分支
+# View all branches with unmerged work
 ```
 
 ![](./figures/merge.png)
 
-我们可以发现原来在 `issue102` 分支上的文件已经合并到了主分支上了，并且 `issue102` 分支还存在。大家可以根据实际的需求进行分支的保留与删除。
+We can see that the files originally on the `issue102` branch have been merged into the main branch, and the `issue102` branch still exists. You can choose to keep or delete branches based on actual needs.
 
-有时候分支的合并不会一番顺利，当我们在两个分支中对同一个文件的同一个部分进行了不同的修改，Git 就没有办法顺利的合并他们，会在合并的时候产生合并冲突。比如我们在 `issue102` 分支和 `master` 分支下对 `issue102.md` 文件进行了修改，当我们将 issue102 分支融合到主分支上时就会发生冲突。如下图所示：
+Sometimes branch merging doesn't go smoothly. When we make different modifications to the same part of the same file in two branches, Git cannot merge them smoothly and will produce a merge conflict during the merge. For example, if we modify the `issue102.md` file in both the `issue102` branch and the `master` branch, a conflict will occur when we merge the issue102 branch into the main branch. As shown in the figure below:
 
 ![](./figures/merge_error.png)
 
-我们也可以通过 `git status` 查看命令来查看那些因包含合并冲突而处于未合并（unmerged）状态的文件。当出现矛盾后，合并的文件内容将会出现 "<<<<<<","=======",">>>>>>" 等分割线来进行标记。如下图所示：
+We can also use the `git status` command to view files that are in an unmerged state due to merge conflicts. When conflicts occur, the merged file content will be marked with dividing lines such as "<<<<<<", "=======", and ">>>>>>". As shown in the figure below:
 
 ![](./figures/brach_message.png)
 
-当出现了矛盾时，我们需要进行手动解决或者放弃合并。
+When conflicts occur, we need to resolve them manually or abandon the merge.
 
-- 手动合并
+- Manual Merge
 
-	手动合并的方法很简单，就是我们选择我们要保留的代码，然后再把>>>>>, ======, <<<<<<这些提示行给去掉。最后重新进行 add commit 的操作即可。
+	The manual merge method is simple: we select the code we want to keep, then remove the prompt lines like >>>>>>, ======, and <<<<<<. Finally, we perform the add and commit operations again.
 
-- 放弃合并
+- Abandon Merge
 
-	当我们发现冲突所导致的改动量很大时，我们可以选择放弃该次的合并。我们可以使用 `git merge --abort` 放弃此次的融合。如果我们在运行了 git merge 之后又进行了一些人为的改动，那么在 abort 之后，所进行的改动也会被回滚掉。
+	When we find that the changes caused by conflicts are extensive, we can choose to abandon the merge. We can use `git merge --abort` to abandon this merge. If we made some manual changes after running git merge, those changes will also be rolled back after abort.
 
 - mergetool
 
-	除了手动合并以及放弃合并之外，我们还有一些其他的合并工具。git 官方开发了一个专门用来合并的工具，叫做 git mergetool(下图所示)，它会将找到一份两个分支的祖先代码作为 base（基准），然后再将两个分支的改动都列举出来作为对比，让我们在 git 编辑器当中决定要留下什么。在此处，我们不做过多的阐述，感兴趣的同学可以点击下方链接进行查看。
+	In addition to manual merging and abandoning merges, we have some other merge tools. Git officially developed a tool specifically for merging called git mergetool (shown in the figure below). It will find a copy of the ancestor code from both branches as the base, then list the changes from both branches for comparison, allowing us to decide what to keep in the git editor. We won't elaborate too much here; interested readers can click the links below for more information.
 
 	1. [Use vimdiff as git mergetool](https://www.rosipov.com/blog/use-vimdiff-as-git-mergetool/)
 	2. [使用vimdiff作为git mergetool](https://kinboyw.github.io/2018/10/09/Use-Vimdiff-As-Git-Mergetool/)
@@ -130,11 +130,11 @@ git merge issue102
 
 ![](./figures/mergetool.png)
 
-### 3.2.4 分支推送到远程
+### 3.2.4 Pushing Branches to Remote
 
-在很多情况下，我们都需要将分支推送到远程，在这一部分，我们将讲一些远程的相关操作。
+In many cases, we need to push branches to remote repositories. In this section, we'll discuss some remote-related operations.
 
-首先，我们可以使用 `git remote -v` 查看远程库的详细信息。会显示我们可以抓取或推送的 origin 地址。
+First, we can use `git remote -v` to view detailed information about the remote repository. It will display the origin addresses we can fetch from or push to.
 
 ```bash
 $ git remote -v
@@ -142,74 +142,74 @@ origin  git@github.com:ProjectOwner/ProjectName.git (fetch)
 origin  git@github.com:ProjectOwner/ProjectName.git (push)
 ```
 
-当我们需要推送本地分支到远程时，需要指定具体的本地分支。
+When we need to push a local branch to remote, we need to specify the specific local branch.
 
 ```bash
-# 推送本地的master分支到远程
+# Push the local master branch to remote
 git push origin master
-# 推送本地的issue102分支到远程
+# Push the local issue102 branch to remote
 git push origin issue102
 ```
 
-但是当我们多人协作进行开发的时候，可能会出现远程分支比我们本地更新的情况，这时，我们就需要使用 `git pull` 的命令来试图合并。如果合并出现冲突时，我们需要解决冲突再提交。在这部分，推荐大家可以看下廖雪峰老师的 Git 教程中的
+However, when multiple people collaborate on development, the remote branch may be more up-to-date than our local one. In this case, we need to use the `git pull` command to attempt a merge. If conflicts occur during the merge, we need to resolve the conflicts before committing. For this section, we recommend checking out Liao Xuefeng's Git tutorial on
 
-[多人协作](https://www.liaoxuefeng.com/wiki/896043488029600/900375748016320)，如有侵权，请联系告知。
+[Multi-person Collaboration](https://www.liaoxuefeng.com/wiki/896043488029600/900375748016320). If there are any copyright concerns, please contact us.
 
-### 3.2.5 分支的删除
+### 3.2.5 Deleting Branches
 
-在 Git 中没有什么分支是不可以删除的（除了当前所在的分支不能删除），包括 `master` 分支也是可以进行删除。
+In Git, there is no branch that cannot be deleted (except for the branch you are currently on), including the `master` branch.
 
-Git 的分支删除可以分为删除本地分支和远程分支。
+Git branch deletion can be divided into deleting local branches and remote branches.
 
-- 删除本地分支
+- Deleting Local Branches
 
 ```bash
-# branchName 是需要删除的本地分支名字
+# branchName is the name of the local branch to be deleted
 git branch -d branchName
 ```
 
-当我们想强行删除分支时，只需要将参数 d 改为 D 即可。
+When we want to force delete a branch, we simply need to change the parameter d to D.
 
-- 删除远程分支
+- Deleting Remote Branches
 
 ```bash
-# origin 是远程的主机名
-# branch 需要删除的远程分支
+# origin is the remote host name
+# branch is the remote branch to be deleted
 git push origin --delete branch
 ```
 
-### 3.2.6 分支的重命名
+### 3.2.6 Renaming Branches
 
-当我们需要重命名分支的名称时，我们可以使用 `git branch` 命令来进行，具体方式如下：
+When we need to rename a branch, we can use the `git branch` command as follows:
 
 ```bash
-# oldBranchName: 旧分支名
-# newBranchName ：新分支名
+# oldBranchName: old branch name
+# newBranchName: new branch name
 git branch -m oldBranchName newBranchName
 ```
 
-当我们想要将改名后的分支推送到远程时，我们需要进行如下操作：
+When we want to push the renamed branch to remote, we need to perform the following operations:
 
 ```bash
-git branch -m oldBranchName newBranchName   # 将本地的分支进行重命名
-git push origin newBranchName               # 将新的分支推送到远程        
-git push --delete origin oldBranchName      # 删除远程的旧的分支 
+git branch -m oldBranchName newBranchName   # Rename the local branch
+git push origin newBranchName               # Push the new branch to remote        
+git push --delete origin oldBranchName      # Delete the old branch from remote 
 ```
 
-## 3.3 分支开发工作流
+## 3.3 Branching Workflows
 
-当我们已经了解了分支的操作后，我们应该考虑使用一种怎样的方式使我们最大化的使用分支操作的优点。在接下来的这部分中，我们将会介绍一些常见的分支开发工作流程。而正是由于分支管理的便捷，才衍生出这些典型的工作模式，我们以后可以根据项目实际情况进行使用。
+After understanding branch operations, we should consider what approach to use to maximize the advantages of branch operations. In this section, we will introduce some common branching workflow patterns. It is precisely because of the convenience of branch management that these typical working modes have emerged, which we can use according to the actual situation of the project in the future.
 
-### 3.3.1 长期分支
+### 3.3.1 Long-Running Branches
 
-在整个项目开发周期的不同阶段，我们可以同时拥有多个分支；然后我们可以定期地把某些主题分支合并入其他分支中。许多使用 Git 的开发者都喜欢使用这种方式来工作，比如只在 master 分支上保留完全稳定的代码——有可能仅仅是已经发布或即将发布的代码。 他们还有一些名为 develop 或者 next 的平行分支，被用来做后续开发或者测试稳定性——这些分支不必保持绝对稳定，但是一旦达到稳定状态，它们就可以被合并入 master 分支了。这样，在确保这些已完成的主题分支（短期分支，比如之前的 issue102 分支）能够通过所有测试，并且不会引入更多 bug 之后，就可以合并入主干分支中，等待下一次的发布。
+At different stages of the entire project development cycle, we can have multiple branches simultaneously; then we can regularly merge certain topic branches into other branches. Many Git developers like to work this way, for example, keeping only completely stable code on the master branch—possibly only code that has been released or is about to be released. They also have parallel branches named develop or next, which are used for subsequent development or stability testing—these branches don't need to remain absolutely stable, but once they reach a stable state, they can be merged into the master branch. This way, after ensuring that these completed topic branches (short-term branches, such as the previous issue102 branch) can pass all tests and won't introduce more bugs, they can be merged into the main branch, waiting for the next release.
 
 ![](./figures/branches.png)
 
-### 3.3.2 短期分支
+### 3.3.2 Short-Term Branches
 
-短期分支也可以叫做主题分支，它的作用是用来实现某一种特性或者相关工作（修复 bug，开发产品新特性）。比如当我们的产品出现了 bug 时，我们应该新建一个分支并起名为 bug 分支，并在该分支上进行 bug 的修复，等我们的代码确定不会引起其他 bug 时，我们就可以合并到主分支上进行修复。当我们看见 issue 时，我们也可以使用同样的方式来解决 issue 的问题。常见的短期分支还有上面提到的 develop，topic 分支。在实际开发中，我们应该按照以下几个基本原则进行分支开发工作流程
+Short-term branches can also be called topic branches. Their purpose is to implement a specific feature or related work (fixing bugs, developing new product features). For example, when our product has a bug, we should create a new branch and name it a bug branch, and fix the bug on that branch. When we're sure our code won't cause other bugs, we can merge it into the main branch for the fix. When we see an issue, we can also use the same approach to solve the issue. Common short-term branches also include the develop and topic branches mentioned above. In actual development, we should follow these basic principles for branching workflow:
 
-1. master 分支应该是最稳定的，也就是仅用来发布新版本，平时不能直接在上面进行操作，应该保存在远程。
-2. 短期分支是我们干活的分支，短期分支可以不用上传到远程，当我们完成了 bug 的修复，新功能的开发时才需要合并到主分支上。
-3. 多使用分支来进行开发工作。
+1. The master branch should be the most stable, meaning it should only be used to release new versions. We shouldn't work directly on it normally, and it should be kept on the remote.
+2. Short-term branches are our working branches. Short-term branches don't need to be uploaded to remote until we've completed bug fixes or new feature development and need to merge them into the main branch.
+3. Use branches frequently for development work.

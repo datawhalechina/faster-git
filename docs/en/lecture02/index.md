@@ -1,40 +1,39 @@
-# 第二章 Git 基础命令
+# Chapter 2 Git Basic Commands
 
-## 2.0 前言
+## 2.0 Introduction
 
-如果你只想通过阅读一章来学习 Git，那么本章将是你的不二选择。 本章涵盖了你在使用 Git 完成各种工作时将会用到的各种基本命令。 在学习完本章之后，你应该能够配置并初始化一个仓库（repository）、开始或停止跟踪（track）文件、暂存（stage）或提交（commit）更改。 本章也将向你演示了如何配置 Git 来忽略指定的文件和文件模式、如何迅速而简单地撤销错误操作、如何浏览你的项目的历史版本以及不同提交（commits）之间的差异、如何向你的远程仓库推送（push）以及如何从你的远程仓库拉取（pull）文件。
+If you can only read one chapter to learn Git, this is it. This chapter covers every basic command you need to do the vast majority of the things you'll eventually spend your time doing with Git. By the end of the chapter, you should be able to configure and initialize a repository, begin and stop tracking files, and stage and commit changes. We'll also show you how to set up Git to ignore certain files and file patterns, how to undo mistakes quickly and easily, how to browse the history of your project and view changes between commits, and how to push and pull from remote repositories.
 
-## 2.1 获取 Git 仓库
+## 2.1 Getting a Git Repository
 
-通常有两种获取 Git 项目仓库的方式：
+You can get a Git project using two main approaches:
 
-将尚未进行版本控制的本地目录转换为 Git 仓库；
+*   Taking a local directory that is currently not under version control and turning it into a Git repository.
+*   Cloning an existing Git repository from another server.
 
-从其它服务器 克隆 一个已存在的 Git 仓库。
+In either case, you end up with a Git repository on your local machine, ready for work.
 
-两种方式都会在你的本地机器上得到一个工作就绪的 Git 仓库。
+### Initializing a Repository in an Existing Directory
 
-### 在已存在目录中初始化仓库
-
-如果你有一个尚未进行版本控制的项目目录，想要用 Git 来控制它，那么首先需要进入该项目目录中。 如果你还没这样做过，那么不同系统上的做法有些不同：
+If you have a project directory that is currently not under version control and you want to start controlling it with Git, you first need to go to that project's directory. If you've never done this before, it looks a little different depending on which system you're running:
 
 ```shell 
-在 Linux 上：
+On Linux:
 $ cd /home/user/my_project
 
-在 macOS 上：
+On macOS:
 $ cd /Users/user/my_project
 
-在 Windows 上：
+On Windows:
 $ cd /c/user/my_project
 
-之后执行：
+Then run:
 $ git init
 ```
 
-该命令将创建一个名为 .git 的子目录，这个子目录含有你初始化的 Git 仓库中所有的必须文件，这些文件是 Git 仓库的骨干。 但是，在这个时候，我们仅仅是做了一个初始化的操作，你的项目里的文件还没有被跟踪。 (参见 Git 内部原理 来了解更多关于到底 .git 文件夹中包含了哪些文件的信息。)
+This creates a new subdirectory named `.git` that contains all of your necessary repository files — a Git repository skeleton. At this point, nothing in your project is tracked yet. (See Git Internals for more information about exactly what files are contained in the `.git` directory you just created.)
 
-如果在一个已存在文件的文件夹（而非空文件夹）中进行版本控制，你应该开始追踪这些文件并进行初始提交。 可以通过 git add 命令来指定所需的文件来进行追踪，然后执行 git commit ：
+If you want to start version-controlling existing files (as opposed to an empty directory), you should probably begin tracking those files and do an initial commit. You can accomplish that with a few `git add` commands that specify the files you want to track, followed by a `git commit`:
 
 ```shell
 $ git add *.c
@@ -42,59 +41,58 @@ $ git add LICENSE
 $ git commit -m 'initial project version'
 ```
 
-稍后我们再逐一解释这些指令的行为。 现在，你已经得到了一个存在被追踪文件与初始提交的 Git 仓库。
+We'll go over what these commands do in just a minute. At this point, you have a Git repository with tracked files and an initial commit.
 
-### 克隆现有的仓库
+### Cloning an Existing Repository
 
-如果你想获得一份已经存在了的 Git 仓库的拷贝，比如说，你想为某个开源项目贡献自己的一份力，这时就要用到 git clone 命令。 如果你对其它的 VCS 系统（比如说 Subversion）很熟悉，请留心一下你所使用的命令是 "clone" 而不是 "checkout"。 这是 Git 区别于其它版本控制系统的一个重要特性，Git 克隆的是该 Git 仓库服务器上的几乎所有数据，而不是仅仅复制完成你的工作所需要文件。 当你执行 git clone 命令的时候，默认配置下远程 Git 仓库中的每一个文件的每一个版本都将被拉取下来。 事实上，如果你的服务器的磁盘坏掉了，你通常可以使用任何一个克隆下来的用户端来重建服务器上的仓库 （虽然可能会丢失某些服务器端的钩子（hook）设置，但是所有版本的数据仍在，详见 在服务器上搭建 Git ）。
+If you want to get a copy of an existing Git repository — for example, a project you'd like to contribute to — the command you need is `git clone`. If you're familiar with other VCS systems such as Subversion, you'll notice that the command is "clone" and not "checkout". This is an important distinction — Git receives a full copy of nearly all data that the server has. Every version of every file for the history of the project is pulled down by default when you run `git clone`. In fact, if your server disk gets corrupted, you can often use any of the clones on any client to set the server back to the state it was in when it was cloned (you may lose some server-side hooks and such, but all the versioned data would be there — see Getting Git on a Server for more details).
 
-克隆仓库的命令是 `git clone <url>` 。 比如，要克隆 Git 的链接库 libgit2，可以用下面的命令：
+You clone a repository with `git clone <url>`. For example, if you want to clone the Git linkable library named `libgit2`, you can do so like this:
 
 ```shell
 $ git clone https://github.com/libgit2/libgit2
 ```
 
-这会在当前目录下创建一个名为 “libgit2” 的目录，并在这个目录下初始化一个 .git 文件夹， 从远程仓库拉取下所有数据放入 .git 文件夹，然后从中读取最新版本的文件的拷贝。 如果你进入到这个新建的 libgit2 文件夹，你会发现所有的项目文件已经在里面了，准备就绪等待后续的开发和使用。
+That creates a directory named `libgit2`, initializes a `.git` directory inside it, pulls down all the data for that repository, and checks out a working copy of the latest version. If you go into the new `libgit2` directory, you'll see the project files in there, ready to be worked on or used.
 
-如果你想在克隆远程仓库的时候，自定义本地仓库的名字，你可以通过额外的参数指定新的目录名：
+If you want to clone the repository into a directory with a name other than `libgit2`, you can specify that as the next command-line option:
 
 ```shell
 $ git clone https://github.com/libgit2/libgit2 mylibgit
 ```
 
-这会执行与上一条命令相同的操作，但目标目录名变为了 mylibgit。
+That command does the same thing as the previous one, but the target directory is called `mylibgit`.
 
-Git 支持多种数据传输协议。 上面的例子使用的是 https:// 协议，不过你也可以使用 `git://` 协议或者使用 SSH 传输协议，比如 user@server:path/to/repo.git 。 在服务器上搭建 Git 将会介绍所有这些协议在服务器端如何配置使用，以及各种方式之间的利弊。
+Git supports a number of different transfer protocols. The previous example uses the `https://` protocol, but you may also see `git://` or `user@server:path/to/repo.git`, which uses the SSH transfer protocol. Getting Git on a Server will introduce all of the available options the server can set up to access your Git repository and the pros and cons of each.
 
-## 2.2 记录每次更新到仓库
+## 2.2 Recording Changes to the Repository
 
-现在我们的机器上有了一个 真实项目 的 Git 仓库，并从这个仓库中检出了所有文件的 工作副本。 通常，你会对这些文件做些修改，每当完成了一个阶段的目标，想要将记录下它时，就将它提交到仓库。
+You have a bona fide Git repository and a checkout or working copy of the files for that project. You need to make some changes and commit snapshots of those changes into your repository each time the project reaches a state you want to record.
 
-请记住，你工作目录下的每一个文件都不外乎这两种状态：已跟踪 或 未跟踪。 已跟踪的文件是指那些被纳入了版本控制的文件，在上一次快照中有它们的记录，在工作一段时间后， 它们的状态可能是未修改，已修改或已放入暂存区。简而言之，已跟踪的文件就是 Git 已经知道的文件。
+Remember that each file in your working directory can be in one of two states: tracked or untracked. Tracked files are files that were in the last snapshot; they can be unmodified, modified, or staged. In short, tracked files are files that Git knows about.
 
-工作目录中除已跟踪文件外的其它所有文件都属于未跟踪文件，它们既不存在于上次快照的记录中，也没有被放入暂存区。 初次克隆某个仓库的时候，工作目录中的所有文件都属于已跟踪文件，并处于未修改状态，因为 Git 刚刚检出了它们， 而你尚未编辑过它们。
+Untracked files are everything else — any files in your working directory that were not in your last snapshot and are not in your staging area. When you first clone a repository, all of your files will be tracked and unmodified because Git just checked them out and you haven't edited anything.
 
-编辑过某些文件之后，由于自上次提交后你对它们做了修改，Git 将它们标记为已修改文件。 在工作时，你可以选择性地将这些修改过的文件放入暂存区，然后提交所有已暂存的修改，如此反复。
+As you edit files, Git sees them as modified, because you've changed them since your last commit. You stage these modified files and then commit all your staged changes, and the cycle repeats.
 
 ![image](https://user-images.githubusercontent.com/62437804/166645345-fa590f8a-9259-47b3-b5b3-048996014521.png)
 
-Git 下文件生命周期图
+Git File Lifecycle
 
-### 2.2.1 检查当前文件状态
+### 2.2.1 Checking the Status of Your Files
 
-可以用 git status 命令查看哪些文件处于什么状态。 如果在克隆仓库后立即使用此命令，会看到类似这样的输出：
+The main tool you use to determine which files are in which state is the `git status` command. If you run this command directly after a clone, you should see something like this:
 
 ```shell
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
 nothing to commit, working directory clean
-
 ```
 
-这说明你现在的工作目录相当干净。换句话说，所有已跟踪文件在上次提交后都未被更改过。 此外，上面的信息还表明，当前目录下没有出现任何处于未跟踪状态的新文件，否则 Git 会在这里列出来。 最后，该命令还显示了当前所在分支，并告诉你这个分支同远程服务器上对应的分支没有偏离。 现在，分支名是“master”，这是默认的分支名。 我们在 Git 分支 中会详细讨论分支和引用。
+This means you have a clean working directory — in other words, there are no tracked and modified files. Git also doesn't see any untracked files, or they would be listed here. Finally, the command tells you which branch you're on and informs you that it has not diverged from the same branch on the server. For now, that branch is always "master", which is the default; you won't worry about it here. Git Branching will go over branches and references in detail.
 
-现在，让我们在项目下创建一个新的 README 文件。 如果之前并不存在这个文件，使用 git status 命令，你将看到一个新的未跟踪文件：
+Let's say you add a new `README` file to your project. If the file didn't exist before, and you run `git status`, you see your untracked file like so:
 
 ```shell
 $ echo 'My Project' > README
@@ -106,16 +104,19 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-在状态报告中可以看到新建的 README 文件出现在 Untracked files 下面。 未跟踪的文件意味着 Git 在之前的快照（提交）中没有这些文件；Git 不会自动将之纳入跟踪范围，除非你明明白白地告诉它“我需要跟踪该文件”。 这样的处理让你不必担心将生成的二进制文件或其它不想被跟踪的文件包含进来。 不过现在的例子中，我们确实想要跟踪管理 README 这个文件。
+You can see that your new `README` file is untracked, because it's under the "Untracked files" heading in your status output. Untracked basically means that Git sees a file you didn't have in the previous snapshot (commit); Git won't start including it in your commit snapshots until you explicitly tell it to do so. It does this so you don't accidentally begin including generated binary files or other files that you did not mean to include. You do want to start including `README`, so let's start tracking the file.
 
-### 2.2.2 跟踪新文件
+### 2.2.2 Tracking New Files
 
-使用命令 git add 开始跟踪一个文件。 所以，要跟踪 README 文件，运行：
+In order to begin tracking a new file, you use the command `git add`. To begin tracking the `README` file, you can run this:
 
 ```shell
 $ git add README
-此时再运行 git status 命令，会看到 README 文件已被跟踪，并处于暂存状态：
+```
 
+If you run your status command again, you can see that your `README` file is now tracked and staged to be committed:
+
+```shell
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -125,11 +126,11 @@ Changes to be committed:
     new file:   README
 ```
 
-只要在 `Changes to be committed` 这行下面的，就说明是已暂存状态。 如果此时提交，那么该文件在你运行 git add 时的版本将被留存在后续的历史记录中。 你可能会想起之前我们使用 `git init` 后就运行了 `git add <files>` 命令，开始跟踪当前目录下的文件。 git add 命令使用文件或目录的路径作为参数；如果参数是目录的路径，该命令将递归地跟踪该目录下的所有文件。
+You can tell that it's staged because it's under the "Changes to be committed" heading. If you commit at this point, the version of the file at the time you ran `git add` is what will be in the historical snapshot. You may recall that when you ran `git init` earlier, you then ran `git add <files>` — that was to begin tracking files in your directory. The `git add` command takes a path name for either a file or a directory; if it's a directory, the command adds all the files in that directory recursively.
 
-### 2.2.3 暂存已修改的文件
+### 2.2.3 Staging Modified Files
 
-现在我们来修改一个已被跟踪的文件。 如果你修改了一个名为 CONTRIBUTING.md 的已被跟踪的文件，然后运行 git status 命令，会看到下面内容：
+Let's change a file that was already tracked. If you change a previously tracked file called `CONTRIBUTING.md` and then run your `git status` command again, you get something that looks like this:
 
 ```shell
 $ git status
@@ -147,7 +148,8 @@ Changes not staged for commit:
     modified:   CONTRIBUTING.md
 ```
 
-文件 CONTRIBUTING.md 出现在 `Changes not staged for commit` 这行下面，说明已跟踪文件的内容发生了变化，但还没有放到暂存区。 要暂存这次更新，需要运行 git add 命令。 这是个多功能命令：可以用它开始跟踪新文件，或者把已跟踪的文件放到暂存区，还能用于合并时把有冲突的文件标记为已解决状态等。 将这个命令理解为“精确地将内容添加到下一次提交中”而不是“将一个文件添加到项目中”要更加合适。 现在让我们运行 git add 将“CONTRIBUTING.md”放到暂存区，然后再看看 git status 的输出：
+The `CONTRIBUTING.md` file appears under a section named "Changes not staged for commit" — which means that a file that is tracked has been modified in the working directory but not yet staged. To stage it, you run the `git add` command. `git add` is a multi-purpose command — you use it to begin tracking new files, to stage files, and to do other things like marking merge-conflicted files as resolved. It may be helpful to think of it more as "add precisely this content to the next commit" rather than "add this file to the project". Let's run `git add` now to stage the `CONTRIBUTING.md` file, and then verify 
+that it's staged so we can commit it:
 
 ```shell
 $ git add CONTRIBUTING.md
@@ -161,7 +163,7 @@ Changes to be committed:
     modified:   CONTRIBUTING.md
 ```
 
-现在两个文件都已暂存，下次提交时就会一并记录到仓库。 假设此时，你想要在 CONTRIBUTING.md 里再加条注释。 重新编辑存盘后，准备好提交。 不过且慢，再运行 git status 看看：
+Both files are staged and will go into your next commit. At this point, suppose you remember one little change you want to make in `CONTRIBUTING.md` before you commit it. You open it again and make that change, and you're ready to commit. However, let's run `git status` one more time:
 
 ```shell
 $ vim CONTRIBUTING.md
@@ -181,7 +183,7 @@ Changes not staged for commit:
     modified:   CONTRIBUTING.md
 ```
 
-怎么回事？ 现在 CONTRIBUTING.md 文件同时出现在暂存区和非暂存区。 这怎么可能呢？ 好吧，实际上 Git 只不过暂存了你运行 git add 命令时的版本。 如果你现在提交，CONTRIBUTING.md 的版本是你最后一次运行 git add 命令时的那个版本，而不是你运行 git commit 时，在工作目录中的当前版本。 所以，运行了 git add 之后又作了修订的文件，需要重新运行 git add 把最新版本重新暂存起来：
+What the heck? Now `CONTRIBUTING.md` is listed as both staged and unstaged. How is that possible? It turns out that Git stages a file exactly as it is when you run the `git add` command. If you commit now, the version of `CONTRIBUTING.md` as it was when you last ran the `git add` command is how it will satisfy the commit, not the version of the file as it looks in your working directory when you run `git commit`. If you modify a file after you run `git add`, you have to run `git add` again to stage the latest version of the file:
 
 ```shell
 $ git add CONTRIBUTING.md
@@ -193,9 +195,11 @@ Changes to be committed:
 
     new file:   README
     modified:   CONTRIBUTING.md
-##  状态简览
-git status 命令的输出十分详细，但其用语有些繁琐。 Git 有一个选项可以帮你缩短状态命令的输出，这样可以以简洁的方式查看更改。 如果你使用 git status -s 命令或 git status --short 命令，你将得到一种格式更为紧凑的输出。
 ```
+
+#### Short Status
+
+While the `git status` output is pretty comprehensive, it's also quite wordy. Git has an option for generating a more compact output. If you run `git status -s` or `git status --short`, you get a much more simplified output from the command:
 
 ```shell  
 $ git status -s
@@ -206,11 +210,11 @@ M  lib/simplegit.rb
 ?? LICENSE.txt
 ```
 
-新添加的未跟踪文件前面有 ?? 标记，新添加到暂存区中的文件前面有 A 标记，修改过的文件前面有 M 标记。 输出中有两栏，左栏指明了暂存区的状态，右栏指明了工作区的状态。例如，上面的状态报告显示： README 文件在工作区已修改但尚未暂存，而 lib/simplegit.rb 文件已修改且已暂存。 Rakefile 文件已修改，暂存后又作了修改，因此该文件的修改中既有已暂存的部分，又有未暂存的部分。
+New untracked files have `??` next to them, new files that have been added to the staging area have an `A`, modified files have an `M` and so on. There are two columns to the output — the left-hand column indicates the status of the staging area and the right-hand column indicates the status of the working tree. So for example in that output, the `README` file is modified in the working directory but not yet staged, while the `lib/simplegit.rb` file is modified and staged. The `Rakefile` was modified, staged and then modified again, so there are changes to it that are both staged and unstaged.
 
-### 2.2.4 忽略文件
+### 2.2.4 Ignoring Files
 
-一般我们总会有些文件无需纳入 Git 的管理，也不希望它们总出现在未跟踪文件列表。 通常都是些自动生成的文件，比如日志文件，或者编译过程中创建的临时文件等。 在这种情况下，我们可以创建一个名为 .gitignore 的文件，列出要忽略的文件的模式。 来看一个实际的 .gitignore 例子：
+Often, you'll have a class of files that you don't want Git to automatically add or even show you as being untracked. These are generally automatically generated files such as log files or files produced by your build system. In such cases, you can create a file listing patterns to match them named `.gitignore`. Here is an example `.gitignore` file:
 
 ```shell
 $ cat .gitignore
@@ -218,55 +222,55 @@ $ cat .gitignore
 *~
 ```
 
-第一行告诉 Git 忽略所有以 .o 或 .a 结尾的文件。一般这类对象文件和存档文件都是编译过程中出现的。 第二行告诉 Git 忽略所有名字以波浪符（~）结尾的文件，许多文本编辑软件（比如 Emacs）都用这样的文件名保存副本。 此外，你可能还需要忽略 log，tmp 或者 pid 目录，以及自动生成的文档等等。 要养成一开始就为你的新仓库设置好 .gitignore 文件的习惯，以免将来误提交这类无用的文件。
+The first line tells Git to ignore any files ending in `.o` or `.a` — object and archive files that may be the product of building your code. The second line tells Git to ignore all files whose names end with a tilde (`~`), which is used by many text editors such as Emacs to mark temporary files. You may also include a `log`, `tmp`, or `pid` directory; automatically generated documentation; and so on. Setting up a `.gitignore` file for your new repository before you get going is generally a good idea so you don't accidentally commit files that you really don't want in your Git repository.
 
-> 文件 .gitignore 的格式规范如下：
+> The rules for the patterns you can put in the `.gitignore` file are as follows:
 
-- 所有空行或者以 # 开头的行都会被 Git 忽略。
-- 可以使用标准的 glob 模式匹配，它会递归地应用在整个工作区中。
-- 匹配模式可以以（/）开头防止递归。
-- 匹配模式可以以（/）结尾指定目录。
-- 要忽略指定模式以外的文件或目录，可以在模式前加上叹号（!）取反。
+- Blank lines or lines starting with `#` are ignored.
+- Standard glob patterns work, and will be applied recursively throughout the entire working tree.
+- You can start patterns with a forward slash (`/`) to avoid recursivity.
+- You can end patterns with a forward slash (`/`) to specify a directory.
+- You can negate a pattern by starting it with an exclamation point (`!`).
 
-所谓的 **glob 模式**是指 shell 所使用的简化了的正则表达式。
+**Glob patterns** are like simplified regular expressions that shells use.
 
-星号 `*` 匹配零个或多个任意字符；[abc] 匹配任何一个列在方括号中的字符 （这个例子要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）； 问号（?）只匹配一个任意字符；如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 [0-9] 表示匹配所有 0 到 9 的数字）。 使用两个星号 `**` 表示匹配任意中间目录，比如 `a/**/z ` 可以匹配 a/z 、 a/b/z 或 a/b/c/z 等。
+An asterisk (`*`) matches zero or more characters; `[abc]` matches any character inside the brackets (in this case a, b, or c); a question mark (`?`) matches a single character; and brackets enclosing characters separated by a hyphen (`[0-9]`) matches any character between them (in this case 0 through 9). You can also use two asterisks to match nested directories; `a/**/z` would match `a/z`, `a/b/z`, `a/b/c/z`, and so on.
 
-我们再看一个 .gitignore 文件的例子：
+Here is another example `.gitignore` file:
 
 ```shell
 
-# 忽略所有的 .a 文件
+# ignore all .a files
 *.a
 
-# 但跟踪所有的 lib.a，即便你在前面忽略了 .a 文件
+# but do track lib.a, even though you're ignoring .a files above
 !lib.a
 
-# 只忽略当前目录下的 TODO 文件，而不忽略 subdir/TODO
+# only ignore the TODO file in the current directory, not subdir/TODO
 /TODO
 
-# 忽略任何目录下名为 build 的文件夹
+# ignore all files in any directory named build
 build/
 
-# 忽略 doc/notes.txt，但不忽略 doc/server/arch.txt
+# ignore doc/notes.txt, but not doc/server/arch.txt
 doc/*.txt
 
-# 忽略 doc/ 目录及其所有子目录下的 .pdf 文件
+# ignore all .pdf files in the doc/ directory and any of its subdirectories
 doc/**/*.pdf
   
 ```
 
-GitHub 有一个十分详细的针对数十种项目及语言的 .gitignore 文件列表， 你可以在 <https://github.com/github/gitignore> 找到它。
+GitHub maintains a fairly comprehensive list of good `.gitignore` file examples for dozens of projects and languages at https://github.com/github/gitignore if you want a starting point for your project.
 
-> 在最简单的情况下，一个仓库可能只根目录下有一个 .gitignore 文件，它递归地应用到整个仓库中。 然而，子目录下也可以有额外的 .gitignore 文件。子目录中的 .gitignore 文件中的规则只作用于它所在的目录中。 （Linux 内核的源码库拥有 206 个 .gitignore 文件。）
+> In the simple case, a repository might have a single `.gitignore` file in its root directory, which applies recursively to the entire repository. However, it is also possible to have additional `.gitignore` files in subdirectories. The rules in these nested `.gitignore` files apply only to the directory in which they contain. (The Linux kernel source code repository contains 206 `.gitignore` files.)
 
-多个 .gitignore 文件的具体细节超出了本书的范围，更多详情见 man gitignore 。
+The details of multiple `.gitignore` files are beyond the scope of this book; see `man gitignore` for more details.
 
-### 2.2.5 查看已暂存和未暂存的修改
+### 2.2.5 Viewing Your Staged and Unstaged Changes
 
-如果 git status 命令的输出对于你来说过于简略，而你想知道具体修改了什么地方，可以用 git diff 命令。 稍后我们会详细介绍 git diff，你通常可能会用它来回答这两个问题：当前做的哪些更新尚未暂存？ 有哪些更新已暂存并准备好下次提交？ 虽然 git status 已经通过在相应栏下列出文件名的方式回答了这个问题，但 git diff 能通过文件补丁的格式更加具体地显示哪些行发生了改变。
+If the `git status` command is too vague for you — you want to know exactly what you changed, not just which files were changed — you can use the `git diff` command. We'll cover `git diff` in more detail later, but you'll probably use it most often to answer these two questions: What have you changed but not yet staged? And what have you staged that you are about to commit? Although `git status` answers those questions generally by listing the file names, `git diff` shows you the exact lines added and removed — the patch, as it were.
 
-假如再次修改 README 文件后暂存，然后编辑 CONTRIBUTING.md 文件后先不暂存， 运行 status 命令将会看到：
+Let's say you edit and stage the `README` file again and then edit the `CONTRIBUTING.md` file without staging it. If you run your `git status` command, you once again see something like this:
 
 ```shell
 $ git status
@@ -284,7 +288,7 @@ Changes not staged for commit:
     modified:   CONTRIBUTING.md
 ```
 
-要查看尚未暂存的文件更新了哪些部分，不加参数直接输入 git diff：
+To see what you've changed but not yet staged, type `git diff` with no other arguments:
 
 ```shell
 $ git diff
@@ -304,9 +308,9 @@ index 8ebb991..643e24f 100644
  that highlights your work in progress (and note in the PR title that it's
 ```
 
-此命令比较的是工作目录中当前文件和暂存区域快照之间的差异。 也就是修改之后还没有暂存起来的变化内容。
+That command compares what is in your working directory with what is in your staging area. The result tells you the changes you've made that you haven't yet staged.
 
-若要查看已暂存的将要添加到下次提交里的内容，可以用 git diff --staged 命令。 这条命令将比对已暂存文件与最后一次提交的文件差异：
+If you want to see what you've staged that will go into your next commit, you can use `git diff --staged`. This command compares your staged changes to your last commit:
 
 ```shell
 $ git diff --staged
@@ -319,9 +323,9 @@ index 0000000..03902a1
 +My Project
 ```
 
-请注意，git diff 本身只显示尚未暂存的改动，而不是自上次提交以来所做的所有改动。 所以有时候你一下子暂存了所有更新过的文件，运行 git diff 后却什么也没有，就是这个原因。
+It's important to note that `git diff` by itself doesn't show all changes made since your last commit — only changes that are still unstaged. If you've staged all of your changes, `git diff` will give you no output.
 
-像之前说的，暂存 CONTRIBUTING.md 后再编辑，可以使用 git status 查看已被暂存的修改或未被暂存的修改。 如果我们的环境（终端输出）看起来如下：
+For another example, if you stage the `CONTRIBUTING.md` file and then edit it, you can use `git status` to see the changes that are staged and the changes that are unstaged. If you run the following commands:
 
 ```shell
 $ git add CONTRIBUTING.md
@@ -341,7 +345,7 @@ Changes not staged for commit:
     modified:   CONTRIBUTING.md
 ```
 
-现在运行 git diff 看暂存前后的变化：
+Now you can use `git diff` to see what is still unstaged:
 
 ```shell
 $ git diff
@@ -354,8 +358,11 @@ index 643e24f..87f08c8 100644
 
  See our [projects list](https://github.com/libgit2/libgit2/blob/development/PROJECTS.md).
 +# test line
-然后用 git diff --cached 查看已经暂存起来的变化（ --staged 和 --cached 是同义词）：
+```
 
+And you can use `git diff --cached` to see what you've staged so far (`--staged` and `--cached` are synonyms):
+
+```shell
 $ git diff --cached
 diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
 index 8ebb991..643e24f 100644
@@ -373,23 +380,23 @@ index 8ebb991..643e24f 100644
  that highlights your work in progress (and note in the PR title that it's
 ```
 
-> Git Diff 的插件版本
+> Git Diff in an External Tool
 >
-> 在本书中，我们使用 git diff 来分析文件差异。 但是你也可以使用图形化的工具或外部 diff 工具来比较差异。 可以使用 git difftool 命令来调用 emerge 或 vimdiff 等软件（包括商业软件）输出 diff 的分析结果。 使用 git difftool --tool-help 命令来看你的系统支持哪些 Git Diff 插件。
+> We will continue to use the git diff command to demonstrate comparing changes in this book. However, if you prefer a graphical or external diff viewer tool, you can use `git difftool` instead to run `emerge`, `vimdiff` and many other tools (including commercial products) to view the differences. Run `git difftool --tool-help` to see what is available on your system.
 
-### 2.2.6 提交更新
+### 2.2.6 Committing Your Changes
 
-现在的暂存区已经准备就绪，可以提交了。 在此之前，请务必确认还有什么已修改或新建的文件还没有 git add 过， 否则提交的时候不会记录这些尚未暂存的变化。 这些已修改但未暂存的文件只会保留在本地磁盘。 所以，每次准备提交前，先用 `git status` 看下，你所需要的文件是不是都已暂存起来了， 然后再运行提交命令 git commit：
+Now that your staging area is set up the way you want it, you can commit your changes. Remember that anything that is still unstaged — any files you have created or modified that you haven't run `git add` on since you edited them — won't go into this commit. They will stay as modified files on your disk. In this case, let's say that the last time you ran `git status`, you saw that everything was staged, so you're ready to commit your changes. The simplest way to commit is to type `git commit`:
 
 ```bash
 $ git commit
 ```
 
-这样会启动你选择的文本编辑器来输入提交说明。
+Doing so launches your editor of choice.
 
-> 启动的编辑器是通过 Shell 的环境变量 EDITOR 指定的，一般为 vim 或 emacs。 当然也可以按照 起步 介绍的方式， 使用 git config --global core.editor 命令设置你喜欢的编辑器。
+> The editor is set by the `EDITOR` environment variable within your shell — usually `vim` or `emacs`. You can set this explicitly with `git config --global core.editor` as you saw in Getting Started.
 
-编辑器会显示类似下面的文本信息（本例选用 Vim 的屏显方式展示）：
+A text editor will display something like this (this is a Vim screen):
 
 ```shell
 # Please enter the commit message for your changes. Lines starting
@@ -407,13 +414,13 @@ $ git commit
 ".git/COMMIT_EDITMSG" 9L, 283C
 ```
 
-可以看到，默认的提交消息包含最后一次运行 git status 的输出，放在注释行里，另外开头还有一个空行，供你输入提交说明。 你完全可以去掉这些注释行，不过留着也没关系，多少能帮你回想起这次更新的内容有哪些。
+You can see that the default commit message contains the latest output of the `git status` command commented out and an empty line on top. You can remove these comments and type your commit message, or you can leave them there to help you remember what you're committing. 
 
-> 更详细的内容修改提示可以用 -v 选项查看，这会将你所作的更改的 diff 输出呈现在编辑器中，以便让你知道本次提交具体作出哪些修改。
+> For an even more explicit reminder of what you've modified, you can pass the `-v` option to `git commit`. Doing so also puts the diff of your change in the editor so you can see exactly what changes you're committing.
 
-退出编辑器时，Git 会丢弃注释行，用你输入的提交说明生成一次提交。
+When you exit the editor, Git creates your commit with that commit message (with the comments and diff stripped out).
 
-另外，你也可以在 commit 命令后添加 -m 选项，将提交信息与命令放在同一行，如下所示：
+Alternatively, you can type your commit message inline with the `commit` command by specifying it after a `-m` flag, like this:
 
 ```shell
 $ git commit -m "Story 182: Fix benchmarks for speed"
@@ -422,13 +429,13 @@ $ git commit -m "Story 182: Fix benchmarks for speed"
  create mode 100644 README
 ```
 
-好，现在你已经创建了第一个提交！ 可以看到，提交后它会告诉你，当前是在哪个分支（master）提交的，本次提交的完整 SHA-1 校验和是什么（463dc4f），以及在本次提交中，有多少文件修订过，多少行添加和删改过。
+Now you've created your first commit! You can see that the commit gave you some output about itself: which branch you committed to (master), what SHA-1 checksum the commit has (463dc4f), how many files were changed, and statistics about lines added and removed in the commit.
 
-请记住，提交时记录的是放在暂存区域的快照。 任何还未暂存文件的仍然保持已修改状态，可以在下次提交时纳入版本管理。 每一次运行提交操作，都是对你项目作一次快照，以后可以回到这个状态，或者进行比较。
+Remember that the commit records the snapshot you set up in your staging area. Anything you didn't stage is still sitting there modified; you can do another commit to add it to your history. Every time you perform a commit, you're recording a snapshot of your project that you can revert to or compare to later.
 
-### 2.2.7 跳过使用暂存区域
+### 2.2.7 Skipping the Staging Area
 
-尽管使用暂存区域的方式可以精心准备要提交的细节，但有时候这么做略显繁琐。 Git 提供了一个跳过使用暂存区域的方式， 只要在提交的时候，给 git commit 加上 -a 选项，Git 就会自动把所有已经跟踪过的文件暂存起来一并提交，从而跳过 git add 步骤：
+Although it can be amazingly useful for crafting commits exactly how you want them, the staging area is sometimes a bit more complex than you need. If you want to skip the staging area, Git provides a simple shortcut. Adding the `-a` option to the `git commit` command makes Git automatically stage every file that is already tracked before doing the commit, letting you skip the `git add` part:
 
 ```shell
 $ git status
@@ -446,13 +453,13 @@ $ git commit -a -m 'added new benchmarks'
  1 file changed, 5 insertions(+), 0 deletions(-)
 ```
 
-看到了吗？提交之前不再需要 git add 文件“CONTRIBUTING.md”了。 这是因为 -a 选项使本次提交包含了所有修改过的文件。 这很方便，但是要小心，有时这个选项会将不需要的文件添加到提交中。
+Notice how you don't have to run `git add` on the `CONTRIBUTING.md` file in this case before you commit. The `-a` flag includes all changed files. This is convenient, but be careful; sometimes this flag will cause you to include unwanted changes.
 
-### 2.2.8 移除文件
+### 2.2.8 Removing Files
 
-要从 Git 中移除某个文件，就必须要从已跟踪文件清单中移除（确切地说，是从暂存区域移除），然后提交。 可以用 `git rm` 命令完成此项工作，并连带从工作目录中删除指定的文件，这样以后就不会出现在未跟踪文件清单中了。
+To remove a file from Git, you have to remove it from your tracked files (more accurately, remove it from your staging area) and then commit. The `git rm` command does that, and also removes the file from your working directory so you don't see it as an untracked file the next time around.
 
-如果只是简单地从工作目录中手工删除文件，运行 git status 时就会在 “Changes not staged for commit” 部分（也就是 未暂存清单）看到：
+If you simply remove the file from your working directory, it shows up under the "Changes not staged for commit" (that is, unstaged) area of your `git status` output:
 
 ```shell
 $ rm PROJECTS.md
@@ -467,7 +474,7 @@ Changes not staged for commit:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 
-# 然后再运行 git rm 记录此次移除文件的操作：
+# Then run git rm:
 
 $ git rm PROJECTS.md
 rm 'PROJECTS.md'
@@ -480,39 +487,39 @@ Changes to be committed:
     deleted:    PROJECTS.md
 ```
 
-下一次提交时，该文件就不再纳入版本管理了。 如果要删除之前修改过或已经放到暂存区的文件，则必须使用强制删除选项 -f（译注：即 force 的首字母）。 这是一种安全特性，用于防止误删尚未添加到快照的数据，这样的数据不能被 Git 恢复。
+The next time you commit, the file will be gone and no longer tracked. If you modified the file or had already added it to the staging area, you must force the removal with the `-f` option. This is a safety feature to prevent accidental removal of data that hasn't yet been recorded in a snapshot and that can't be recovered from Git.
 
-另外一种情况是，我们想把文件从 Git 仓库中删除（亦即从暂存区域移除），但仍然希望保留在当前工作目录中。 换句话说，你想让文件保留在磁盘，但是并不想让 Git 继续跟踪。 当你忘记添加 .gitignore 文件，不小心把一个很大的日志文件或一堆 .a 这样的编译生成文件添加到暂存区时，这一做法尤其有用。 为达到这一目的，使用 --cached 选项：
+Another useful thing you may want to do is to keep the file in your working tree but remove it from your staging area. In other words, you may want to keep the file on your hard drive but not have Git track it anymore. This is particularly useful if you forgot to add something to your `.gitignore` file and accidentally staged it, like a large log file or a bunch of `.a` compiled files. To do this, use the `--cached` option:
 
 ```bash
 $ git rm --cached README
 ```
 
-git rm 命令后面可以列出文件或者目录的名字，也可以使用 glob 模式。比如：
+You can pass files, directories, and file-glob patterns to the `git rm` command. That means you can do things like:
 
 ```bash
 $ git rm log/\*.log
 ```
 
-注意到星号 * 之前的反斜杠 \， 因为 Git 有它自己的文件模式扩展匹配方式，所以我们不用 shell 来帮忙展开。 此命令删除 log/ 目录下扩展名为 .log 的所有文件。 类似的比如：
+Note the backslash (`\`) in front of the `*`. This is necessary because Git does its own filename expansion in addition to your shell's filename expansion. This command removes all files that have the `.log` extension in the `log/` directory. Or, you can do this:
 
 ```bash
 $ git rm \*~
 ```
 
-该命令会删除所有名字以 ~ 结尾的文件。
+This command removes all files whose names end with `~`.
 
-### 2.2.9 移动文件
+### 2.2.9 Moving Files
 
-不像其它的 VCS 系统，Git 并不显式跟踪文件移动操作。 如果在 Git 中重命名了某个文件，仓库中存储的元数据并不会体现出这是一次改名操作。 不过 Git 非常聪明，它会推断出究竟发生了什么，至于具体是如何做到的，我们稍后再谈。
+Unlike many other VCS systems, Git doesn't explicitly track file movement. If you rename a file in Git, no metadata is stored in Git that tells it you renamed the file. However, Git is pretty smart about figuring that out after the fact — we'll deal with detecting file movement a bit later.
 
-既然如此，当你看到 Git 的 mv 命令时一定会困惑不已。 要在 Git 中对文件改名，可以这么做：
+Thus it's a bit confusing that Git has a `mv` command. If you want to rename a file in Git, you can run something like:
 
 ```bash
 $ git mv file_from file_to
 ```
 
-它会恰如预期般正常工作。 实际上，即便此时查看状态信息，也会明白无误地看到关于重命名操作的说明：
+and it works fine. In fact, if you run something like this and look at the status, you'll see that Git considers it a renamed file:
 
 ```shell
 $ git mv README.md README
@@ -525,7 +532,7 @@ Changes to be committed:
     renamed:    README.md -> README
 ```
 
-其实，运行 git mv 就相当于运行了下面三条命令：
+However, this is equivalent to running something like this:
 
 ```bash
 $ mv README.md README
@@ -535,18 +542,21 @@ $ git rm README.md
 $ git add README
 ```
 
-如此分开操作，Git 也会意识到这是一次重命名，所以不管何种方式结果都一样。 两者唯一的区别在于，git mv 是一条命令而非三条命令，直接使用 git mv 方便得多。 不过在使用其他工具重命名文件时，记得在提交前 git rm 删除旧文件名，再 git add 添加新文件名。
+Git figures out that it's a rename implicitly, so it doesn't matter if you rename a file that way or with the `mv` command. The only real difference is that `git mv` is one command instead of three — it's a convenience function. More importantly, you can use any tool you like to rename a file, and address that with `git add/rm` later, before you commit.
 
-## 2.3 查看提交历史
+## 2.3 Viewing the Commit History
 
-在提交了若干更新，又或者克隆了某个项目之后，你也许想回顾下提交历史。 完成这个任务最简单而又有效的工具是 git log 命令。
+After you have created several commits, or if you have cloned a repository with an existing commit history, you'll probably want to look back to see what has happened. The most basic and powerful tool to do this is the `git log` command.
 
-我们使用一个非常简单的 “simplegit” 项目作为示例。 运行下面的命令获取该项目：
+We'll use a very simple project called "simplegit" for the examples in this section. To get the project, run:
 
 ```shell
 $ git clone https://github.com/schacon/simplegit-progit
-当你在此项目中运行 git log 命令时，可以看到下面的输出：
+```
 
+When you run `git log` in this project, you should see output that looks something like this:
+
+```shell
 $ git log
 commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon <schacon@gee-mail.com>
@@ -567,11 +577,11 @@ Date:   Sat Mar 15 10:31:28 2008 -0700
     first commit
 ```
 
-不传入任何参数的默认情况下，git log 会按时间先后顺序列出所有的提交，最近的更新排在最上面。 正如你所看到的，这个命令会列出每个提交的 SHA-1 校验和、作者的名字和电子邮件地址、提交时间以及提交说明。
+By default, with no arguments, `git log` lists the commits made in that repository in reverse chronological order mainly. That is, the most recent commits show up first. As you can see, this command lists each commit with its SHA-1 checksum, the author's name and email, the date written, and the commit message.
 
-git log 有许多选项可以帮助你搜寻你所要找的提交， 下面我们会介绍几个最常用的选项。
+A huge number of options to `git log` are available to help you find exactly what you're looking for. Here, we'll show you some of the most popular.
 
-其中一个比较有用的选项是 -p 或 --patch ，它会显示每次提交所引入的差异（按 补丁 的格式输出）。 你也可以限制显示的日志条目数量，例如使用 -2 选项来只显示最近的两次提交：
+One of the more helpful options is `-p` or `--patch`, which shows the difference (the patch output) introduced in each commit. You can also limit the number of log entries displayed, such as using `-2` to show only the last two entries:
 
 ```shell
 $ git log -p -2
@@ -617,7 +627,7 @@ index a0a60ae..47c6340 100644
 
 ```
 
-该选项除了显示基本信息之外，还附带了每次提交的变化。 当进行代码审查，或者快速浏览某个搭档的提交所带来的变化的时候，这个参数就非常有用了。 你也可以为 git log 附带一系列的总结性选项。 比如你想看到每次提交的简略统计信息，可以使用 --stat 选项：
+This option shows the same information but with a diff directly following each entry. This is very helpful for code review or to quickly browse what happened during a series of commits that a collaborator has added. You can also use a series of summarizing options with `git log`. For example, if you want to see some abbreviated stats for each commit, you can use the `--stat` option:
 
 ```shell
 $ git log --stat
@@ -651,48 +661,49 @@ Date:   Sat Mar 15 10:31:28 2008 -0700
  3 files changed, 54 insertions(+)
 ```
 
-正如你所看到的，--stat 选项在每次提交的下面列出所有被修改过的文件、有多少文件被修改了以及被修改过的文件的哪些行被移除或是添加了。 在每次提交的最后还有一个总结。
+As you can see, the `--stat` option prints below each commit entry a list of modified files, how many files were changed, and how many lines in those files were added and removed. It also puts a summary of the information at the end.
 
-另一个非常有用的选项是 --pretty。 这个选项可以使用不同于默认格式的方式展示提交历史。 这个选项有一些内建的子选项供你使用。 比如 oneline 会将每个提交放在一行显示，在浏览大量的提交时非常有用。 另外还有 short，full 和 fuller 选项，它们展示信息的格式基本一致，但是详尽程度不一：
+Another really useful option is `--pretty`. This option changes the log output to a format other than the default. A few prebuilt options are available for you to use. The `oneline` option prints each commit on a single line, which is useful if you're looking at a lot of commits. In addition, the `short`, `full`, and `fuller` options show the output in the same format but with less or more information, respectively:
 
 ```shell
 $ git log --pretty=oneline
 ca82a6dff817ec66f44342007202690a93763949 changed the version number
 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7 removed unnecessary test
 a11bef06a3f659402fe7563abf99ad00de2209e6 first commit
-最有意思的是 format ，可以定制记录的显示格式。 这样的输出对后期提取分析格外有用——因为你知道输出的格式不会随着 Git 的更新而发生改变：
+```
 
+The most interesting option is `format`, which allows you to specify your own log output format. This is especially useful when you're generating output for machine parsing — because you specify the format explicitly, you know it won't change with updates to Git:
+
+```shell
 $ git log --pretty=format:"%h - %an, %ar : %s"
 ca82a6d - Scott Chacon, 6 years ago : changed the version number
 085bb3b - Scott Chacon, 6 years ago : removed unnecessary test
 a11bef0 - Scott Chacon, 6 years ago : first commit
-git log --pretty=format 常用的选项 列出了 format 接受的常用格式占位符的写法及其代表的意义。
-
 ```
 
-**Table 1. git log --pretty=format 常用的选项**
+**Table 1. Common options to git log --pretty=format**
 
-| 选项     | 说明                                           |
-| ------ | -------------------------------------------- |
-| `%H`   | 提交的完整哈希值                                     |
-| `%h`   | 提交的简写哈希值                                     |
-| `%T`   | 树的完整哈希值                                      |
-| `%t`   | 树的简写哈希值                                      |
-| `%P`   | 父提交的完整哈希值                                    |
-| `%p`   | 父提交的简写哈希值                                    |
-| `%an`  | 作者名字                                         |
-| `%ae`  | 作者的电子邮件地址                                    |
-| `%ad`  | 作者修订日期（可以用 --date=选项 来定制格式）                  |
-| `%ar`  | 作者修订日期，按多久以前的方式显示                            |
-| `%cn`  | 提交者的名字                                       |
-| `%ce`  | 提交者的电子邮件地址                                   |
-| `%cd`  | 提交日期                                         |
-| `%cr`  | 提交日期（距今多长时间）                                 |
-| `%s`   | 提交说明                                         |
+| Option | Description |
+| ------ | ----------- |
+| `%H` | Commit hash |
+| `%h` | Abbreviated commit hash |
+| `%T` | Tree hash |
+| `%t` | Abbreviated tree hash |
+| `%P` | Parent hashes |
+| `%p` | Abbreviated parent hashes |
+| `%an` | Author name |
+| `%ae` | Author email |
+| `%ad` | Author date (format respects --date= option) |
+| `%ar` | Author date, relative |
+| `%cn` | Committer name |
+| `%ce` | Committer email |
+| `%cd` | Committer date |
+| `%cr` | Committer date, relative |
+| `%s` | Subject |
 
-你一定奇怪 作者 和 提交者 之间究竟有何差别， 其实作者指的是实际作出修改的人，提交者指的是最后将此工作成果提交到仓库的人。 所以，当你为某个项目发布补丁，然后某个核心成员将你的补丁并入项目时，你就是作者，而那个核心成员就是提交者。 我们会在 分布式 Git 再详细介绍两者之间的细微差别。
+You may be wondering what the difference is between author and committer. The author is the person who originally wrote the work, whereas the committer is the person who last applied the work to the version control system. So, if you send a patch to a project and one of the core members applies the patch, both of you get credit — you as the author, and the core member as the committer. We'll examine this distinction a bit more in Distributed Git.
 
-当 oneline 或 format 与另一个 log 选项 --graph 结合使用时尤其有用。 这个选项添加了一些 ASCII 字符串来形象地展示你的分支、合并历史：
+The `oneline` and `format` options are particularly useful with another `log` option called `--graph`. This option adds a nice little ASCII graph showing your branch and merge history:
 
 ```shell
 $ git log --pretty=format:"%h %s" --graph
@@ -708,65 +719,64 @@ $ git log --pretty=format:"%h %s" --graph
 *  11d191e Merge branch 'defunkt' into local
 ```
 
-这种输出类型会在我们下一章学完分支与合并以后变得更加有趣。
+This type of output will become more interesting in the next chapter when we go through branching and merging.
 
-以上只是简单介绍了一些 git log 命令支持的选项。 git log 的常用选项 列出了我们目前涉及到的和没涉及到的选项，以及它们是如何影响 log 命令的输出的：
+Those are only some of the output-formatting options to `git log` — there are many more. **Table 2** lists the options we’ve covered so far, as well as some other common formatting options that may be useful, along with how they change the output of the log command.
 
-**Table 2. git log 的常用选项**
+**Table 2. Common options to git log**
 
-| 选项                | 说明                                                                    |
-| ----------------- | --------------------------------------------------------------------- |
-| `-p`              | 按补丁格式显示每个提交引入的差异。                                                     |
-| `--stat`          | 显示每次提交的文件修改统计信息。                                                      |
-| `--shortstat`     | 只显示 --stat 中最后的行数修改添加移除统计。                                            |
-| `--name-only`     | 仅在提交信息后显示已修改的文件清单。                                                    |
-| `--name-status`   | 显示新增、修改、删除的文件清单。                                                      |
-| `--abbrev-commit` | 仅显示 SHA-1 校验和所有 40 个字符中的前几个字符。                                        |
-| `--relative-date` | 使用较短的相对时间而不是完整格式显示日期（比如“2 weeks ago”）。                                |
-| `--graph`         | 在日志旁以 ASCII 图形显示分支与合并历史。                                              |
-| `--pretty`        | 使用其他格式显示历史提交信息。可用的选项包括 oneline、short、full、fuller 和 format（用来定义自己的格式）。 |
-| `--oneline`       | --pretty=oneline --abbrev-commit 合用的简写。                               |
-|                   |                                                                       |
+| Option | Description |
+| ------ | ----------- |
+| `-p` | Show the patch introduced with each commit. |
+| `--stat` | Show statistics for files modified in each commit. |
+| `--shortstat` | Display only the changed/insertions/deletions line from the --stat command. |
+| `--name-only` | Show the list of files modified after the commit information. |
+| `--name-status` | Show the list of files affected with added/modified/deleted information as well. |
+| `--abbrev-commit` | Show only the first few characters of the SHA-1 checksum instead of all 40. |
+| `--relative-date` | Display the date in a relative format (for example, “2 weeks ago”) instead of using the full date format. |
+| `--graph` | Display an ASCII graph of the branch and merge history beside the log output. |
+| `--pretty` | Show commits in an alternate format. Option values include oneline, short, full, fuller, and format (where you specify your own format). |
+| `--oneline` | Shorthand for --pretty=oneline --abbrev-commit used together. |
 
-### 2.3.1 限制输出长度
+### 2.3.1 Limiting Log Output
 
-除了定制输出格式的选项之外，git log 还有许多非常实用的限制输出长度的选项，也就是只输出一部分的提交。 之前你已经看到过 -2 选项了，它只会显示最近的两条提交， 实际上，你可以使用类似 `-<n>` 的选项，其中的 n 可以是任何整数，表示仅显示最近的 n 条提交。 不过实践中这个选项不是很常用，因为 Git 默认会将所有的输出传送到分页程序中，所以你一次只会看到一页的内容。
+In addition to output-formatting options, `git log` takes a number of useful limiting options; that is, options that let you show only a subset of commits. You've seen one such option already: the `-2` option, which displays only the last two commits. In fact, you can do `-<n>`, where `n` is any integer to show the last `n` commits. In practice, you're unlikely to use this often, because Git by default pipes all output through a pager so you see only one page of log output at a time.
 
-但是，类似 --since 和 --until 这种按照时间作限制的选项很有用。 例如，下面的命令会列出最近两周的所有提交：
+However, the time-limiting options such as `--since` and `--until` are very useful. For example, this command gets the list of commits made in the last two weeks:
 
 ```bash
 $ git log --since=2.weeks
 ```
 
-该命令可用的格式十分丰富——可以是类似 "2008-01-15" 的具体的某一天，也可以是类似 "2 years 1 day 3 minutes ago" 的相对日期。
+This command works with lots of formats — you can specify a specific date like `2008-01-15`, or a relative date such as `2 years 1 day 3 minutes ago`.
 
-还可以过滤出匹配指定条件的提交。 用 --author 选项显示指定作者的提交，用 --grep 选项搜索提交说明中的关键字。
+You can also filter the list to commits that match some search criteria. The `--author` option allows you to filter on a specific author, and the `--grep` option lets you search for keywords in the commit messages.
 
-> 你可以指定多个 --author 和 --grep 搜索条件，这样会只输出匹配 任意 --author 模式和 任意 --grep 模式的提交。然而，如果你添加了 --all-match 选项， 则只会输出匹配 所有 --grep 模式的提交。
+> You can specify more than one instance of both the `--author` and `--grep` search criteria, which will limit the commit output to commits that match any of the `--author` patterns and any of the `--grep` patterns; however, adding the `--all-match` option forces the output to match all `--grep` patterns.
 
-另一个非常有用的过滤器是 -S（俗称“pickaxe”选项，取“用鹤嘴锄在土里捡石头”之意）， 它接受一个字符串参数，并且只会显示那些添加或删除了该字符串的提交。 假设你想找出添加或删除了对某一个特定函数的引用的提交，可以调用：
+Another really helpful filter is the `-S` option (colloquially referred to as the "pickaxe" option). It takes a string and shows only those commits that changed the number of occurrences of that string. For instance, if you want to find the last commit that added or removed a reference to a specific function, you could call:
 
 ```bash
 $ git log -S function_name
 ```
 
-最后一个很实用的 git log 选项是路径（path）， 如果只关心某些文件或者目录的历史提交，可以在 git log 选项的最后指定它们的路径。 因为是放在最后位置上的选项，所以用两个短划线（--）隔开之前的选项和后面限定的路径名。
+The last really useful option to pass to `git log` as a filter is a path. If you specify a directory or file name, you can limit the log output to commits that introduced a change to those files. This is always the last option and is generally preceded by double dashes (`--`) to separate the paths from the options.
 
-在 限制 git log 输出的选项 中列出了常用的选项
+In **Table 3** we listed the common options.
 
-**Table 3. 限制 git log 输出的选项**
+**Table 3. Options to limit the output of git log**
 
-| 选项                    | 说明                    |
-| --------------------- | --------------------- |
-| `-n`                  | 仅显示最近的 n 条提交。         |
-| `--since`, `--after`  | 仅显示指定时间之后的提交。         |
-| `--until`, `--before` | 仅显示指定时间之前的提交。         |
-| `--author`            | 仅显示作者匹配指定字符串的提交。      |
-| `--committer`         | 仅显示提交者匹配指定字符串的提交。     |
-| `--grep`              | 仅显示提交说明中包含指定字符串的提交。   |
-| `-S`                  | 仅显示添加或删除内容匹配指定字符串的提交。 |
+| Option | Description |
+| ------ | ----------- |
+| `-<n>` | Show only the last n commits |
+| `--since`, `--after` | Limit the commits to those made after the specified date. |
+| `--until`, `--before` | Limit the commits to those made before the specified date. |
+| `--author` | Only show commits in which the author entry matches the specified string. |
+| `--committer` | Only show commits in which the committer entry matches the specified string. |
+| `--grep` | Only show commits with a commit message containing the string. |
+| `-S` | Only show commits adding or removing code matching the string. |
 
-来看一个实际的例子，如果要在 Git 源码库中查看 Junio Hamano 在 2008 年 10 月其间， 除了合并提交之外的哪一个提交修改了测试文件，可以使用下面的命令：
+For example, if you want to see which test files in the Git source code repository were modified by Junio Hamano in the month of October 2008 and are not merge commits, you can run this:
 
 ```shell
 $ git log --pretty="%h - %s" --author='Junio C Hamano' --since="2008-10-01" \
@@ -779,29 +789,29 @@ d1a43f2 - reset --hard/read-tree --reset -u: remove unmerged new paths
 b0ad11e - pull: allow "git pull origin $something:$current_branch" into an unborn branch
 ```
 
-在近 40000 条提交中，上面的输出仅列出了符合条件的 6 条记录。
+Of the nearly 40,000 commits in the Git source code history, this command shows the 6 that match those criteria.
 
 ### 2.3.2 Tip
 
-隐藏合并提交
+Prevent showing merge commits
 
-按照你代码仓库的工作流程，记录中可能有为数不少的合并提交，它们所包含的信息通常并不多。 为了避免显示的合并提交弄乱历史记录，可以为 log 加上 --no-merges 选项。
+Depending on the workflow used in your repository, it’s possible that a sizable percentage of the commits in your log history are just merge commits, which typically aren’t very informative. To prevent the log command from displaying merge commits in the history, add the `--no-merges` option.
 
-## 2.4 撤消操作
+## 2.4 Undoing Things
 
-在任何一个阶段，你都有可能想要撤消某些操作。 这里，我们将会学习几个撤消你所做修改的基本工具。 注意，有些撤消操作是不可逆的。 这是在使用 Git 的过程中，会因为操作失误而导致之前的工作丢失的少有的几个地方之一。
+At any stage, you may want to undo something. Here, we'll review a few basic tools for undoing changes that you've made. Be careful, because you can't always undo some of these undos. This is one of the few areas in Git where you may lose some work if you do it wrong.
 
-有时候我们提交完了才发现漏掉了几个文件没有添加，或者提交信息写错了。 此时，可以运行带有 --amend 选项的提交命令来重新提交：
+One of the common undos takes place when you commit too early and possibly forget to add some files, or you mess up your commit message. If you want to redo that commit, make the additional changes you forgot, stage them, and commit again using the `--amend` option:
 
 ```shell
 $ git commit --amend
 ```
 
-这个命令会将暂存区中的文件提交。 如果自上次提交以来你还未做任何修改（例如，在上次提交后马上执行了此命令）， 那么快照会保持不变，而你所修改的只是提交信息。
+This command takes your staging area and uses it for the commit. If you've made no changes since your last commit (for instance, you run this command immediately after your previous commit), then your snapshot will look exactly the same, and all you'll change is your commit message.
 
-文本编辑器启动后，可以看到之前的提交信息。 编辑后保存会覆盖原来的提交信息。
+The same commit-message editor fires up, but it already contains the message of your previous commit. You can edit the message the same as always, but it overwrites your previous commit.
 
-例如，你提交后发现忘记了暂存某些需要的修改，可以像下面这样操作：
+As an example, if you commit and then realize you forgot to stage the changes in a file you wanted to add to this commit, you can do something like this:
 
 ```shell
 $ git commit -m 'initial commit'
@@ -809,15 +819,15 @@ $ git add forgotten_file
 $ git commit --amend
 ```
 
-最终你只会有一个提交——第二次提交将代替第一次提交的结果。
+You end up with a single commit — the second commit replaces the results of the first.
 
-> 当你在修补最后的提交时，与其说是修复旧提交，倒不如说是完全用一个 新的提交 替换旧的提交， 理解这一点非常重要。从效果上来说，就像是旧有的提交从未存在过一样，它并不会出现在仓库的历史中。
+> It's important to understand that when you're amending your last commit, you're not so much fixing it as replacing it entirely with a new, improved commit that pushes the old commit out of the way and takes its place. Effectively, it's as if the previous commit never happened, and it won't show up in your repository history.
 
-修补提交最明显的价值是可以稍微改进你最后的提交，而不会让“啊，忘了添加一个文件”或者 “小修补，修正笔误”这种提交信息弄乱你的仓库历史。
+The obvious value to amending commits is to make minor improvements to your last commit, without cluttering your repository history with commit messages of the form, “Oops, forgot to add a file” or “Darn, fixed a typo in the last commit”.
 
-### 2.4.1 取消暂存的文件
+### 2.4.1 Unstaging a Staged File
 
-接下来的两个小节演示如何操作暂存区和工作目录中已修改的文件。 这些命令在修改文件状态的同时，也会提示如何撤消操作。 例如，你已经修改了两个文件并且想要将它们作为两次独立的修改提交， 但是却意外地输入 git add * 暂存了它们两个。如何只取消暂存两个中的一个呢？ git status 命令提示了你：
+The next two sections demonstrate how to work with your staging area and working directory changes. The commands involved are nice enough to give you a hint about how to undo your changes in the output of the command. For example, let's say you've changed two files and want to commit them as two separate changes, but you accidentally type `git add *` and stage them both. How do you unstage the one of the two? The `git status` command reminds you:
 
 ```shell
 $ git add *
@@ -830,7 +840,7 @@ Changes to be committed:
     modified:   CONTRIBUTING.md
 ```
 
-在 “Changes to be committed” 文字正下方，提示使用 `git reset HEAD <file>…` 来取消暂存。 所以，我们可以这样来取消暂存 CONTRIBUTING.md 文件：
+Right below the "Changes to be committed" text, it says use `git reset HEAD <file>...` to unstage. So, let's use that advice to unstage the `CONTRIBUTING.md` file:
 
 ```shell
 $ git reset HEAD CONTRIBUTING.md
@@ -850,15 +860,15 @@ Changes not staged for commit:
     modified:   CONTRIBUTING.md
 ```
 
-这个命令有点儿奇怪，但是起作用了。 CONTRIBUTING.md 文件已经是修改未暂存的状态了。
+The command is a bit strange, but it works. The `CONTRIBUTING.md` file is modified but once again unstaged.
 
-> git reset 确实是个危险的命令，如果加上了 --hard 选项则更是如此。 然而在上述场景中，工作目录中的文件尚未修改，因此相对安全一些。
+> true, `git reset` can be a dangerous command, especially if you provide the `--hard` flag. However, in the scenario described above, the file in your working directory is not touched, so it's relatively safe.
 
-到目前为止这个神奇的调用就是你需要对 git reset 命令了解的全部。 我们将会在 重置揭密 中了解 reset 的更多细节以及如何掌握它做一些真正有趣的事。
+For now, this is the only magic invocation of `git reset` you will need to know. We’ll look at the gory details of what `reset` does and how to master it to do really interesting things in Reset Demystified.
 
-### 2.4.2 撤消对文件的修改
+### 2.4.2 Unmodifying a Modified File
 
-如果你并不想保留对 CONTRIBUTING.md 文件的修改怎么办？ 你该如何方便地撤消修改——将它还原成上次提交时的样子（或者刚克隆完的样子，或者刚把它放入工作目录时的样子）？ 幸运的是，git status 也告诉了你应该如何做。 在最后一个例子中，未暂存区域是这样：
+What if you realize that you don't want to keep your changes to the `CONTRIBUTING.md` file? How can you easily unmodify it — revert it back to what it looked like when you last committed (or initially cloned, or however you got it into your working directory)? Luckily, `git status` tells you how to do that, too. In the last example output, the unstaged area looks like this:
 
 ```shell
 Changes not staged for commit:
@@ -868,7 +878,7 @@ Changes not staged for commit:
     modified:   CONTRIBUTING.md
 ```
 
-它非常清楚地告诉了你如何撤消之前所做的修改。 让我们来按照提示执行：
+It tells you pretty explicitly how to discard the changes you've made. Let's do as it says:
 
 ```shell
 $ git checkout -- CONTRIBUTING.md
@@ -880,29 +890,29 @@ Changes to be committed:
     renamed:    README.md -> README
 ```
 
-可以看到那些修改已经被撤消了。
+You can see that the changes have been reverted.
 
 ### 2.4.3 Important
 
-请务必记得 `git checkout -- <file>` 是一个危险的命令。 你对那个文件在本地的任何修改都会消失——Git 会用最近提交的版本覆盖掉它。 除非你确实清楚不想要对那个文件的本地修改了，否则请不要使用这个命令。
+It is important to understand that `git checkout -- <file>` is a dangerous command. Any changes you made to that file are gone — Git just replaced that file with the last staged or committed version. Don't ever use this command unless you absolutely know that you don't want those unsaved local changes.
 
-如果你仍然想保留对那个文件做出的修改，但是现在仍然需要撤消，我们将会在 Git 分支 介绍保存进度与分支，这通常是更好的做法。
+If you would like to keep the changes you've made to that file but still need to get it out of the way for now, we'll go over Stashing and Branching in Git Branching; these are generally better ways to go.
 
-记住，在 Git 中任何 已提交 的东西几乎总是可以恢复的。 甚至那些被删除的分支中的提交或使用 --amend 选项覆盖的提交也可以恢复 （阅读 数据恢复 了解数据恢复）。 然而，任何你未提交的东西丢失后很可能再也找不到了。
+Remember, anything that is committed in Git can almost always be recovered. Even commits that were on branches that were deleted or commits that were overwritten with an `--amend` commit can be recovered (see Data Recovery for data recovery). However, anything you lose that was never committed is likely lost for good.
 
-## 2.5 远程仓库的使用
+## 2.5 Working with Remotes
 
-为了能在任意 Git 项目上协作，你需要知道如何管理自己的远程仓库。 远程仓库是指托管在因特网或其他网络中的你的项目的版本库。 你可以有好几个远程仓库，通常有些仓库对你只读，有些则可以读写。 与他人协作涉及管理远程仓库以及根据需要推送或拉取数据。 管理远程仓库包括了解如何添加远程仓库、移除无效的远程仓库、管理不同的远程分支并定义它们是否被跟踪等等。 在本节中，我们将介绍一部分远程管理的技能。
+To be able to collaborate on any Git project, you need to know how to manage your remote repositories. Remote repositories are versions of your project that are hosted on the Internet or network somewhere. You can have several of them, generally each one for you to be able to read or write to. Collaborating with others involves managing these remote repositories and pushing and pulling data to and from them when you need to share work. Managing remote repositories includes knowing how to add remote repositories, remove remotes that on longer valid, manage various remote branches and define them as being tracked or not, and more. In this section, we’ll cover some of these remote-management skills.
 
 ### 2.5.1 Note
 
-远程仓库可以在你的本地主机上
+Remote repositories can be on your local machine.
 
-你完全可以在一个“远程”仓库上工作，而实际上它在你本地的主机上。 词语“远程”未必表示仓库在网络或互联网上的其它位置，而只是表示它在别处。 在这样的远程仓库上工作，仍然需要和其它远程仓库上一样的标准推送、拉取和抓取操作。
+It is entirely possible that you can be working with a “remote” repository that is, in fact, on the same machine that you are. The word “remote” does not necessarily imply that the repository is somewhere else on the network or Internet, only that it is elsewhere. In this case, you still address the remote repository with the standard push, pull and fetch operations as with any other remote.
 
-### 2.5.2 查看远程仓库
+### 2.5.2 Showing Your Remotes
 
-如果想查看你已经配置的远程仓库服务器，可以运行 git remote 命令。 它会列出你指定的每一个远程服务器的简写。 如果你已经克隆了自己的仓库，那么至少应该能看到 origin ——这是 Git 给你克隆的仓库服务器的默认名字：
+To see which remote servers you have configured, you can run the `git remote` command. It lists the shortnames of each remote handle you've specified. If you've cloned your repository, you should at least see `origin` — that is the default name Git gives to the server you cloned from:
 
 ```shell
 $ git clone https://github.com/schacon/ticgit
@@ -917,7 +927,7 @@ $ git remote
 origin
 ```
 
-你也可以指定选项 -v，会显示需要读写远程仓库使用的 Git 保存的简写与其对应的 URL。
+You can also specify `-v`, which shows you the URLs that Git has stored for the shortname to be used when reading and writing to that remote:
 
 ```shell
 $ git remote -v
@@ -926,7 +936,7 @@ origin	https://github.com/schacon/ticgit (push)
 
 ```
 
-如果你的远程仓库不止一个，该命令会将它们全部列出。 例如，与几个协作者合作的，拥有多个远程仓库的仓库看起来像下面这样：
+If you have more than one remote, the command lists them all. For example, a repository with multiple remotes for working with several collaborators might look something like this.
 
 ```shell
 $ cd grit
@@ -943,13 +953,13 @@ origin    git@github.com:mojombo/grit.git (fetch)
 origin    git@github.com:mojombo/grit.git (push)
 ```
 
-这表示我们能非常方便地拉取其它用户的贡献。我们还可以拥有向他们推送的权限，这里暂不详述。
+This means we can pull contributions from any of these users pretty easily. We may additionally have permission to push to one or more of these, though we can't tell that here.
 
-注意这些远程仓库使用了不同的协议。我们将会在 在服务器上搭建 Git 中了解关于它们的更多信息。
+Notice that these remotes use a variety of protocols; we’ll cover more about this in Getting Git on a Server.
 
-### 2.5.3 添加远程仓库
+### 2.5.3 Adding Remote Repositories
 
-我们在之前的章节中已经提到并展示了 git clone 命令是如何自行添加远程仓库的， 不过这里将告诉你如何自己来添加它。 运行 `git remote add <shortname> <url> ` 添加一个新的远程 Git 仓库，同时指定一个方便使用的简写：
+I’ve mentioned and given some demonstrations of how the `git clone` command implicitly adds the `origin` remote for you. Here’s how to add a new remote explicitly. To add a new remote Git repository as a shortname you can reference easily, run `git remote add <shortname> <url>`:
 
 ```shell
 $ git remote
@@ -962,7 +972,7 @@ pb	https://github.com/paulboone/ticgit (fetch)
 pb	https://github.com/paulboone/ticgit (push)
 ```
 
-现在你可以在命令行中使用字符串 pb 来代替整个 URL。 例如，如果你想拉取 Paul 的仓库中有但你没有的信息，可以运行 git fetch pb：
+Now you can use the string `pb` on the command line instead of the whole URL. For example, if you want to fetch all the information that Paul has but that you don't yet have in your repository, you can run `git fetch pb`:
 
 ```shell
 $ git fetch pb
@@ -975,35 +985,35 @@ From https://github.com/paulboone/ticgit
  * [new branch]      ticgit     -> pb/ticgit
 ```
 
-现在 Paul 的 master 分支可以在本地通过 pb/master 访问到——你可以将它合并到自己的某个分支中， 或者如果你想要查看它的话，可以检出一个指向该点的本地分支。 （我们将会在 Git 分支 中详细介绍什么是分支以及如何使用分支。）
+Paul's master branch is now accessible locally as `pb/master` — you can merge it into one of your branches, or you can check out a local branch at that point if you want to inspect it. (We'll go over what branches are and how to use them in much more detail in Git Branching.)
 
-从远程仓库中抓取与拉取
+Fetching and Pulling from Your Remotes
 
-就如刚才所见，从远程仓库中获得数据，可以执行：
+As you just saw, to get data from your remote projects, you can run:
 
 ```shell
 $ git fetch <remote>
 ```
 
-这个命令会访问远程仓库，从中拉取所有你还没有的数据。 执行完成后，你将会拥有那个远程仓库中所有分支的引用，可以随时合并或查看。
+The command goes out to that remote project and pulls down all the data from that remote project that you don't have yet. After you do this, you should have references to all the branches from that remote, which you can merge in or inspect at any time.
 
-如果你使用 clone 命令克隆了一个仓库，命令会自动将其添加为远程仓库并默认以 “origin” 为简写。 所以，git fetch origin 会抓取克隆（或上一次抓取）后新推送的所有工作。 必须注意 git fetch 命令只会将数据下载到你的本地仓库——它并不会自动合并或修改你当前的工作。 当准备好时你必须手动将其合并入你的工作。
+If you clone a repository, the command automatically adds that remote repository under the name “origin”. So, `git fetch origin` fetches any new work that has been pushed to that server since you cloned (or last fetched from) it. It’s important to note that the `git fetch` command only downloads the data to your local repository — it doesn't automatically merge it with any of your work or modify what you're currently working on. You have to merge it manually into your work when you're ready.
 
-如果你的当前分支设置了跟踪远程分支（阅读下一节和 Git 分支 了解更多信息）， 那么可以用 git pull 命令来自动抓取后合并该远程分支到当前分支。 这或许是个更加简单舒服的工作流程。默认情况下，git clone 命令会自动设置本地 master 分支跟踪克隆的远程仓库的 master 分支（或其它名字的默认分支）。 运行 git pull 通常会从最初克隆的服务器上抓取数据并自动尝试合并到当前所在的分支。
+If your current branch is set up to track a remote branch (see the next section and Git Branching for more information), you can use the `git pull` command to automatically fetch and then merge that remote branch into your current branch. This may be an easier or more comfortable workflow for you; and by default, the `git clone` command automatically sets up your local master branch to track the remote master branch (or whatever the default branch is called) on the server you cloned from. Running `git pull` generally fetches data from the server you originally cloned from and automatically tries to merge it into the code you're currently working on.
 
-### 2.5.4 推送到远程仓库
+### 2.5.4 Pushing to Your Remotes
 
-当你想分享你的项目时，必须将其推送到上游。 这个命令很简单：`git push <remote> <branch>`。 当你想要将 master 分支推送到 origin 服务器时（再次说明，克隆时通常会自动帮你设置好那两个名字）， 那么运行这个命令就可以将你所做的备份到服务器：
+When you have your project at a point that you want to share, you have to push it upstream. The command for this is simple: `git push <remote> <branch>`. If you want to push your master branch to your `origin` server (again, cloning generally sets up both of those names for you automatically), then you can run this to push any commits you've done back up to the server:
 
 ```bash
 $ git push origin master
 ```
 
-只有当你有所克隆服务器的写入权限，并且之前没有人推送过时，这条命令才能生效。 当你和其他人在同一时间克隆，他们先推送到上游然后你再推送到上游，你的推送就会毫无疑问地被拒绝。 你必须先抓取他们的工作并将其合并进你的工作后才能推送。 阅读 Git 分支 了解如何推送到远程仓库服务器的详细信息。
+This command works only if you cloned from a server to which you have write access and if nobody has pushed in the meantime. If you and someone else clone at the same time and they push upstream and then you push upstream, your push will correctly be rejected. You’ll have to fetch their work first and incorporate it into yours before you’ll be allowed to push. See Git Branching for more detailed information on how to push to remote servers.
 
-查看某个远程仓库
+#### Inspecting a Remote
 
-如果想要查看某一个远程仓库的更多信息，可以使用 `git remote show <remote> ` 命令。 如果想以一个特定的缩写名运行这个命令，例如 origin，会得到像下面类似的信息：
+If you want to see more information about a particular remote, you can use the `git remote show <remote>` command. If you run this command with a particular shortname, such as `origin`, you get something like this:
 
 ```shell
 $ git remote show origin
@@ -1020,9 +1030,9 @@ $ git remote show origin
     master pushes to master (up to date)
 ```
 
-它同样会列出远程仓库的 URL 与跟踪分支的信息。 这些信息非常有用，它告诉你正处于 master 分支，并且如果运行 git pull， 就会抓取所有的远程引用，然后将远程 master 分支合并到本地 master 分支。 它也会列出拉取到的所有远程引用。
+It lists the URL for the remote repository as well as the tracking branch information. These are helpful answers in this situation — it tells you that if you’re on the `master` branch and you run `git pull`, it will automatically merge in the `master` branch on the remote after it fetches all the remote references. It also lists all the remote references it has pulled down.
 
-这是一个经常遇到的简单例子。 如果你是 Git 的重度使用者，那么还可以通过 git remote show 看到更多的信息。
+This is a simple example you’re likely to encounter. When you use Git more heavily, however, you may see much more information from `git remote show`:
 
 ```shell
 $ git remote show origin
@@ -1047,11 +1057,11 @@ $ git remote show origin
     master                         pushes to master                         (up to date)
 ```
 
-这个命令列出了当你在特定的分支上执行 git push 会自动地推送到哪一个远程分支。 它也同样地列出了哪些远程分支不在你的本地，哪些远程分支已经从服务器上移除了， 还有当你执行 git pull 时哪些本地分支可以与它跟踪的远程分支自动合并。
+This command shows which branch is automatically pushed to when you run `git push` while on certain branches. It also shows you which remote branches on the server you don't yet have, which remote branches you have that have been removed from the server, and multiple local branches that are able to merge automatically with their remote-tracking branch when you run `git pull`.
 
-### 2.5.5 远程仓库的重命名与移除
+### 2.5.5 Renaming and Removing Remotes
 
-你可以运行 git remote rename 来修改一个远程仓库的简写名。 例如，想要将 pb 重命名为 paul，可以用 git remote rename 这样做：
+You can run `git remote rename` to change a remote's shortname. For instance, if you want to rename `pb` to `paul`, you can do so with `git remote rename`:
 
 ```shell
 $ git remote rename pb paul
@@ -1060,9 +1070,9 @@ origin
 paul
 ```
 
-值得注意的是这同样也会修改你所有远程跟踪的分支名字。 那些过去引用 pb/master 的现在会引用 paul/master。
+It’s worth mentioning that this changes all your remote-tracking branch names, too. What used to be referenced at `pb/master` is now at `paul/master`.
 
-如果因为一些原因想要移除一个远程仓库——你已经从服务器上搬走了或不再想使用某一个特定的镜像了， 又或者某一个贡献者不再贡献了——可以使用 git remote remove 或 git remote rm ：
+If you want to remove a remote for some reason — you’ve moved the server or are no longer using a particular mirror, or perhaps a contributor isn’t contributing anymore — you can use either `git remote remove` or `git remote rm`:
 
 ```shell
 $ git remote remove paul
@@ -1070,15 +1080,15 @@ $ git remote
 origin
 ```
 
-一旦你使用这种方式删除了一个远程仓库，那么所有和这个远程仓库相关的远程跟踪分支以及配置信息也会一起被删除。
+Once you delete the reference to a remote this way, all remote-tracking branches and configuration settings associated with that remote are also deleted.
 
-## 2.6 打标签
+## 2.6 Tagging
 
-像其他版本控制系统（VCS）一样，Git 可以给仓库历史中的某一个提交打上标签，以示重要。 比较有代表性的是人们会使用这个功能来标记发布结点（ v1.0 、 v2.0 等等）。 在本节中，你将会学习如何列出已有的标签、如何创建和删除新的标签、以及不同类型的标签分别是什么。
+Like most VCSs, Git has the ability to tag specific points in a repository’s history as being important. Typically, people use this functionality to mark release points (v1.0, v2.0 and so on). In this section, you’ll learn how to list the existing tags, how to create and delete tags, and what the different types of tags are.
 
-### 2.6.1 列出标签
+### 2.6.1 Listing Tags
 
-在 Git 中列出已有的标签非常简单，只需要输入 git tag （可带上可选的 -l 选项 --list）：
+Listing the existing tags in Git is straightforward. Just type `git tag` (with the optional `-l` or `--list`):
 
 ```shell
 $ git tag
@@ -1086,9 +1096,9 @@ v1.0
 v2.0
 ```
 
-这个命令以字母顺序列出标签，但是它们显示的顺序并不重要。
+This command lists the tags in alphabetical order; the order in which they appear has no real importance.
 
-你也可以按照特定的模式查找标签。 例如，Git 自身的源代码仓库包含标签的数量超过 500 个。 如果只对 1.8.5 系列感兴趣，可以运行：
+You can also search for tags that match a particular pattern. The Git source repo, for instance, contains more than 500 tags. If you’re interested only in looking at the 1.8.5 series, you can run this:
 
 ```shell
 $ git tag -l "v1.8.5*"
@@ -1104,23 +1114,23 @@ v1.8.5.4
 v1.8.5.5
 ```
 
-按照通配符列出标签需要 -l 或 --list 选项
+Listing tags with wildcards requires the `-l` or `--list` option.
 
-如果你只想要完整的标签列表，那么运行 git tag 就会默认假定你想要一个列表，它会直接给你列出来， 此时的 -l 或 --list 是可选的。
+If you just want the complete list of tags, run `git tag` implicitly assumes you want a list and provides one; the `-l` or `--list` in that case is optional.
 
-然而，如果你提供了一个匹配标签名的通配模式，那么 -l 或 --list 就是强制使用的。
+However, if you supply a wildcard pattern to match tag names, the use of `-l` or `--list` is mandatory.
 
-### 2.6.2 创建标签
+### 2.6.2 Creating Tags
 
-Git 支持两种标签：轻量标签（lightweight）与附注标签（annotated）。
+Git uses two main types of tags: lightweight and annotated.
 
-轻量标签很像一个不会改变的分支——它只是某个特定提交的引用。
+A lightweight tag is very much like a branch that doesn’t change — it’s just a pointer to a specific commit.
 
-而附注标签是存储在 Git 数据库中的一个完整对象， 它们是可以被校验的，其中包含打标签者的名字、电子邮件地址、日期时间， 此外还有一个标签信息，并且可以使用 GNU Privacy Guard （GPG）签名并验证。 通常会建议创建附注标签，这样你可以拥有以上所有信息。但是如果你只是想用一个临时的标签， 或者因为某些原因不想要保存这些信息，那么也可以用轻量标签。
+Annotated tags, however, are stored as full objects in the Git database. They are checksummed; contain the tagger name, email, and date; have a tagging message; and can be signed and verified with GNU Privacy Guard (GPG). It’s generally recommended that you create annotated tags so you have all this information; but if you want a temporary tag or for some reason don’t want the other information, lightweight tags are available.
 
-### 2.6.3 附注标签
+### 2.6.3 Annotated Tags
 
-在 Git 中创建附注标签十分简单。 最简单的方式是当你在运行 tag 命令时指定 -a 选项：
+Creating an annotated tag in Git is simple. The easiest way is to specify `-a` when you run the `tag` command:
 
 ```shell 
 $ git tag -a v1.4 -m "my version 1.4"
@@ -1128,10 +1138,11 @@ $ git tag
 v0.1
 v1.3
 v1.4
--m 选项指定了一条将会存储在标签中的信息。 如果没有为附注标签指定一条信息，Git 会启动编辑器要求你输入信息。
 ```
 
-通过使用 git show 命令可以看到标签信息和与之对应的提交信息：
+The `-m` specifies a tagging message, which is stored with the tag. If you don’t specify a message for an annotated tag, Git launches your editor so you can type it in.
+
+You can see the tag data along with the commit that was tagged by using the `git show` command:
 
 ```shell
 $ git show v1.4
@@ -1148,11 +1159,11 @@ Date:   Mon Mar 17 21:52:11 2008 -0700
     changed the version number
 ```
 
-输出显示了打标签者的信息、打标签的日期时间、附注信息，然后显示具体的提交信息。
+That shows the tagger information, the date the commit was tagged, and the annotation message before showing the commit information.
 
-### 2.6.4 轻量标签
+### 2.6.4 Lightweight Tags
 
-另一种给提交打标签的方式是使用轻量标签。 轻量标签本质上是将提交校验和存储到一个文件中——没有保存任何其他信息。 创建轻量标签，不需要使用 -a、-s 或 -m 选项，只需要提供标签名字：
+Another way to tag commits is with a lightweight tag. This is basically the commit checksum stored in a file — no other information is kept. To create a lightweight tag, don’t supply the `-a`, `-s`, or `-m` option, just provide a tag name:
 
 ```shell
 $ git tag v1.4-lw
@@ -1162,8 +1173,11 @@ v1.3
 v1.4
 v1.4-lw
 v1.5
-这时，如果在标签上运行 git show，你不会看到额外的标签信息。 命令只会显示出提交信息：
+```
 
+This time, if you run `git show` on the tag, you don’t see the extra tag information. The command just shows the commit:
+
+```shell
 $ git show v1.4-lw
 commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon <schacon@gee-mail.com>
@@ -1172,9 +1186,9 @@ Date:   Mon Mar 17 21:52:11 2008 -0700
     changed the version number
 ```
 
-### 2.6.5 后期打标签
+### 2.6.5 Tagging Later
 
-你也可以对过去的提交打标签。 假设提交历史是这样的：
+You can also tag commits that you’ve moved past. Suppose your commit history looks like this:
 
 ```shell
 $ git log --pretty=oneline
@@ -1190,13 +1204,13 @@ a6b4c97498bd301d84096da251c98a07c7723e65 beginning write support
 8a5cbc430f1a9c3d00faaeffd07798508422908a updated readme
 ```
 
-现在，假设在 v1.2 时你忘记给项目打标签，也就是在 “updated rakefile” 提交。 你可以在之后补上标签。 要在那个提交上打标签，你需要在命令的末尾指定提交的校验和（或部分校验和）：
+Now, suppose you forgot to tag the project at v1.2, which was at the “updated rakefile” commit. You can add it after the fact. To tag that commit, you specify the commit checksum (or part of it) at the end of the command:
 
 ```bash
 $ git tag -a v1.2 9fceb02
 ```
 
-可以看到你已经在那次提交上打上标签了：
+You can see that you’ve tagged the commit:
 
 ```shell
 $ git tag
@@ -1222,9 +1236,9 @@ Date:   Sun Apr 27 20:43:35 2008 -0700
 
 ```
 
-### 2.6.6 共享标签
+### 2.6.6 Sharing Tags
 
-默认情况下，git push 命令并不会传送标签到远程仓库服务器上。 在创建完标签后你必须显式地推送标签到共享服务器上。 这个过程就像共享远程分支一样——你可以运行 `git push origin <tagname>`。
+By default, the `git push` command doesn’t transfer tags to remote servers. You will have to explicitly push tags to a shared server after you have created them. This process is just like sharing remote branches — you can run `git push origin <tagname>`.
 
 ```shell
 $ git push origin v1.5
@@ -1237,7 +1251,7 @@ To git@github.com:schacon/simplegit.git
  * [new tag]         v1.5 -> v1.5
 ```
 
-如果想要一次性推送很多标签，也可以使用带有 --tags 选项的 git push 命令。 这将会把所有不在远程仓库服务器上的标签全部传送到那里。
+If you have a lot of tags that you want to push up at once, you can also use the `--tags` option to the `git push` command. This will transfer all of your tags to the remote server that are not already there.
 
 ```shell
 $ git push origin --tags
@@ -1249,15 +1263,15 @@ To git@github.com:schacon/simplegit.git
  * [new tag]         v1.4-lw -> v1.4-lw
 ```
 
-现在，当其他人从仓库中克隆或拉取，他们也能得到你的那些标签。
+Now, when someone else clones or pulls from your repository, they will get all your tags as well.
 
-> git push 推送两种标签
+> git push pushes both types of tags
 
-使用 `git push <remote> --tags` 推送标签并不会区分轻量标签和附注标签， 没有简单的选项能够让你只选择推送一种标签。
+Using `git push <remote> --tags` will push both lightweight and annotated tags. There is currently no option to push only lightweight tags or only annotated tags.
 
-### 2.6.7 删除标签
+### 2.6.7 Deleting Tags
 
-要删除掉你本地仓库上的标签，可以使用命令 `git tag -d <tagname>。` 例如，可以使用以下命令删除一个轻量标签：
+To delete a tag on your local repository, you can use the command `git tag -d <tagname>`. For example, we could remove our lightweight tag above like this:
 
 ```bash
 $ git tag -d v1.4-lw
@@ -1265,9 +1279,7 @@ $ git tag -d v1.4-lw
 Deleted tag 'v1.4-lw' (was e7d5add)
 ```
 
-注意上述命令并不会从任何远程仓库中移除这个标签，你必须用 `git push <remote> :refs/tags/<tagname>` 来更新你的远程仓库：
-
-第一种变体是 `git push <remote> :refs/tags/<tagname>` ：
+Note that this does not remove the tag from any remote servers. There are two common variations for deleting a tag from a remote server. The first version is `git push <remote> :refs/tags/<tagname>`:
 
 ```shell
 $ git push origin :refs/tags/v1.4-lw
@@ -1275,17 +1287,17 @@ To /git@github.com:schacon/simplegit.git
  - [deleted]         v1.4-lw
 ```
 
-  上面这种操作的含义是，将冒号前面的空值推送到远程标签名，从而高效地删除它。
+The way to interpret the above is to read it as the null value before the colon is being pushed to the remote tag name, effectively deleting it.
 
-第二种更直观的删除远程标签的方式是：
+The second (and more intuitive) way to delete a remote tag is:
 
 ```shell
 $ git push origin --delete <tagname>
 ```
 
-### 2.6.8 检出标签
+### 2.6.8 Checking out Tags
 
-如果你想查看某个标签所指向的文件版本，可以使用 git checkout 命令， 虽然这会使你的仓库处于“分离头指针（detached HEAD）”的状态——这个状态有些不好的副作用：
+If you want to view the versions of files a tag points to, you can do a `git checkout` of that tag, although this puts your repository in "detached HEAD" state, which has some ill side effects:
 
 ```shell
 $ git checkout 2.0.0
@@ -1307,20 +1319,20 @@ Previous HEAD position was 99ada87... Merge pull request #89 from schacon/append
 HEAD is now at df3f601... add atlas.json and cover image
 ```
 
-在“分离头指针”状态下，如果你做了某些更改然后提交它们，标签不会发生变化， 但你的新提交将不属于任何分支，并且将无法访问，除非通过确切的提交哈希才能访问。 因此，如果你需要进行更改，比如你要修复旧版本中的错误，那么通常需要创建一个新分支：
+In "detached HEAD" state, if you make changes and then create a commit, the tag will stay the same, but your new commit won’t belong to any branch and will be unreachable, except by the exact commit hash. Thus, if you need to make changes — say you’re fixing a bug on an older version — you will generally want to create a branch:
 
 ```shell
 $ git checkout -b version2 v2.0.0
 Switched to a new branch 'version2'
 ```
 
-如果在这之后又进行了一次提交，version2 分支就会因为这个改动向前移动， 此时它就会和 v2.0.0 标签稍微有些不同，这时就要当心了。
+If you do this and make a commit, your `version2` branch will be slightly different than your `v2.0.0` tag since it will move forward with your new changes, so do be careful.
 
-## 2.7 Git 别名
+## 2.7 Git Aliases
 
-在我们结束本章 Git 基础之前，正好有一个小技巧可以使你的 Git 体验更简单、容易、熟悉：别名。 我们不会在之后的章节中引用到或假定你使用过它们，但是你大概应该知道如何使用它们。
+Before we finish this chapter on basic Git, there’s a little tip that can make your Git experience simpler, easier, and more familiar: aliases. We won’t refer to them or assume you’ve used them later in the book, but you should probably know how to use them.
 
-Git 并不会在你输入部分命令时自动推断出你想要的命令。 如果不想每次都输入完整的 Git 命令，可以通过 git config 文件来轻松地为每一个命令设置一个别名。 这里有一些例子你可以试试：
+Git doesn’t infer your command if you type it in partially. If you don’t want to type the entire text of each of the Git commands, you can easily set up an alias for each command using `git config`. Here are a couple of examples you may want to set up:
 
 ```shell
 $ git config --global alias.co checkout
@@ -1329,25 +1341,28 @@ $ git config --global alias.ci commit
 $ git config --global alias.st status
 ```
 
-这意味着，当要输入 git commit 时，只需要输入 git ci。 随着你继续不断地使用 Git，可能也会经常使用其他命令，所以创建别名时不要犹豫。
+This means that, for example, instead of typing `git commit`, you just need to type `git ci`. As you go on using Git, you’ll probably use other commands frequently as well; don’t hesitate to create new aliases.
 
-在创建你认为应该存在的命令时这个技术会很有用。 例如，为了解决取消暂存文件的易用性问题，可以向 Git 中添加你自己的取消暂存别名：
+This technique can also be very useful in creating commands that you think should exist. For example, to correct the usability problem you encountered with unstaging a file, you can add your own unstage alias to Git:
 
 ```shell
 $ git config --global alias.unstage 'reset HEAD --'
-这会使下面的两个命令等价：
 ```
+
+This makes the following two commands equivalent:
 
 ```shell
 $ git unstage fileA
 $ git reset HEAD -- fileA
-这样看起来更清楚一些。 通常也会添加一个 last 命令，像这样：
 ```
+
+This seems a bit clearer. It’s also common to add a `last` command, like this:
 
 ```shell
 $ git config --global alias.last 'log -1 HEAD'
-这样，可以轻松地看到最后一次提交：
 ```
+
+This way, you can see the last commit easily:
 
 ```shell
 $ git last
@@ -1360,7 +1375,7 @@ Date:   Tue Aug 26 19:48:51 2008 +0800
     Signed-off-by: Scott Chacon <schacon@example.com>
 ```
 
-可以看出，Git 只是简单地将别名替换为对应的命令。 然而，你可能想要执行外部命令，而不是一个 Git 子命令。 如果是那样的话，可以在命令前面加入 ! 符号。 如果你自己要写一些与 Git 仓库协作的工具的话，那会很有用。 我们现在演示将 git visual 定义为 gitk 的别名：
+As you can tell, Git simply replaces the new command with whatever you alias it for. However, maybe you want to run an external command, rather than a Git subcommand. In that case, you start the command with a `!` character. This is useful if you write your own tools that work with a Git repository. We can demonstrate by aliasing `git visual` to run `gitk`:
 
 ```shell
 $ git config --global alias.visual '!gitk'
